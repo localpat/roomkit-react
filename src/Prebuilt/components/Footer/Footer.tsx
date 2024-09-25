@@ -30,6 +30,10 @@ import { useShowPolls } from '../AppData/useUISettings';
 // @ts-ignore: No implicit Any
 import { SIDE_PANE_OPTIONS } from '../../common/constants';
 
+import { selectLocalPeerRole, useHMSStore } from '@100mslive/react-sdk';
+import Int2EnButton from './Int2En';
+import Int2FrButton from './Int2Fr';
+
 export const Footer = ({
   screenType,
   elements,
@@ -44,7 +48,7 @@ export const Footer = ({
   const isChatOpen = useIsSidepaneTypeOpen(SIDE_PANE_OPTIONS.CHAT);
   const toggleChat = useSidepaneToggle(SIDE_PANE_OPTIONS.CHAT);
   const { showPolls } = useShowPolls();
-
+  const role = useHMSStore(selectLocalPeerRole);
   useEffect(() => {
     if (!isChatOpen && openByDefault) {
       toggleChat();
@@ -77,6 +81,12 @@ export const Footer = ({
         {isMobile ? <LeaveRoom screenType={screenType} /> : null}
         <AudioVideoToggle />
         {!isMobile && elements.virtual_background ? <VBToggle /> : null}
+        { role?.name === "int-to-nl" || role?.name === "int-to-fr" || role?.name === "int-to-es" || role?.name === "int-to-en" ? (
+          <>
+            <Int2EnButton />
+            <Int2FrButton />
+          </>
+        ) : null}
       </AppFooter.Left>
       <AppFooter.Center
         css={{
