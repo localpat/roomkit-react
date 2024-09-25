@@ -31,8 +31,8 @@ import { useShowPolls } from '../AppData/useUISettings';
 import { SIDE_PANE_OPTIONS } from '../../common/constants';
 
 import { selectLocalPeerRole, useHMSStore } from '@100mslive/react-sdk';
-import Int2EnButton from './Int2En';
-import Int2FrButton from './Int2Fr';
+import Int2EnButton from '../Interpreting/Int2En';
+import Int2FrButton from '../Interpreting/Int2Fr';
 
 export const Footer = ({
   screenType,

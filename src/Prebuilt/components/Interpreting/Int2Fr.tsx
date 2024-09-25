@@ -3,7 +3,7 @@ import {
     useHMSActions,
     useHMSStore,
   } from "@100mslive/react-sdk";
-  import { Tooltip } from "@100mslive/roomkit-react";
+  import { Tooltip } from '../../../Tooltip';
   import IconButton from "../../IconButton";
   
   const Int2FrButton = () => {
@@ -14,7 +14,7 @@ import {
     };
   
     return (
-      <Tooltip title="Interprétation vers le français">
+      <Tooltip key="int2fr" title="Interprétation vers le français">
         <IconButton onClick={changeRole} className="w-auto">
           <div className="text-xs text-slate-200 rounded-lg">FR</div>
         </IconButton>
