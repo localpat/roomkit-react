@@ -10,7 +10,7 @@ import {
     const hmsActions = useHMSActions();
     const localPeerId = useHMSStore(selectLocalPeerID);
     const changeRole = () => {
-      hmsActions.changeRoleOfPeer(localPeerId, "int-to-en", true);
+      hmsActions.changeRoleOfPeer(localPeerId, "interpreter-en", true);
     };
   
     return (
