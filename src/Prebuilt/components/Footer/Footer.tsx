@@ -81,7 +81,7 @@ export const Footer = ({
         {isMobile ? <LeaveRoom screenType={screenType} /> : null}
         <AudioVideoToggle />
         {!isMobile && elements.virtual_background ? <VBToggle /> : null}
-        { role?.name === "int-to-nl" || role?.name === "int-to-fr" || role?.name === "int-to-es" || role?.name === "int-to-en" ? (
+        { role?.name === "interpreter-en" || role?.name === "interpreter-fr" ? (
           <>
             <Int2EnButton />
             <Int2FrButton />
