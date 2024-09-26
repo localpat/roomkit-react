@@ -15,8 +15,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/localpat/web-sdks.git",
-    "directory": "packages/roomkit-react"
+    "url": "https://github.com/localpat/roomkit-react.git"
+    
   },
   "files": [
     "dist",
@@ -116,6 +116,6 @@
     "ts-pattern": "4.3.0",
     "uuid": "^8.3.2",
     "worker-timers": "^7.0.40"
-  },
-  "gitHead": "da50781c2357d6201da1c94dcfef574a0081e2dc"
+  }
+  
 }
