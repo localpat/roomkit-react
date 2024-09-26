@@ -33,7 +33,8 @@ import { SIDE_PANE_OPTIONS } from '../../common/constants';
 import { selectLocalPeerRole, useHMSStore } from '@100mslive/react-sdk';
 import Int2EnButton from '../Interpreting/Int2En';
 import Int2FrButton from '../Interpreting/Int2Fr';
-
+import EnButton from '../Languages/En';
+import FrButton from '../Languages/Fr';
 export const Footer = ({
   screenType,
   elements,
@@ -85,6 +86,12 @@ export const Footer = ({
           <>
             <Int2EnButton />
             <Int2FrButton />
+          </>
+        ) : null}
+         { role?.name === "guest" || role?.name === "host" ? (
+          <>
+            <EnButton />
+            <FrButton />
           </>
         ) : null}
       </AppFooter.Left>
