@@ -6,6 +6,7 @@ import IconButton from '../../IconButton';
 const EnButton = () => {
   const peers = useHMSStore(selectPeers);
   const hmsActions = useHMSActions();
+  
   const changeVolume = () => {
     for (const peer of peers) {
       if (
@@ -13,6 +14,8 @@ const EnButton = () => {
         (peer.roleName === 'interpreter-fr' && peer.audioTrack)
       ) {
         hmsActions.setVolume(0, peer.audioTrack);
+      } else if ((peer.roleName === 'host' && peer.audioTrack) || (peer.roleName === 'guest' && peer.audioTrack)) {
+        hmsActions.setVolume(100, peer.audioTrack);
       }
     }
   };
