@@ -1,7 +1,7 @@
 import React from 'react';
 import { selectPeerScreenSharing, useHMSStore, useWhiteboard } from '@100mslive/react-sdk';
 import { PencilDrawIcon } from '@100mslive/react-icons';
-import { Tooltip } from '../../../Tooltip';
+import { Tooltip } from '../../..';
 // @ts-ignore: No implicit Any
 import IconButton from '../../IconButton';
 // @ts-ignore: No implicit Any
