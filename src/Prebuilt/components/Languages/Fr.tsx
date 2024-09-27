@@ -18,7 +18,7 @@ const EnButton = () => {
     }
   };
   return (
-    <Tooltip title="English">
+    <Tooltip title="Français">
       <IconButton onClick={changeVolume}>
         <div className="text-xs text-slate-200 rounded-lg">FR</div>
       </IconButton>

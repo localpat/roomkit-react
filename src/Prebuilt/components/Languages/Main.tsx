@@ -17,7 +17,7 @@ const EnButton = () => {
     }
   };
   return (
-    <Tooltip title="English">
+    <Tooltip title="Floor Sound">
       <IconButton onClick={changeVolume}>
         <div className="text-xs text-slate-200 rounded-lg">Floor</div>
       </IconButton>
