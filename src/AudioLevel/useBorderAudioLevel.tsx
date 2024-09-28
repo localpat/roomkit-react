@@ -1,7 +1,7 @@
-import { useCallback, useRef } from 'react';
-import { HMSTrackID } from '@100mslive/hms-video-store';
-import { useAudioLevelStyles } from '@100mslive/react-sdk';
-import { useTheme } from '../Theme';
+import { useCallback, useRef } from "react";
+import { HMSTrackID } from "@100mslive/hms-video-store";
+import { useAudioLevelStyles } from "@100mslive/react-sdk";
+import { useTheme } from "../Theme";
 
 /**
  * pass in a track id and get a ref. That ref can be attached to an element which will have border
@@ -13,12 +13,14 @@ export function useBorderAudioLevel(audioTrackId?: HMSTrackID) {
   const getStyle = useCallback(
     (level: number) => {
       const style: Record<string, string> = {
-        transition: 'outline 0.4s ease-in-out',
+        transition: "outline 0.4s ease-in-out",
       };
-      style['outline'] = level ? `${sigmoid(level) * 4}px solid ${color}` : '0px solid transparent';
+      style["outline"] = level
+        ? `${sigmoid(level) * 4}px solid ${color}`
+        : "0px solid transparent";
       return style;
     },
-    [color],
+    [color]
   );
   const ref = useRef(null);
   useAudioLevelStyles({

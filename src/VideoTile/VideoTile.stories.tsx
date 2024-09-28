@@ -1,11 +1,11 @@
-import React from 'react';
-import { MicOffIcon } from '@100mslive/react-icons';
-import { Video } from '../Video/Video';
-import { StyledVideoTile } from './StyledVideoTile';
-import VideoTileDocs from './VideoTile.mdx';
+import React from "react";
+import { MicOffIcon } from "@100mslive/react-icons";
+import { Video } from "../Video/Video";
+import { StyledVideoTile } from "./StyledVideoTile";
+import VideoTileDocs from "./VideoTile.mdx";
 
 const VideoTileMeta = {
-  title: 'Video/VideoTile',
+  title: "Video/VideoTile",
   parameters: {
     docs: {
       page: VideoTileDocs,

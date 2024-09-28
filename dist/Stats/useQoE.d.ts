@@ -1,4 +1,4 @@
-import { HMSTrackID } from '@100mslive/react-sdk';
+import { HMSTrackID } from "@100mslive/react-sdk";
 interface UseQoEProps {
     videoTrackID?: HMSTrackID;
     audioTrackID?: HMSTrackID;
@@ -15,5 +15,5 @@ interface UseQoEProps {
  *
  * https://github.com/100mslive/webrtc-benchmark/blob/daily/sssd.py#L112
  */
-export declare const useQoE: ({ videoTrackID, audioTrackID, isLocal }: UseQoEProps) => string | undefined;
+export declare const useQoE: ({ videoTrackID, audioTrackID, isLocal, }: UseQoEProps) => string | undefined;
 export {};

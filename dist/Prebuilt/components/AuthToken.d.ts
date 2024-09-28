@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrebuiltStates } from '../AppStateContext';
+import React from "react";
+import { PrebuiltStates } from "../AppStateContext";
 /**
  * query params exposed -
  * skip_preview=true => used by recording and streaming service, skips preview and directly joins
@@ -11,7 +11,7 @@ import { PrebuiltStates } from '../AppStateContext';
  */
 declare const AuthToken: React.NamedExoticComponent<{
     authTokenByRoomCodeEndpoint: string;
-    defaultAuthToken?: string | undefined;
-    activeState?: PrebuiltStates | undefined;
+    defaultAuthToken?: string;
+    activeState?: PrebuiltStates;
 }>;
 export default AuthToken;

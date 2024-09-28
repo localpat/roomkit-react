@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 import {
   selectIsConnectedToRoom,
   selectPermissions,
   useHMSActions,
   useHMSStore,
   useRecordingStreaming,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey } from '../AppData/useUISettings';
+import { useSetAppDataByKey } from "../AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { useShowStreamingUI } from '../../common/hooks';
+import { useShowStreamingUI } from "../../common/hooks";
 // @ts-ignore: No implicit Any
-import { APP_DATA } from '../../common/constants';
+import { APP_DATA } from "../../common/constants";
 
 export const useAutoStartStreaming = () => {
   const [isHLSStarted, setHLSStarted] = useSetAppDataByKey(APP_DATA.hlsStarted);
@@ -19,7 +19,12 @@ export const useAutoStartStreaming = () => {
   const showStreamingUI = useShowStreamingUI();
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-  const { isHLSRunning, isRTMPRunning, isHLSRecordingOn, isBrowserRecordingOn } = useRecordingStreaming();
+  const {
+    isHLSRunning,
+    isRTMPRunning,
+    isHLSRecordingOn,
+    isBrowserRecordingOn,
+  } = useRecordingStreaming();
   const streamStartedRef = useRef(false);
 
   const startHLS = useCallback(async () => {
@@ -60,7 +65,11 @@ export const useAutoStartStreaming = () => {
   }, [isHLSStarted, isHLSRunning]);
 
   useEffect(() => {
-    if (!isConnected || streamStartedRef.current || !permissions?.hlsStreaming) {
+    if (
+      !isConnected ||
+      streamStartedRef.current ||
+      !permissions?.hlsStreaming
+    ) {
       return;
     }
     // Is a streaming kit and peer with streaming permissions joins

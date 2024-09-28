@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const useAudioOutputTest: ({ deviceId }: {
     deviceId: string;
 }) => {

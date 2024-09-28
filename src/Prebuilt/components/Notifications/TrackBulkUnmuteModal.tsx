@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   HMSChangeMultiTrackStateRequest,
   HMSNotificationTypes,
   useHMSActions,
   useHMSNotifications,
-} from '@100mslive/react-sdk';
-import { MicOnIcon } from '@100mslive/react-icons';
+} from "@100mslive/react-sdk";
+import { MicOnIcon } from "@100mslive/react-icons";
 // @ts-ignore: No implicit Any
-import { RequestDialog } from '../../primitives/DialogContent';
+import { RequestDialog } from "../../primitives/DialogContent";
 
 export const TrackBulkUnmuteModal = () => {
   const hmsActions = useHMSActions();
-  const [muteNotification, setMuteNotification] = useState<HMSChangeMultiTrackStateRequest | null>(null);
+  const [muteNotification, setMuteNotification] =
+    useState<HMSChangeMultiTrackStateRequest | null>(null);
   const notification = useHMSNotifications([
     HMSNotificationTypes.CHANGE_MULTI_TRACK_STATE_REQUEST,
     HMSNotificationTypes.ROOM_ENDED,
@@ -40,15 +41,17 @@ export const TrackBulkUnmuteModal = () => {
 
   const { requestedBy: peer, tracks, enabled } = muteNotification;
 
-  const types = new Set(tracks.map(track => track.type));
+  const types = new Set(tracks.map((track) => track.type));
 
   return (
     <RequestDialog
       title="Unmute request"
-      body={`${peer?.name} is requesting you to unmute your ${Array.from(types).join(',')}`}
+      body={`${peer?.name} is requesting you to unmute your ${Array.from(
+        types
+      ).join(",")}`}
       onOpenChange={(value: boolean) => !value && setMuteNotification(null)}
       onAction={() => {
-        tracks.forEach(track => {
+        tracks.forEach((track) => {
           hmsActions.setEnabledTrack(track.id, enabled);
         });
         setMuteNotification(null);

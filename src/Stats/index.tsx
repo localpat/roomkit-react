@@ -1,2 +1,2 @@
-export { VideoTileStats } from './Stats';
-export { formatBytes } from './formatBytes';
+export { VideoTileStats } from "./Stats";
+export { formatBytes } from "./formatBytes";

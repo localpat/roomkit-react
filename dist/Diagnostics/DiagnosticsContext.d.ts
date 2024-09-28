@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSDiagnosticsInterface } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSDiagnosticsInterface } from "@100mslive/react-sdk";
 export declare enum DiagnosticsStep {
     BROWSER = 0,
     VIDEO = 1,
@@ -26,17 +26,17 @@ export interface DiagnosticsStepInfo {
     isCompleted?: boolean;
 }
 export declare const DiagnosticsContext: React.Context<{
-    hmsDiagnostics?: HMSDiagnosticsInterface | undefined;
+    hmsDiagnostics?: HMSDiagnosticsInterface;
     activeStepIndex: DiagnosticsStep;
     setActiveStep: React.Dispatch<React.SetStateAction<DiagnosticsStep>>;
     steps: Record<DiagnosticsStep, DiagnosticsStepInfo>;
-    updateStep: (step: DiagnosticsStep, value: Omit<DiagnosticsStepInfo, 'name'>) => void;
+    updateStep: (step: DiagnosticsStep, value: Omit<DiagnosticsStepInfo, "name">) => void;
 }>;
 export declare const useDiagnostics: () => {
     activeStep: DiagnosticsStepInfo;
-    hmsDiagnostics?: HMSDiagnosticsInterface | undefined;
+    hmsDiagnostics?: HMSDiagnosticsInterface;
     activeStepIndex: DiagnosticsStep;
     setActiveStep: React.Dispatch<React.SetStateAction<DiagnosticsStep>>;
     steps: Record<DiagnosticsStep, DiagnosticsStepInfo>;
-    updateStep: (step: DiagnosticsStep, value: Omit<DiagnosticsStepInfo, 'name'>) => void;
+    updateStep: (step: DiagnosticsStep, value: Omit<DiagnosticsStepInfo, "name">) => void;
 };

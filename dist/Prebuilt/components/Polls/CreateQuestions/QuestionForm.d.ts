@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSPollQuestionCreateParams, HMSPollQuestionOptionCreateParams } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSPollQuestionCreateParams, HMSPollQuestionOptionCreateParams } from "@100mslive/react-sdk";
 export declare const QuestionForm: ({ question, index, length, onSave, removeQuestion, isQuiz, }: {
     question: HMSPollQuestionCreateParams & {
         draftID: number;
@@ -18,5 +18,5 @@ export declare const isValidQuestion: ({ text, type, options, weight, isQuiz, }:
     type: string;
     options: HMSPollQuestionOptionCreateParams[];
     weight: number;
-    isQuiz?: boolean | undefined;
+    isQuiz?: boolean;
 }) => boolean;

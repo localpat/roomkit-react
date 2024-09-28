@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 export declare const ArrowNavigation: ({ total, index, showPrevious, showNext, }: {
     total: number;
     index: number;

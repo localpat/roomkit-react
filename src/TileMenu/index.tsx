@@ -1,1 +1,1 @@
-export { StyledMenuTile } from './StyledMenuTile';
+export { StyledMenuTile } from "./StyledMenuTile";

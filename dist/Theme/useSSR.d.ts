@@ -1,4 +1,4 @@
-export declare type SSRState = {
+export type SSRState = {
     isBrowser: boolean;
     isServer: boolean;
 };

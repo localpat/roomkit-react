@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 // @ts-ignore: No implicit Any
-import { PollsQuizMenu } from './CreatePollQuiz/PollsQuizMenu';
+import { PollsQuizMenu } from "./CreatePollQuiz/PollsQuizMenu";
 // @ts-ignore: No implicit Any
-import { CreateQuestions } from './CreateQuestions/CreateQuestions';
-import { LeaderboardSummary } from './Voting/LeaderboardSummary';
+import { CreateQuestions } from "./CreateQuestions/CreateQuestions";
+import { LeaderboardSummary } from "./Voting/LeaderboardSummary";
 // @ts-ignore: No implicit Any
-import { Voting } from './Voting/Voting';
+import { Voting } from "./Voting/Voting";
 // @ts-ignore: No implicit Any
-import { usePollViewToggle } from '../AppData/useSidepane';
+import { usePollViewToggle } from "../AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { usePollViewState } from '../AppData/useUISettings';
+import { usePollViewState } from "../AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { POLL_VIEWS } from '../../common/constants';
+import { POLL_VIEWS } from "../../common/constants";
 
 export const Polls = () => {
   const togglePollView = usePollViewToggle();

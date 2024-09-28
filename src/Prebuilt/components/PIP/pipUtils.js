@@ -5,18 +5,18 @@ function setPIPCanvasColors() {
   if (!CANVAS_FILL_COLOR) {
     CANVAS_FILL_COLOR = window
       .getComputedStyle(document.documentElement)
-      .getPropertyValue('--hms-ui-colors-surface_bright');
+      .getPropertyValue("--hms-ui-colors-surface_bright");
   }
   if (!CANVAS_STROKE_COLOR) {
     CANVAS_STROKE_COLOR = window
       .getComputedStyle(document.documentElement)
-      .getPropertyValue('--hms-ui-colors-border_bright');
+      .getPropertyValue("--hms-ui-colors-border_bright");
   }
 }
 
 export function resetPIPCanvasColors() {
-  CANVAS_FILL_COLOR = '';
-  CANVAS_STROKE_COLOR = '';
+  CANVAS_FILL_COLOR = "";
+  CANVAS_STROKE_COLOR = "";
 }
 /**
  * no tile - blank canvas, black image
@@ -27,9 +27,11 @@ export function resetPIPCanvasColors() {
  * All videos will respect their aspect ratios.
  */
 export function drawVideoElementsOnCanvas(videoElements, canvas) {
-  let videoTiles = videoElements.filter(videoElement => videoElement.srcObject !== null);
+  let videoTiles = videoElements.filter(
+    (videoElement) => videoElement.srcObject !== null
+  );
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   setPIPCanvasColors();
   ctx.fillStyle = CANVAS_FILL_COLOR;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -46,7 +48,7 @@ export function drawVideoElementsOnCanvas(videoElements, canvas) {
 // this is to send some data for stream and resolve video element's play for a
 // video element rendering this canvas' capture stream
 export function dummyChangeInCanvas(canvas) {
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   setPIPCanvasColors();
   ctx.fillStyle = CANVAS_FILL_COLOR;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -72,7 +74,11 @@ function fillGridTiles(videoElements, ctx, canvas) {
 
   if (videoElements.length === 1) {
     const video = videoElements[0];
-    const { width, height } = getRenderDimensions(video, canvas.width - offset, canvas.height - offset);
+    const { width, height } = getRenderDimensions(
+      video,
+      canvas.width - offset,
+      canvas.height - offset
+    );
     /**
      * The x and y offset are to center the video tile horizontally and vertically
      * width and height are the aspect ratio constrained video tile dimensions
@@ -87,14 +93,15 @@ function fillGridTiles(videoElements, ctx, canvas) {
       const { width, height } = getRenderDimensions(
         video,
         canvas.width / 2 - offset, // This will be the max available width for each tile
-        canvas.height - offset,
+        canvas.height - offset
       );
       /**
        * (canvas.width / 2 - width) / 2 This is to center width wise within in the box
        * (canvas.width / 2) * index This is the start offset
        * for 1st element it is 0, for second it will be canvas.width/2 which starts from the center
        */
-      const xOffset = (canvas.width / 2 - width) / 2 + (canvas.width / 2) * index;
+      const xOffset =
+        (canvas.width / 2 - width) / 2 + (canvas.width / 2) * index;
       /**
        * (canvas.height - height) / 2 This is to center height wise
        */
@@ -113,13 +120,20 @@ function fillGridTiles(videoElements, ctx, canvas) {
 
   if (videoElements.length === 3) {
     videoElements.forEach((video, index) => {
-      const { width, height } = getRenderDimensions(video, canvas.width / 2 - offset, canvas.height / 2 - offset);
+      const { width, height } = getRenderDimensions(
+        video,
+        canvas.width / 2 - offset,
+        canvas.height / 2 - offset
+      );
       /**
        * for first two tiles, xOffset is similar to the 2 tiles calculation with only difference being the height. it is half now.
        */
       const xOffset =
-        index < 2 ? (canvas.width / 2 - width) / 2 + (canvas.width / 2) * index : canvas.width / 2 - width / 2;
-      const yOffset = (index < 2 ? 0 : canvas.height / 2) + (canvas.height / 2 - height) / 2;
+        index < 2
+          ? (canvas.width / 2 - width) / 2 + (canvas.width / 2) * index
+          : canvas.width / 2 - width / 2;
+      const yOffset =
+        (index < 2 ? 0 : canvas.height / 2) + (canvas.height / 2 - height) / 2;
 
       ctx.drawImage(video, xOffset, yOffset, width, height);
     });
@@ -136,17 +150,23 @@ function fillGridTiles(videoElements, ctx, canvas) {
   }
   if (videoElements.length === 4) {
     videoElements.forEach((video, index) => {
-      const { width, height } = getRenderDimensions(video, canvas.width / 2 - offset, canvas.height / 2 - offset);
+      const { width, height } = getRenderDimensions(
+        video,
+        canvas.width / 2 - offset,
+        canvas.height / 2 - offset
+      );
       /**
        * Similar to two tiles repeat after 2 tiles
        * (canvas.width / 2 - width) / 2 is to center horizontally
        */
-      const xOffset = (canvas.width / 2 - width) / 2 + (canvas.width / 2) * (index % 2);
+      const xOffset =
+        (canvas.width / 2 - width) / 2 + (canvas.width / 2) * (index % 2);
       /**
        * Similar to two tiles with the yOffset being height/2 for the 3rd and 4th tiles
        * (canvas.height / 2 - height) / 2 is to center vertically
        */
-      const yOffset = (index < 2 ? 0 : canvas.height / 2) + (canvas.height / 2 - height) / 2;
+      const yOffset =
+        (index < 2 ? 0 : canvas.height / 2) + (canvas.height / 2 - height) / 2;
 
       ctx.drawImage(video, xOffset, yOffset, width, height);
     });

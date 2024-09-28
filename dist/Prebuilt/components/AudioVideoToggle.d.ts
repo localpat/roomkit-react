@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 export declare const Options: ({ options, selectedDeviceId, onClick, }: {
-    options?: (MediaDeviceInfo | InputDeviceInfo)[] | undefined;
-    selectedDeviceId?: string | undefined;
+    options?: Array<MediaDeviceInfo | InputDeviceInfo>;
+    selectedDeviceId?: string;
     onClick: (deviceId: string) => Promise<void>;
 }) => React.JSX.Element;
 export declare const NoiseCancellation: ({ actionTile, iconOnly, setOpenOptionsSheet, }: {
-    setOpenOptionsSheet?: ((value: boolean) => void) | undefined;
-    iconOnly?: boolean | undefined;
-    actionTile?: boolean | undefined;
+    setOpenOptionsSheet?: (value: boolean) => void;
+    iconOnly?: boolean;
+    actionTile?: boolean;
 }) => React.JSX.Element | null;
-export declare const AudioVideoToggle: ({ hideOptions }: {
-    hideOptions?: boolean | undefined;
+export declare const AudioVideoToggle: ({ hideOptions, }: {
+    hideOptions?: boolean;
 }) => React.JSX.Element | null;

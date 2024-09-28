@@ -1,11 +1,11 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Flex } from '../Layout';
-import mdx from './Loading.mdx';
-import { Loading } from '.';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Flex } from "../Layout";
+import mdx from "./Loading.mdx";
+import { Loading } from ".";
 
 export default {
-  title: 'UI Components/Loading',
+  title: "UI Components/Loading",
   component: Loading,
   parameters: {
     docs: {
@@ -26,12 +26,14 @@ const Template: ComponentStory<typeof Loading> = ({ color }) => {
 
 export const Multiple = Template.bind({});
 Multiple.args = {
-  color: 'red',
+  color: "red",
 };
 
-export const Playground: ComponentStory<typeof Loading> = args => <Loading {...args} />;
-Playground.storyName = 'Loading';
+export const Playground: ComponentStory<typeof Loading> = (args) => (
+  <Loading {...args} />
+);
+Playground.storyName = "Loading";
 Playground.argTypes = {
-  size: { control: { type: 'number' }, defaultValue: 24 },
-  color: { defaultValue: 'blue' },
+  size: { control: { type: "number" }, defaultValue: 24 },
+  color: { defaultValue: "blue" },
 };

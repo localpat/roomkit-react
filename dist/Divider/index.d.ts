@@ -1,1 +1,1 @@
-export { HorizontalDivider, VerticalDivider } from './Divider';
+export { HorizontalDivider, VerticalDivider } from "./Divider";

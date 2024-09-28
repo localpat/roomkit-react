@@ -1,11 +1,20 @@
-import React, { useEffect, useMemo } from 'react';
-import { selectAppData, selectPeers, selectPeerScreenSharing, useEmbedShare, useHMSStore } from '@100mslive/react-sdk';
-import { SecondaryTiles } from '../components/SecondaryTiles';
-import { ToastManager } from '../components/Toast/ToastManager';
-import { ProminenceLayout } from '../components/VideoLayouts/ProminenceLayout';
-import { Box } from '../../Layout';
-import { useResetEmbedConfig, useSetAppDataByKey } from '../components/AppData/useUISettings';
-import { APP_DATA } from '../common/constants';
+import React, { useEffect, useMemo } from "react";
+import {
+  selectAppData,
+  selectPeers,
+  selectPeerScreenSharing,
+  useEmbedShare,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { SecondaryTiles } from "../components/SecondaryTiles";
+import { ToastManager } from "../components/Toast/ToastManager";
+import { ProminenceLayout } from "../components/VideoLayouts/ProminenceLayout";
+import { Box } from "../../Layout";
+import {
+  useResetEmbedConfig,
+  useSetAppDataByKey,
+} from "../components/AppData/useUISettings";
+import { APP_DATA } from "../common/constants";
 
 export const EmbedView = () => {
   return (
@@ -19,22 +28,28 @@ export const EmbedScreenShareView = ({ children }) => {
   const peers = useHMSStore(selectPeers);
 
   const peerPresenting = useHMSStore(selectPeerScreenSharing);
-  const [, setActiveScreenSharePeer] = useSetAppDataByKey(APP_DATA.activeScreensharePeerId);
+  const [, setActiveScreenSharePeer] = useSetAppDataByKey(
+    APP_DATA.activeScreensharePeerId
+  );
 
   const smallTilePeers = useMemo(() => {
-    const smallTilePeers = peers.filter(peer => peer.id !== peerPresenting?.id);
+    const smallTilePeers = peers.filter(
+      (peer) => peer.id !== peerPresenting?.id
+    );
     return smallTilePeers;
   }, [peers, peerPresenting]);
 
   useEffect(() => {
     setActiveScreenSharePeer(peerPresenting?.id);
     return () => {
-      setActiveScreenSharePeer('');
+      setActiveScreenSharePeer("");
     };
   }, [peerPresenting?.id, setActiveScreenSharePeer]);
   return (
     <ProminenceLayout.Root>
-      <ProminenceLayout.ProminentSection>{children}</ProminenceLayout.ProminentSection>
+      <ProminenceLayout.ProminentSection>
+        {children}
+      </ProminenceLayout.ProminentSection>
       <SecondaryTiles peers={smallTilePeers} />
     </ProminenceLayout.Root>
   );
@@ -47,7 +62,8 @@ const EmbedComponent = () => {
   const resetConfig = useResetEmbedConfig();
 
   // need to send resetConfig to clear configuration, if stop screenshare occurs.
-  const { iframeRef, startEmbedShare, isEmbedShareInProgress } = useEmbedShare(resetConfig);
+  const { iframeRef, startEmbedShare, isEmbedShareInProgress } =
+    useEmbedShare(resetConfig);
 
   useEffect(() => {
     (async () => {
@@ -57,8 +73,8 @@ const EmbedComponent = () => {
         } catch (err) {
           resetConfig();
           ToastManager.addToast({
-            title: `Error while sharing embed url ${err.message || ''}`,
-            variant: 'error',
+            title: `Error while sharing embed url ${err.message || ""}`,
+            variant: "error",
           });
         }
       }
@@ -68,12 +84,12 @@ const EmbedComponent = () => {
   return (
     <Box
       css={{
-        mx: '$8',
-        flex: '3 1 0',
-        '@lg': {
-          flex: '2 1 0',
-          display: 'flex',
-          alignItems: 'center',
+        mx: "$8",
+        flex: "3 1 0",
+        "@lg": {
+          flex: "2 1 0",
+          display: "flex",
+          alignItems: "center",
         },
       }}
     >
@@ -81,10 +97,10 @@ const EmbedComponent = () => {
         title="Embed View"
         ref={iframeRef}
         style={{
-          width: '100%',
-          height: '100%',
+          width: "100%",
+          height: "100%",
           border: 0,
-          borderRadius: '0.75rem',
+          borderRadius: "0.75rem",
         }}
         allow="autoplay; clipboard-write;"
         referrerPolicy="no-referrer"

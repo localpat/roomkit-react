@@ -1,5 +1,5 @@
-import React from 'react';
-import { CSS } from '../../Theme';
+import React from "react";
+import { CSS } from "../../Theme";
 export declare const RaiseHand: ({ css }: {
-    css?: CSS | undefined;
+    css?: CSS;
 }) => React.JSX.Element | null;

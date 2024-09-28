@@ -1,4 +1,4 @@
-import { QUESTION_TYPE } from './constants';
+import { QUESTION_TYPE } from "./constants";
 
 // eslint-disable-next-line complexity
 export function shadeColor(color, percent) {
@@ -14,9 +14,12 @@ export function shadeColor(color, percent) {
   G = G < 255 ? G : 255;
   B = B < 255 ? B : 255;
 
-  const RR = R.toString(16).length === 1 ? `0${R.toString(16)}` : R.toString(16);
-  const GG = G.toString(16).length === 1 ? `0${G.toString(16)}` : G.toString(16);
-  const BB = B.toString(16).length === 1 ? `0${B.toString(16)}` : B.toString(16);
+  const RR =
+    R.toString(16).length === 1 ? `0${R.toString(16)}` : R.toString(16);
+  const GG =
+    G.toString(16).length === 1 ? `0${G.toString(16)}` : G.toString(16);
+  const BB =
+    B.toString(16).length === 1 ? `0${B.toString(16)}` : B.toString(16);
 
   return `#${RR}${GG}${BB}`;
 }
@@ -40,7 +43,7 @@ export const arrayIntersection = (a, b) => {
   });
 };
 
-export const getMetadata = metadataString => {
+export const getMetadata = (metadataString) => {
   try {
     return !metadataString ? {} : JSON.parse(metadataString);
   } catch (error) {
@@ -55,10 +58,10 @@ export const metadataProps = function (peer) {
 };
 
 export const isScreenshareSupported = () => {
-  return typeof navigator.mediaDevices.getDisplayMedia !== 'undefined';
+  return typeof navigator.mediaDevices.getDisplayMedia !== "undefined";
 };
 
-export const metadataPayloadParser = payload => {
+export const metadataPayloadParser = (payload) => {
   try {
     const data = window.atob(payload);
     const parsedData = JSON.parse(data);
@@ -70,25 +73,34 @@ export const metadataPayloadParser = payload => {
 
 // For bottom action sheet, returns updated height based on drag
 export const getUpdatedHeight = (e, MINIMUM_HEIGHT) => {
-  const heightToPercentage = 100 - ((e?.touches?.[0] || e).pageY / window.innerHeight) * 100;
+  const heightToPercentage =
+    100 - ((e?.touches?.[0] || e).pageY / window.innerHeight) * 100;
   // Snap to top if height > 80%, should be at least 40vh
-  const sheetHeightInVH = Math.max(MINIMUM_HEIGHT, heightToPercentage > 80 ? 100 : heightToPercentage);
+  const sheetHeightInVH = Math.max(
+    MINIMUM_HEIGHT,
+    heightToPercentage > 80 ? 100 : heightToPercentage
+  );
   return `${sheetHeightInVH}vh`;
 };
 
-export const getFormattedCount = num => {
-  const formatter = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 });
+export const getFormattedCount = (num) => {
+  const formatter = new Intl.NumberFormat("en", {
+    notation: "compact",
+    maximumFractionDigits: 2,
+  });
   const formattedNum = formatter.format(num);
   return formattedNum;
 };
 
-export const formatTime = timeInSeconds => {
+export const formatTime = (timeInSeconds) => {
   timeInSeconds = Math.floor(timeInSeconds / 1000);
   const hours = Math.floor(timeInSeconds / 3600);
   const minutes = Math.floor((timeInSeconds % 3600) / 60);
   const seconds = timeInSeconds % 60;
-  const hour = hours !== 0 ? `${hours < 10 ? '0' : ''}${hours}:` : '';
-  return `${hour}${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  const hour = hours !== 0 ? `${hours < 10 ? "0" : ""}${hours}:` : "";
+  return `${hour}${minutes < 10 ? "0" : ""}${minutes}:${
+    seconds < 10 ? "0" : ""
+  }${seconds}`;
 };
 
 const compareArrays = (a, b) => {
@@ -108,7 +120,11 @@ export const checkCorrectAnswer = (answer, localPeerResponse, type) => {
   if (type === QUESTION_TYPE.SINGLE_CHOICE) {
     return answer?.option === localPeerResponse?.option;
   } else if (type === QUESTION_TYPE.MULTIPLE_CHOICE) {
-    return answer?.options && localPeerResponse?.options && compareArrays(answer?.options, localPeerResponse?.options);
+    return (
+      answer?.options &&
+      localPeerResponse?.options &&
+      compareArrays(answer?.options, localPeerResponse?.options)
+    );
   }
 };
 
@@ -116,41 +132,49 @@ export const isValidTextInput = (text, minLength = 1, maxLength = 1024) => {
   return text && text.length >= minLength && text.length <= maxLength;
 };
 
-export const calculateAvatarAndAttribBoxSize = (calculatedWidth, calculatedHeight) => {
+export const calculateAvatarAndAttribBoxSize = (
+  calculatedWidth,
+  calculatedHeight
+) => {
   if (!calculatedWidth || !calculatedHeight) {
     return [undefined, undefined];
   }
 
-  let avatarSize = 'large';
+  let avatarSize = "large";
   if (calculatedWidth <= 150 || calculatedHeight <= 150) {
-    avatarSize = 'small';
+    avatarSize = "small";
   } else if (calculatedWidth <= 300 || calculatedHeight <= 300) {
-    avatarSize = 'medium';
+    avatarSize = "medium";
   }
 
-  let attribBoxSize = 'medium';
+  let attribBoxSize = "medium";
   if (calculatedWidth <= 180 || calculatedHeight <= 180) {
-    attribBoxSize = 'small';
+    attribBoxSize = "small";
   }
 
   return [avatarSize, attribBoxSize];
 };
 
-export const isMobileUserAgent = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+export const isMobileUserAgent = /Mobi|Android|iPhone/i.test(
+  navigator.userAgent
+);
 
 export const getPeerResponses = (questions, peerid, userid) => {
-  return questions.map(question =>
+  return questions.map((question) =>
     question.responses?.filter(
-      response =>
-        response && (response.peer?.peerid === peerid || response.peer?.userid === userid) && !response.skipped,
-    ),
+      (response) =>
+        response &&
+        (response.peer?.peerid === peerid ||
+          response.peer?.userid === userid) &&
+        !response.skipped
+    )
   );
 };
 
-export const getIndexToShow = responses => {
+export const getIndexToShow = (responses) => {
   let lastAttemptedIndex = 0;
 
-  Object.keys(responses).forEach(key => {
+  Object.keys(responses).forEach((key) => {
     const keyNum = parseInt(key);
     if (keyNum > lastAttemptedIndex && responses[key]) {
       lastAttemptedIndex = keyNum;
@@ -160,21 +184,29 @@ export const getIndexToShow = responses => {
   return lastAttemptedIndex + 1;
 };
 
-export const getPeerParticipationSummary = (poll, localPeerID, localCustomerUserID) => {
+export const getPeerParticipationSummary = (
+  poll,
+  localPeerID,
+  localCustomerUserID
+) => {
   let correctResponses = 0;
   let score = 0;
   const questions = poll.questions || [];
-  const peerResponses = getPeerResponses(questions, localPeerID, localCustomerUserID);
+  const peerResponses = getPeerResponses(
+    questions,
+    localPeerID,
+    localCustomerUserID
+  );
   let totalResponses = peerResponses.length || 0;
 
-  peerResponses.forEach(peerResponse => {
+  peerResponses.forEach((peerResponse) => {
     if (!peerResponse?.[0]) {
       return;
     }
     const isCorrect = checkCorrectAnswer(
       questions[peerResponse[0].questionIndex - 1].answer,
       peerResponse[0],
-      questions[peerResponse[0].questionIndex - 1].type,
+      questions[peerResponse[0].questionIndex - 1].type
     );
     if (isCorrect) {
       score += questions[peerResponse[0].questionIndex - 1]?.weight || 0;

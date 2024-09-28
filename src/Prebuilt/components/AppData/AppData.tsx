@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { useMedia } from 'react-use';
+import React, { useEffect, useMemo, useRef } from "react";
+import { useMedia } from "react-use";
 import {
   HMSRoomState,
   selectFullAppData,
@@ -10,16 +10,19 @@ import {
   useHMSActions,
   useHMSStore,
   useRecordingStreaming,
-} from '@100mslive/react-sdk';
-import { config as cssConfig } from '../../../Theme';
-import { LayoutMode } from '../Settings/LayoutSettings';
-import { useRoomLayoutConferencingScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+} from "@100mslive/react-sdk";
+import { config as cssConfig } from "../../../Theme";
+import { LayoutMode } from "../Settings/LayoutSettings";
+import { useRoomLayoutConferencingScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 //@ts-ignore
-import { UserPreferencesKeys, useUserPreferences } from '../hooks/useUserPreferences';
+import {
+  UserPreferencesKeys,
+  useUserPreferences,
+} from "../hooks/useUserPreferences";
 // @ts-ignore
-import { useIsSidepaneTypeOpen, useSidepaneToggle } from './useSidepane';
+import { useIsSidepaneTypeOpen, useSidepaneToggle } from "./useSidepane";
 // @ts-ignore
-import { useSetAppDataByKey, useSetNoiseCancellation } from './useUISettings';
+import { useSetAppDataByKey, useSetNoiseCancellation } from "./useUISettings";
 import {
   APP_DATA,
   CHAT_SELECTOR,
@@ -27,8 +30,8 @@ import {
   SIDE_PANE_OPTIONS,
   UI_MODE_GRID,
   UI_SETTINGS,
-} from '../../common/constants';
-import { DEFAULT_TILES_IN_VIEW } from '../MoreSettings/constants';
+} from "../../common/constants";
+import { DEFAULT_TILES_IN_VIEW } from "../MoreSettings/constants";
 
 const initialAppData = {
   [APP_DATA.uiSettings]: {
@@ -49,25 +52,25 @@ const initialAppData = {
   },
   [APP_DATA.chatOpen]: false,
   [APP_DATA.chatSelector]: {
-    [CHAT_SELECTOR.ROLE]: '',
+    [CHAT_SELECTOR.ROLE]: "",
     [CHAT_SELECTOR.PEER]: {},
   },
-  [APP_DATA.chatDraft]: '',
-  [APP_DATA.sidePane]: '',
-  [APP_DATA.sheet]: '',
+  [APP_DATA.chatDraft]: "",
+  [APP_DATA.sidePane]: "",
+  [APP_DATA.sheet]: "",
   [APP_DATA.hlsStarted]: false,
   [APP_DATA.rtmpStarted]: false,
   [APP_DATA.recordingStarted]: false,
   [APP_DATA.dropdownList]: [],
-  [APP_DATA.authToken]: '',
+  [APP_DATA.authToken]: "",
   [APP_DATA.minimiseInset]: false,
-  [APP_DATA.activeScreensharePeerId]: '',
+  [APP_DATA.activeScreensharePeerId]: "",
   [APP_DATA.disableNotifications]: false,
   [APP_DATA.loadingEffects]: false,
-  [APP_DATA.background]: 'none',
+  [APP_DATA.background]: "none",
   [APP_DATA.pollState]: {
-    [POLL_STATE.pollInView]: '',
-    [POLL_STATE.view]: '',
+    [POLL_STATE.pollInView]: "",
+    [POLL_STATE.view]: "",
   },
   // by default on because of on demand now, for beam disabled
   [APP_DATA.caption]: false,
@@ -76,7 +79,9 @@ const initialAppData = {
 
 export const AppData = React.memo(() => {
   const hmsActions = useHMSActions();
-  const [preferences = {}] = useUserPreferences(UserPreferencesKeys.UI_SETTINGS);
+  const [preferences = {}] = useUserPreferences(
+    UserPreferencesKeys.UI_SETTINGS
+  );
   const appData = useHMSStore(selectFullAppData);
   const { elements } = useRoomLayoutConferencingScreen();
   const toggleVB = useSidepaneToggle(SIDE_PANE_OPTIONS.VB);
@@ -89,7 +94,10 @@ export const AppData = React.memo(() => {
     if (elements?.noise_cancellation?.enabled_by_default) {
       setNoiseCancellationEnabled(true);
     }
-  }, [elements?.noise_cancellation?.enabled_by_default, setNoiseCancellationEnabled]);
+  }, [
+    elements?.noise_cancellation?.enabled_by_default,
+    setNoiseCancellationEnabled,
+  ]);
 
   const defaultMediaURL = useMemo(() => {
     const media = elements?.virtual_background?.background_media || [];
@@ -98,7 +106,7 @@ export const AppData = React.memo(() => {
         return media[i].url;
       }
     }
-    return '';
+    return "";
   }, [elements?.virtual_background?.background_media]);
 
   useEffect(() => {
@@ -108,7 +116,7 @@ export const AppData = React.memo(() => {
     });
     // @ts-ignore
     hmsActions.setFrameworkInfo({
-      type: 'react-web',
+      type: "react-web",
       isPrebuilt: true,
       version: React.version,
     });
@@ -131,9 +139,10 @@ export const AppData = React.memo(() => {
       {
         [UI_SETTINGS.maxTileCount]: isMobile
           ? DEFAULT_TILES_IN_VIEW.MWEB
-          : Number(elements?.video_tile_layout?.grid?.tiles_in_view) || DEFAULT_TILES_IN_VIEW.DESKTOP,
+          : Number(elements?.video_tile_layout?.grid?.tiles_in_view) ||
+            DEFAULT_TILES_IN_VIEW.DESKTOP,
       },
-      true,
+      true
     );
   }, [hmsActions, isMobile, elements?.video_tile_layout?.grid?.tiles_in_view]);
 
@@ -141,7 +150,11 @@ export const AppData = React.memo(() => {
     if (!preferences.subscribedNotifications) {
       return;
     }
-    hmsActions.setAppData(APP_DATA.subscribedNotifications, preferences.subscribedNotifications, true);
+    hmsActions.setAppData(
+      APP_DATA.subscribedNotifications,
+      preferences.subscribedNotifications,
+      true
+    );
   }, [preferences.subscribedNotifications, hmsActions]);
 
   useEffect(() => {
@@ -159,13 +172,18 @@ export const AppData = React.memo(() => {
  * reset hlsStarted, rtmpStarted values when streaming starts
  */
 const ResetStreamingStart = () => {
-  const { isHLSRunning, isRTMPRunning, isBrowserRecordingOn } = useRecordingStreaming();
+  const { isHLSRunning, isRTMPRunning, isBrowserRecordingOn } =
+    useRecordingStreaming();
   const hlsError = useHMSStore(selectHLSState).error;
   const rtmpError = useHMSStore(selectRTMPState).error;
   const roomState = useHMSStore(selectRoomState);
   const [hlsStarted, setHLSStarted] = useSetAppDataByKey(APP_DATA.hlsStarted);
-  const [recordingStarted, setRecordingStarted] = useSetAppDataByKey(APP_DATA.recordingStarted);
-  const [rtmpStarted, setRTMPStarted] = useSetAppDataByKey(APP_DATA.rtmpStarted);
+  const [recordingStarted, setRecordingStarted] = useSetAppDataByKey(
+    APP_DATA.recordingStarted
+  );
+  const [rtmpStarted, setRTMPStarted] = useSetAppDataByKey(
+    APP_DATA.rtmpStarted
+  );
   const toggleStreaming = useSidepaneToggle(SIDE_PANE_OPTIONS.STREAMING);
   const isStreamingOpen = useIsSidepaneTypeOpen(SIDE_PANE_OPTIONS.STREAMING);
 
@@ -193,7 +211,14 @@ const ResetStreamingStart = () => {
         }
       }
     }
-  }, [isHLSRunning, hlsStarted, setHLSStarted, hlsError, isStreamingOpen, toggleStreaming]);
+  }, [
+    isHLSRunning,
+    hlsStarted,
+    setHLSStarted,
+    hlsError,
+    isStreamingOpen,
+    toggleStreaming,
+  ]);
   useEffect(() => {
     if (isRTMPRunning || rtmpError || isBrowserRecordingOn) {
       if (rtmpStarted) {
@@ -203,6 +228,14 @@ const ResetStreamingStart = () => {
         }
       }
     }
-  }, [isRTMPRunning, setRTMPStarted, rtmpStarted, rtmpError, isBrowserRecordingOn, isStreamingOpen, toggleStreaming]);
+  }, [
+    isRTMPRunning,
+    setRTMPStarted,
+    rtmpStarted,
+    rtmpError,
+    isBrowserRecordingOn,
+    isStreamingOpen,
+    toggleStreaming,
+  ]);
   return null;
 };

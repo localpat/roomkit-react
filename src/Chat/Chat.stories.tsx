@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { selectHMSMessages, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import ChatDocs from './Chat.mdx';
+import React, { useState } from "react";
+import {
+  selectHMSMessages,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import ChatDocs from "./Chat.mdx";
 
 const ChatStories = {
-  title: 'Chat/Broadcast Message',
+  title: "Chat/Broadcast Message",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   parameters: {
     docs: {
@@ -17,19 +21,23 @@ export default ChatStories;
 const ChatExample = () => {
   const chats = useHMSStore(selectHMSMessages);
   const actions = useHMSActions();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     actions.sendBroadcastMessage(input);
-    setInput('');
+    setInput("");
   };
   return (
     <div>
-      {chats.map(c => (
+      {chats.map((c) => (
         <div>{c.message}</div>
       ))}
       <form onSubmit={sendMessage}>
-        <input value={input} onChange={e => setInput(e.target.value)} type="text" />
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
+        />
         <button type="submit">Send</button>
       </form>
     </div>

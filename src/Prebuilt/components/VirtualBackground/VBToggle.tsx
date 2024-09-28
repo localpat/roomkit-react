@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 // eslint-disable-next-line
-import { HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background/hmsvbplugin';
+import { HMSVirtualBackgroundTypes } from "@100mslive/hms-virtual-background/hmsvbplugin";
 import {
   selectAppData,
   selectIsEffectsEnabled,
@@ -9,15 +9,18 @@ import {
   useAVToggle,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { VirtualBackgroundIcon } from '@100mslive/react-icons';
-import { Loading } from '../../../Loading';
-import { Tooltip } from '../../../Tooltip';
-import IconButton from '../../IconButton';
-import { VBHandler } from './VBHandler';
+} from "@100mslive/react-sdk";
+import { VirtualBackgroundIcon } from "@100mslive/react-icons";
+import { Loading } from "../../../Loading";
+import { Tooltip } from "../../../Tooltip";
+import IconButton from "../../IconButton";
+import { VBHandler } from "./VBHandler";
 // @ts-ignore
-import { useIsSidepaneTypeOpen, useSidepaneToggle } from '../AppData/useSidepane';
-import { APP_DATA, isSafari, SIDE_PANE_OPTIONS } from '../../common/constants';
+import {
+  useIsSidepaneTypeOpen,
+  useSidepaneToggle,
+} from "../AppData/useSidepane";
+import { APP_DATA, isSafari, SIDE_PANE_OPTIONS } from "../../common/constants";
 
 export const VBToggle = () => {
   const toggleVB = useSidepaneToggle(SIDE_PANE_OPTIONS.VB);
@@ -32,7 +35,10 @@ export const VBToggle = () => {
   useEffect(() => {
     if (!toggleVideo) {
       VBHandler?.reset();
-      hmsActions.setAppData(APP_DATA.background, HMSVirtualBackgroundTypes.NONE);
+      hmsActions.setAppData(
+        APP_DATA.background,
+        HMSVirtualBackgroundTypes.NONE
+      );
     }
   }, [hmsActions, toggleVideo]);
 
@@ -41,8 +47,16 @@ export const VBToggle = () => {
   }
 
   return (
-    <Tooltip side="top" disabled={isVBOpen} title="Configure Virtual Background">
-      <IconButton active={!isVBOpen} onClick={toggleVB} data-testid="virtual_bg_btn">
+    <Tooltip
+      side="top"
+      disabled={isVBOpen}
+      title="Configure Virtual Background"
+    >
+      <IconButton
+        active={!isVBOpen}
+        onClick={toggleVB}
+        data-testid="virtual_bg_btn"
+      >
         {loadingEffects ? <Loading size={18} /> : <VirtualBackgroundIcon />}
       </IconButton>
     </Tooltip>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 /**
  * shows a button which when clicked shows some videos in PIP, clicking
  * again turns it off.

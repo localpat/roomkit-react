@@ -1,38 +1,46 @@
-import React, { useRef, useState } from 'react';
-import { useFullscreen, useMedia } from 'react-use';
-import screenfull from 'screenfull';
+import React, { useRef, useState } from "react";
+import { useFullscreen, useMedia } from "react-use";
+import screenfull from "screenfull";
 import {
   selectLocalPeerID,
   selectPeerByID,
   selectScreenShareAudioByPeerID,
   selectScreenShareByPeerID,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { ExpandIcon, ShrinkIcon } from '@100mslive/react-icons';
-import TileMenu from './TileMenu/TileMenu';
-import { Box } from '../../Layout';
-import { VideoTileStats } from '../../Stats';
-import { config as cssConfig, useTheme } from '../../Theme';
-import { Video } from '../../Video';
-import { StyledVideoTile } from '../../VideoTile';
-import { LayoutModeSelector } from './LayoutModeSelector';
+} from "@100mslive/react-sdk";
+import { ExpandIcon, ShrinkIcon } from "@100mslive/react-icons";
+import TileMenu from "./TileMenu/TileMenu";
+import { Box } from "../../Layout";
+import { VideoTileStats } from "../../Stats";
+import { config as cssConfig, useTheme } from "../../Theme";
+import { Video } from "../../Video";
+import { StyledVideoTile } from "../../VideoTile";
+import { LayoutModeSelector } from "./LayoutModeSelector";
 // @ts-ignore: No implicit Any
-import { getVideoTileLabel } from './peerTileUtils';
-import { ScreenshareDisplay } from './ScreenshareDisplay';
+import { getVideoTileLabel } from "./peerTileUtils";
+import { ScreenshareDisplay } from "./ScreenshareDisplay";
 // @ts-ignore: No implicit Any
-import { useUISettings } from './AppData/useUISettings';
-import { UI_SETTINGS } from '../common/constants';
+import { useUISettings } from "./AppData/useUISettings";
+import { UI_SETTINGS } from "../common/constants";
 
 const labelStyles = {
-  position: 'unset',
-  width: '100%',
-  textAlign: 'center',
-  c: '$on_surface_high',
-  transform: 'none',
+  position: "unset",
+  width: "100%",
+  textAlign: "center",
+  c: "$on_surface_high",
+  transform: "none",
   flexShrink: 0,
 };
 
-const Tile = ({ peerId, width = '100%', height = '100%' }: { peerId: string; width?: string; height?: string }) => {
+const Tile = ({
+  peerId,
+  width = "100%",
+  height = "100%",
+}: {
+  peerId: string;
+  width?: string;
+  height?: string;
+}) => {
   const isLocal = useHMSStore(selectLocalPeerID) === peerId;
   const track = useHMSStore(selectScreenShareByPeerID(peerId));
   const { theme } = useTheme();
@@ -51,7 +59,11 @@ const Tile = ({ peerId, width = '100%', height = '100%' }: { peerId: string; wid
   const isFullScreenSupported = screenfull.isEnabled;
   const audioTrack = useHMSStore(selectScreenShareAudioByPeerID(peer?.id));
 
-  if (isLocal && track?.displaySurface && !['browser', 'window', 'application'].includes(track.displaySurface)) {
+  if (
+    isLocal &&
+    track?.displaySurface &&
+    !["browser", "window", "application"].includes(track.displaySurface)
+  ) {
     return <ScreenshareDisplay />;
   }
 
@@ -78,14 +90,19 @@ const Tile = ({ peerId, width = '100%', height = '100%' }: { peerId: string; wid
       <StyledVideoTile.Container
         transparentBg
         ref={fullscreenRef}
-        css={{ flexDirection: 'column', gap: '$2' }}
+        css={{ flexDirection: "column", gap: "$2" }}
         onMouseEnter={() => setIsMouseHovered(true)}
         onMouseLeave={() => {
           setIsMouseHovered(false);
         }}
       >
         {showStatsOnTiles ? (
-          <VideoTileStats audioTrackID={audioTrack?.id} videoTrackID={track?.id} peerID={peerId} isLocal={isLocal} />
+          <VideoTileStats
+            audioTrackID={audioTrack?.id}
+            videoTrackID={track?.id}
+            peerID={peerId}
+            isLocal={isLocal}
+          />
         ) : null}
         {isFullScreenSupported && isMouseHovered ? (
           <StyledVideoTile.FullScreenButton
@@ -98,11 +115,11 @@ const Tile = ({ peerId, width = '100%', height = '100%' }: { peerId: string; wid
         {!isMobile && isMouseHovered && !isFullscreen && (
           <Box
             css={{
-              position: 'absolute',
-              top: '$2',
-              r: '$1',
-              h: '$14',
-              right: isFullScreenSupported ? '$17' : '$2',
+              position: "absolute",
+              top: "$2",
+              r: "$1",
+              h: "$14",
+              right: isFullScreenSupported ? "$17" : "$2",
               zIndex: 5,
               bg: `${theme.colors.background_dim.value}A3`,
             }}
@@ -112,7 +129,13 @@ const Tile = ({ peerId, width = '100%', height = '100%' }: { peerId: string; wid
         )}
 
         {track ? (
-          <Video screenShare={true} mirror={false} attach={!isAudioOnly} trackId={track.id} css={{ minHeight: 0 }} />
+          <Video
+            screenShare={true}
+            mirror={false}
+            attach={!isAudioOnly}
+            trackId={track.id}
+            css={{ minHeight: 0 }}
+          />
         ) : null}
         <StyledVideoTile.Info css={labelStyles}>{label}</StyledVideoTile.Info>
         {isMouseHovered && !peer.isLocal ? (

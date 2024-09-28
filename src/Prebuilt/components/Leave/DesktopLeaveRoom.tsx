@@ -1,17 +1,22 @@
-import React, { Fragment, useState } from 'react';
-import { ConferencingScreen } from '@100mslive/types-prebuilt';
-import { selectIsConnectedToRoom, selectPermissions, useHMSStore, useRecordingStreaming } from '@100mslive/react-sdk';
-import { ExitIcon, StopIcon, VerticalMenuIcon } from '@100mslive/react-icons';
-import { Dropdown } from '../../../Dropdown';
-import { Box, Flex } from '../../../Layout';
-import { Dialog } from '../../../Modal';
-import { Tooltip } from '../../../Tooltip';
-import { EndSessionContent } from './EndSessionContent';
-import { LeaveIconButton, MenuTriggerButton } from './LeaveAtoms';
-import { LeaveCard } from './LeaveCard';
-import { LeaveSessionContent } from './LeaveSessionContent';
+import React, { Fragment, useState } from "react";
+import { ConferencingScreen } from "@100mslive/types-prebuilt";
+import {
+  selectIsConnectedToRoom,
+  selectPermissions,
+  useHMSStore,
+  useRecordingStreaming,
+} from "@100mslive/react-sdk";
+import { ExitIcon, StopIcon, VerticalMenuIcon } from "@100mslive/react-icons";
+import { Dropdown } from "../../../Dropdown";
+import { Box, Flex } from "../../../Layout";
+import { Dialog } from "../../../Modal";
+import { Tooltip } from "../../../Tooltip";
+import { EndSessionContent } from "./EndSessionContent";
+import { LeaveIconButton, MenuTriggerButton } from "./LeaveAtoms";
+import { LeaveCard } from "./LeaveCard";
+import { LeaveSessionContent } from "./LeaveSessionContent";
 // @ts-ignore: No implicit Any
-import { useDropdownList } from '../hooks/useDropdownList';
+import { useDropdownList } from "../hooks/useDropdownList";
 
 export const DesktopLeaveRoom = ({
   leaveRoom,
@@ -30,10 +35,17 @@ export const DesktopLeaveRoom = ({
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const permissions = useHMSStore(selectPermissions);
   const { isStreamingOn } = useRecordingStreaming();
-  const showStream = screenType !== 'hls_live_streaming' && isStreamingOn && permissions?.hlsStreaming;
-  const showLeaveOptions = (permissions?.hlsStreaming && isStreamingOn) || permissions?.endRoom;
+  const showStream =
+    screenType !== "hls_live_streaming" &&
+    isStreamingOn &&
+    permissions?.hlsStreaming;
+  const showLeaveOptions =
+    (permissions?.hlsStreaming && isStreamingOn) || permissions?.endRoom;
 
-  useDropdownList({ open: open || showEndStreamAlert || showLeaveRoomAlert, name: 'LeaveRoom' });
+  useDropdownList({
+    open: open || showEndStreamAlert || showLeaveRoomAlert,
+    name: "LeaveRoom",
+  });
 
   if (!permissions || !isConnected) {
     return null;
@@ -54,7 +66,7 @@ export const DesktopLeaveRoom = ({
           >
             <Tooltip title="Leave Room">
               <Box>
-                <ExitIcon style={{ transform: 'rotate(180deg)' }} />
+                <ExitIcon style={{ transform: "rotate(180deg)" }} />
               </Box>
             </Tooltip>
           </LeaveIconButton>
@@ -63,7 +75,7 @@ export const DesktopLeaveRoom = ({
               asChild
               css={{
                 '&[data-state="open"]': {
-                  bg: '$alert_error_dim',
+                  bg: "$alert_error_dim",
                 },
               }}
             >
@@ -72,42 +84,58 @@ export const DesktopLeaveRoom = ({
               </MenuTriggerButton>
             </Dropdown.Trigger>
             <Dropdown.Portal container={container}>
-              <Dropdown.Content css={{ p: 0, w: '$100' }} alignOffset={-50} sideOffset={10}>
+              <Dropdown.Content
+                css={{ p: 0, w: "$100" }}
+                alignOffset={-50}
+                sideOffset={10}
+              >
                 <Dropdown.Item
                   css={{
-                    bg: '$surface_dim',
-                    color: '$on_surface_medium',
-                    '&:hover': { bg: '$surface_default', color: '$on_surface_high' },
-                    p: '0',
+                    bg: "$surface_dim",
+                    color: "$on_surface_medium",
+                    "&:hover": {
+                      bg: "$surface_default",
+                      color: "$on_surface_high",
+                    },
+                    p: "0",
                   }}
                   data-testid="just_leave_btn"
                 >
                   <LeaveCard
-                    title={showStream ? 'Leave Stream' : 'Leave Session'}
+                    title={showStream ? "Leave Stream" : "Leave Session"}
                     subtitle={`Others will continue after you leave. You can join the ${
-                      showStream ? 'stream' : 'session'
+                      showStream ? "stream" : "session"
                     } again.`}
                     bg=""
                     titleColor="$on_surface_high"
-                    icon={<ExitIcon height={24} width={24} style={{ transform: 'rotate(180deg)' }} />}
+                    icon={
+                      <ExitIcon
+                        height={24}
+                        width={24}
+                        style={{ transform: "rotate(180deg)" }}
+                      />
+                    }
                     onClick={async () => await leaveRoom()}
-                    css={{ p: '$8 $4' }}
+                    css={{ p: "$8 $4" }}
                   />
                 </Dropdown.Item>
 
                 <Dropdown.Item
                   css={{
-                    bg: '$alert_error_dim',
-                    color: '$alert_error_bright',
-                    '&:hover': { bg: '$alert_error_dim', color: '$alert_error_brighter' },
-                    p: '0',
+                    bg: "$alert_error_dim",
+                    color: "$alert_error_bright",
+                    "&:hover": {
+                      bg: "$alert_error_dim",
+                      color: "$alert_error_brighter",
+                    },
+                    p: "0",
                   }}
                   data-testid="end_room_btn"
                 >
                   <LeaveCard
-                    title={showStream ? 'End Stream' : 'End Session'}
+                    title={showStream ? "End Stream" : "End Session"}
                     subtitle={`The ${
-                      showStream ? 'stream' : 'session'
+                      showStream ? "stream" : "session"
                     } will end for everyone. You can't undo this action.`}
                     bg=""
                     titleColor="$alert_error_brighter"
@@ -116,7 +144,7 @@ export const DesktopLeaveRoom = ({
                       setOpen(false);
                       setShowEndStreamAlert(true);
                     }}
-                    css={{ p: '$8 $4' }}
+                    css={{ p: "$8 $4" }}
                   />
                 </Dropdown.Item>
               </Dropdown.Content>
@@ -133,7 +161,7 @@ export const DesktopLeaveRoom = ({
         >
           <Tooltip title="Leave Room">
             <Box>
-              <ExitIcon style={{ transform: 'rotate(180deg)' }} />
+              <ExitIcon style={{ transform: "rotate(180deg)" }} />
             </Box>
           </Tooltip>
         </LeaveIconButton>
@@ -142,10 +170,14 @@ export const DesktopLeaveRoom = ({
       <Dialog.Root open={showEndStreamAlert} modal={false}>
         <Dialog.Portal>
           <Dialog.Overlay />
-          <Dialog.Content css={{ w: 'min(420px, 90%)', p: '$8', bg: '$surface_dim' }}>
+          <Dialog.Content
+            css={{ w: "min(420px, 90%)", p: "$8", bg: "$surface_dim" }}
+          >
             <EndSessionContent
               setShowEndStreamAlert={setShowEndStreamAlert}
-              leaveRoom={isStreamingOn ? () => leaveRoom({ endStream: true }) : endRoom}
+              leaveRoom={
+                isStreamingOn ? () => leaveRoom({ endStream: true }) : endRoom
+              }
               isStreamingOn={isStreamingOn}
               isModal
             />
@@ -156,8 +188,14 @@ export const DesktopLeaveRoom = ({
       <Dialog.Root open={showLeaveRoomAlert} modal={false}>
         <Dialog.Portal>
           <Dialog.Overlay />
-          <Dialog.Content css={{ w: 'min(420px, 90%)', p: '$8', bg: '$surface_dim' }}>
-            <LeaveSessionContent setShowLeaveRoomAlert={setShowLeaveRoomAlert} leaveRoom={leaveRoom} isModal />
+          <Dialog.Content
+            css={{ w: "min(420px, 90%)", p: "$8", bg: "$surface_dim" }}
+          >
+            <LeaveSessionContent
+              setShowLeaveRoomAlert={setShowLeaveRoomAlert}
+              leaveRoom={leaveRoom}
+              isModal
+            />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

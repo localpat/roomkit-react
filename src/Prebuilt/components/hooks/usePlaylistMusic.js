@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import {
   selectAudioPlaylist,
   selectAudioPlaylistTrackByPeerID,
   selectPeerSharingAudioPlaylist,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 
 export const usePlaylistMusic = () => {
   const peer = useHMSStore(selectPeerSharingAudioPlaylist);
@@ -14,10 +14,10 @@ export const usePlaylistMusic = () => {
   const hmsActions = useHMSActions();
 
   const play = useCallback(
-    async selectedId => {
+    async (selectedId) => {
       await hmsActions.audioPlaylist.play(selectedId);
     },
-    [hmsActions],
+    [hmsActions]
   );
 
   const pause = useCallback(() => {
@@ -25,10 +25,10 @@ export const usePlaylistMusic = () => {
   }, [hmsActions]);
 
   const setVolume = useCallback(
-    value => {
+    (value) => {
       hmsActions.setVolume(value, track?.id);
     },
-    [hmsActions, track],
+    [hmsActions, track]
   );
 
   return { selection, peer, track, play, pause, setVolume };

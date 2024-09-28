@@ -62,7 +62,7 @@ export declare const SIDE_PANE_OPTIONS: {
     VB: string;
     ROOM_DETAILS: string;
 };
-export declare type SidePaneOption = (typeof SIDE_PANE_OPTIONS)[keyof typeof SIDE_PANE_OPTIONS];
+export type SidePaneOption = (typeof SIDE_PANE_OPTIONS)[keyof typeof SIDE_PANE_OPTIONS];
 export declare const SHEET_OPTIONS: {
     ROOM_DETAILS: string;
 };
@@ -109,8 +109,8 @@ export declare enum INTERACTION_TYPE {
     QUIZ = "Quiz"
 }
 export declare enum QUESTION_TYPE_TITLE {
-    'single-choice' = "Single Choice",
-    'multiple-choice' = "Multiple Choice"
+    "single-choice" = "Single Choice",
+    "multiple-choice" = "Multiple Choice"
 }
 export declare enum QUESTION_TYPE {
     SINGLE_CHOICE = "single-choice",

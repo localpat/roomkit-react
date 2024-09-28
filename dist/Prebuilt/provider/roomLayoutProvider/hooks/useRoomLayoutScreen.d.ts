@@ -1,5 +1,5 @@
-import { ConferencingScreen, DefaultConferencingScreen_Elements, DefaultPreviewScreen_Elements, HLSLiveStreamingScreen_Elements, Screens } from '@100mslive/types-prebuilt';
-export declare type useRoomLayoutScreenProps = {
+import { ConferencingScreen, DefaultConferencingScreen_Elements, DefaultPreviewScreen_Elements, HLSLiveStreamingScreen_Elements, Screens } from "@100mslive/types-prebuilt";
+export type useRoomLayoutScreenProps = {
     screen: keyof Screens;
 };
 export declare function useRoomLayoutPreviewScreen(): {
@@ -7,7 +7,7 @@ export declare function useRoomLayoutPreviewScreen(): {
     elements: DefaultPreviewScreen_Elements | undefined;
     screenType: "default" | undefined;
 };
-export declare type ConferencingScreenElements = DefaultConferencingScreen_Elements & HLSLiveStreamingScreen_Elements;
+export type ConferencingScreenElements = DefaultConferencingScreen_Elements & HLSLiveStreamingScreen_Elements;
 export declare function useRoomLayoutConferencingScreen(): {
     hideSections: string[];
     elements: ConferencingScreenElements;

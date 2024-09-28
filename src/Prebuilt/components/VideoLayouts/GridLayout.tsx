@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { GridVideoTileLayout } from '@100mslive/types-prebuilt/elements/video_tile_layout';
+import React, { useEffect, useMemo, useState } from "react";
+import { GridVideoTileLayout } from "@100mslive/types-prebuilt/elements/video_tile_layout";
 import {
   selectLocalPeerID,
   selectLocalPeerRoleName,
@@ -8,23 +8,23 @@ import {
   selectWhiteboard,
   useHMSStore,
   useHMSVanillaStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 // @ts-ignore: No implicit Any
-import { EqualProminence } from './EqualProminence';
-import { RoleProminence } from './RoleProminence';
-import { ScreenshareLayout } from './ScreenshareLayout';
-import { WhiteboardLayout } from './WhiteboardLayout';
+import { EqualProminence } from "./EqualProminence";
+import { RoleProminence } from "./RoleProminence";
+import { ScreenshareLayout } from "./ScreenshareLayout";
+import { WhiteboardLayout } from "./WhiteboardLayout";
 // @ts-ignore: No implicit Any
-import { usePinnedTrack, useSetAppDataByKey } from '../AppData/useUISettings';
-import { VideoTileContext } from '../hooks/useVideoTileLayout';
-import PeersSorter from '../../common/PeersSorter';
-import { APP_DATA } from '../../common/constants';
+import { usePinnedTrack, useSetAppDataByKey } from "../AppData/useUISettings";
+import { VideoTileContext } from "../hooks/useVideoTileLayout";
+import PeersSorter from "../../common/PeersSorter";
+import { APP_DATA } from "../../common/constants";
 
 export type TileCustomisationProps = {
   hide_participant_name_on_tile: boolean;
   rounded_video_tile: boolean;
   hide_audio_mute_on_tile: boolean;
-  video_object_fit: 'contain' | 'cover';
+  video_object_fit: "contain" | "cover";
   edge_to_edge: boolean;
   hide_metadata_on_tile: boolean;
 };
@@ -38,7 +38,7 @@ export const GridLayout = ({
   hide_participant_name_on_tile = false,
   rounded_video_tile = true,
   hide_audio_mute_on_tile = false,
-  video_object_fit = 'contain',
+  video_object_fit = "contain",
   edge_to_edge = false,
   hide_metadata_on_tile = false,
 }: GridLayoutProps) => {
@@ -49,25 +49,37 @@ export const GridLayout = ({
   const localPeerRole = useHMSStore(selectLocalPeerRoleName);
   const localPeerID = useHMSStore(selectLocalPeerID);
 
-  const [activeScreensharePeerId] = useSetAppDataByKey(APP_DATA.activeScreensharePeerId);
+  const [activeScreensharePeerId] = useSetAppDataByKey(
+    APP_DATA.activeScreensharePeerId
+  );
   const isRoleProminence =
     (prominentRoles.length &&
       peers.some(
-        peer => peer.roleName && prominentRoles.includes(peer.roleName) && (peer.videoTrack || peer.audioTrack),
+        (peer) =>
+          peer.roleName &&
+          prominentRoles.includes(peer.roleName) &&
+          (peer.videoTrack || peer.audioTrack)
       )) ||
     pinnedTrack;
   const updatedPeers = useMemo(() => {
     // remove screenshare/whiteboard peer from active speaker sorting
     if (activeScreensharePeerId || whiteboard?.open) {
-      return peers.filter(peer => peer.id !== activeScreensharePeerId || peer.customerUserId !== whiteboard?.owner);
+      return peers.filter(
+        (peer) =>
+          peer.id !== activeScreensharePeerId ||
+          peer.customerUserId !== whiteboard?.owner
+      );
     }
     if (isInsetEnabled) {
       const isLocalPeerPinned = localPeerID === pinnedTrack?.peerId;
       // if localPeer role is prominent role, it shows up in the center or local peer is pinned, so allow it in active speaker sorting
-      if ((localPeerRole && prominentRoles.includes(localPeerRole)) || isLocalPeerPinned) {
+      if (
+        (localPeerRole && prominentRoles.includes(localPeerRole)) ||
+        isLocalPeerPinned
+      ) {
         return peers;
       } else {
-        return peers.filter(peer => !peer.isLocal);
+        return peers.filter((peer) => !peer.isLocal);
       }
     }
     return peers;
@@ -83,7 +95,10 @@ export const GridLayout = ({
   ]);
   const vanillaStore = useHMSVanillaStore();
   const [sortedPeers, setSortedPeers] = useState(updatedPeers);
-  const peersSorter = useMemo(() => new PeersSorter(vanillaStore), [vanillaStore]);
+  const peersSorter = useMemo(
+    () => new PeersSorter(vanillaStore),
+    [vanillaStore]
+  );
   const [pageSize, setPageSize] = useState(0);
   const [mainPage, setMainPage] = useState(0);
   const tileLayout = {

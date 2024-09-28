@@ -1,5 +1,5 @@
-import { ToastConfig } from './ToastConfig';
-import { ToastManager } from './ToastManager';
+import { ToastConfig } from "./ToastConfig";
+import { ToastManager } from "./ToastManager";
 
 export const ToastBatcher = {
   toastsType: new Map(),
@@ -49,12 +49,12 @@ export const ToastBatcher = {
         this.toastCache = {};
       }
     } catch (err) {
-      console.debug('Notifications', err);
+      console.debug("Notifications", err);
     }
   },
   syncUItoast(toastsDisplaying) {
     for (const [toastType, toastInfo] of this.toastsType.entries()) {
-      if (!toastsDisplaying.find(toast => toast.id === toastInfo.id)) {
+      if (!toastsDisplaying.find((toast) => toast.id === toastInfo.id)) {
         this.toastsType.delete(toastType);
       }
     }

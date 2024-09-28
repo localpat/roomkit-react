@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   HMSChangeTrackStateRequest,
   HMSNotificationTypes,
   useHMSActions,
   useHMSNotifications,
-} from '@100mslive/react-sdk';
-import { MicOnIcon } from '@100mslive/react-icons';
+} from "@100mslive/react-sdk";
+import { MicOnIcon } from "@100mslive/react-icons";
 // @ts-ignore: No implicit Any
-import { RequestDialog } from '../../primitives/DialogContent';
+import { RequestDialog } from "../../primitives/DialogContent";
 
 export const TrackUnmuteModal = () => {
   const hmsActions = useHMSActions();
@@ -16,7 +16,8 @@ export const TrackUnmuteModal = () => {
     HMSNotificationTypes.ROOM_ENDED,
     HMSNotificationTypes.REMOVED_FROM_ROOM,
   ]);
-  const [muteNotification, setMuteNotification] = useState<HMSChangeTrackStateRequest | null>(null);
+  const [muteNotification, setMuteNotification] =
+    useState<HMSChangeTrackStateRequest | null>(null);
 
   useEffect(() => {
     switch (notification?.type) {

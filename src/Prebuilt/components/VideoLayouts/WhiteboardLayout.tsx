@@ -1,19 +1,24 @@
-import React, { useEffect, useMemo } from 'react';
-import { useMedia } from 'react-use';
-import { Whiteboard } from '@100mslive/hms-whiteboard';
-import { selectPeerByCondition, selectWhiteboard, useHMSStore, useWhiteboard } from '@100mslive/react-sdk';
-import { Box } from '../../../Layout';
-import { config as cssConfig } from '../../../Theme';
-import { InsetTile } from '../InsetTile';
-import { SecondaryTiles } from '../SecondaryTiles';
-import { LayoutMode } from '../Settings/LayoutSettings';
-import { LayoutProps } from './interface';
-import { ProminenceLayout } from './ProminenceLayout';
+import React, { useEffect, useMemo } from "react";
+import { useMedia } from "react-use";
+import { Whiteboard } from "@100mslive/hms-whiteboard";
+import {
+  selectPeerByCondition,
+  selectWhiteboard,
+  useHMSStore,
+  useWhiteboard,
+} from "@100mslive/react-sdk";
+import { Box } from "../../../Layout";
+import { config as cssConfig } from "../../../Theme";
+import { InsetTile } from "../InsetTile";
+import { SecondaryTiles } from "../SecondaryTiles";
+import { LayoutMode } from "../Settings/LayoutSettings";
+import { LayoutProps } from "./interface";
+import { ProminenceLayout } from "./ProminenceLayout";
 // @ts-ignore: No implicit Any
-import { useSetUiSettings } from '../AppData/useUISettings';
-import { UI_SETTINGS } from '../../common/constants';
+import { useSetUiSettings } from "../AppData/useUISettings";
+import { UI_SETTINGS } from "../../common/constants";
 // eslint-disable-next-line import/no-unresolved
-import '@100mslive/hms-whiteboard/index.css';
+import "@100mslive/hms-whiteboard/index.css";
 
 const WhiteboardEmbed = () => {
   const isMobile = useMedia(cssConfig.media.md);
@@ -26,25 +31,36 @@ const WhiteboardEmbed = () => {
   return (
     <Box
       css={{
-        mx: '$8',
-        flex: '3 1 0',
-        '@lg': {
-          flex: '2 1 0',
-          display: 'flex',
-          alignItems: 'center',
+        mx: "$8",
+        flex: "3 1 0",
+        "@lg": {
+          flex: "2 1 0",
+          display: "flex",
+          alignItems: "center",
         },
       }}
     >
-      <Box css={{ size: '100%' }}>
-        <Whiteboard token={token} endpoint={`https://${endpoint}`} zoomToContent={zoomToContent} />
+      <Box css={{ size: "100%" }}>
+        <Whiteboard
+          token={token}
+          endpoint={`https://${endpoint}`}
+          zoomToContent={zoomToContent}
+        />
       </Box>
     </Box>
   );
 };
 
-export const WhiteboardLayout = ({ peers, onPageChange, onPageSize, edgeToEdge }: LayoutProps) => {
+export const WhiteboardLayout = ({
+  peers,
+  onPageChange,
+  onPageSize,
+  edgeToEdge,
+}: LayoutProps) => {
   const whiteboard = useHMSStore(selectWhiteboard);
-  const whiteboardOwner = useHMSStore(selectPeerByCondition(peer => peer.customerUserId === whiteboard?.owner));
+  const whiteboardOwner = useHMSStore(
+    selectPeerByCondition((peer) => peer.customerUserId === whiteboard?.owner)
+  );
   const [layoutMode, setLayoutMode] = useSetUiSettings(UI_SETTINGS.layoutMode);
   const isMobile = useMedia(cssConfig.media.md);
   const hasSidebar = !isMobile && layoutMode === LayoutMode.SIDEBAR;
@@ -54,10 +70,13 @@ export const WhiteboardLayout = ({ peers, onPageChange, onPageSize, edgeToEdge }
     }
     if (isMobile || layoutMode === LayoutMode.SIDEBAR) {
       return whiteboardOwner
-        ? [whiteboardOwner, ...peers.filter(p => p.id !== whiteboardOwner?.id)] //keep active sharing peer as first tile
+        ? [
+            whiteboardOwner,
+            ...peers.filter((p) => p.id !== whiteboardOwner?.id),
+          ] //keep active sharing peer as first tile
         : peers;
     }
-    return peers.filter(p => p.id !== whiteboardOwner?.id);
+    return peers.filter((p) => p.id !== whiteboardOwner?.id);
   }, [whiteboardOwner, peers, isMobile, layoutMode]);
 
   useEffect(() => {
@@ -87,7 +106,9 @@ export const WhiteboardLayout = ({ peers, onPageChange, onPageSize, edgeToEdge }
         edgeToEdge={edgeToEdge}
         hasSidebar={hasSidebar}
       />
-      {layoutMode === LayoutMode.SPOTLIGHT && whiteboardOwner && <InsetTile peerId={whiteboardOwner?.id} />}
+      {layoutMode === LayoutMode.SPOTLIGHT && whiteboardOwner && (
+        <InsetTile peerId={whiteboardOwner?.id} />
+      )}
     </ProminenceLayout.Root>
   );
 };

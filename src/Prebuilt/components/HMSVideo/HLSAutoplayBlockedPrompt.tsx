@@ -1,10 +1,10 @@
-import React from 'react';
-import { useMedia } from 'react-use';
-import { VolumeTwoIcon } from '@100mslive/react-icons';
-import { Button, config, Dialog, IconButton, Text } from '../../..';
+import React from "react";
+import { useMedia } from "react-use";
+import { VolumeTwoIcon } from "@100mslive/react-icons";
+import { Button, config, Dialog, IconButton, Text } from "../../..";
 // @ts-ignore
-import { DialogContent, DialogRow } from '../../primitives/DialogContent';
-import { useIsLandscape } from '../../common/hooks';
+import { DialogContent, DialogRow } from "../../primitives/DialogContent";
+import { useIsLandscape } from "../../common/hooks";
 
 export function HLSAutoplayBlockedPrompt({
   open,
@@ -19,10 +19,10 @@ export function HLSAutoplayBlockedPrompt({
     return (
       <IconButton
         css={{
-          border: '1px solid white',
-          bg: 'white',
-          color: '#000',
-          r: '$2',
+          border: "1px solid white",
+          bg: "white",
+          color: "#000",
+          r: "$2",
         }}
         onClick={async () => await unblockAutoPlay()}
       >
@@ -30,9 +30,9 @@ export function HLSAutoplayBlockedPrompt({
         <Text
           variant="body1"
           css={{
-            fontWeight: '$semiBold',
-            px: '$2',
-            color: '#000',
+            fontWeight: "$semiBold",
+            px: "$2",
+            color: "#000",
           }}
         >
           Tap To Unmute
@@ -43,7 +43,7 @@ export function HLSAutoplayBlockedPrompt({
   return (
     <Dialog.Root
       open={open}
-      onOpenChange={async value => {
+      onOpenChange={async (value) => {
         if (!value) {
           await unblockAutoPlay();
         }
@@ -52,8 +52,8 @@ export function HLSAutoplayBlockedPrompt({
       <DialogContent title="Attention" closeable={false}>
         <DialogRow>
           <Text variant="md">
-            The browser wants us to get a confirmation for playing the HLS Stream. Please click "play stream" to
-            proceed.
+            The browser wants us to get a confirmation for playing the HLS
+            Stream. Please click "play stream" to proceed.
           </Text>
         </DialogRow>
         <DialogRow justify="end">

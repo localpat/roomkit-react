@@ -4,16 +4,18 @@ import {
   selectVideoPlaylist,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 
-export const usePlaylist = type => {
+export const usePlaylist = (type) => {
   const isAudioPlaylist = type === HMSPlaylistType.audio;
   const selector = isAudioPlaylist ? selectAudioPlaylist : selectVideoPlaylist;
   const active = useHMSStore(selector.selectedItem);
   const selection = useHMSStore(selector.selection);
   const playlist = useHMSStore(selector.list);
   const hmsActions = useHMSActions();
-  const playlistAction = isAudioPlaylist ? hmsActions.audioPlaylist : hmsActions.videoPlaylist;
+  const playlistAction = isAudioPlaylist
+    ? hmsActions.audioPlaylist
+    : hmsActions.videoPlaylist;
 
   return {
     active,

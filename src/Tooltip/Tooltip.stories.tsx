@@ -1,20 +1,20 @@
-import React from 'react';
-import { ComponentMeta } from '@storybook/react';
-import { Flex } from '../Layout';
-import { Text } from '../Text';
-import { alignTooltip, sideTooltip, Tooltip } from './Tooltip';
+import React from "react";
+import { ComponentMeta } from "@storybook/react";
+import { Flex } from "../Layout";
+import { Text } from "../Text";
+import { alignTooltip, sideTooltip, Tooltip } from "./Tooltip";
 
 export default {
-  title: 'UI Components/Tooltip',
+  title: "UI Components/Tooltip",
   argTypes: {
-    outlined: { control: 'boolean' },
-    side: { control: 'radio' },
-    align: { control: 'radio' },
+    outlined: { control: "boolean" },
+    side: { control: "radio" },
+    align: { control: "radio" },
   },
   args: {
     outlined: false,
-    side: 'bottom',
-    align: 'center',
+    side: "bottom",
+    align: "center",
   },
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
@@ -25,7 +25,7 @@ const TooltipStoryWithString = (
     outlined?: boolean | undefined;
     side?: sideTooltip;
     align?: alignTooltip;
-  } & { children?: React.ReactNode },
+  } & { children?: React.ReactNode }
 ) => {
   return (
     <Flex justify="center" align="center" css={{ w: 800, h: 200 }}>
@@ -39,7 +39,7 @@ const TooltipStoryWithString = (
 export const ExampleWithString = TooltipStoryWithString.bind({});
 
 const ExampleTitle = () => {
-  return <h3 style={{ color: '$on_primary_high' }}>This is title</h3>;
+  return <h3 style={{ color: "$on_primary_high" }}>This is title</h3>;
 };
 
 const TooltipStorywithReactNode = (
@@ -48,7 +48,7 @@ const TooltipStorywithReactNode = (
     outlined?: boolean | undefined;
     side?: sideTooltip;
     align?: alignTooltip;
-  } & { children?: React.ReactNode },
+  } & { children?: React.ReactNode }
 ) => {
   return (
     <Flex justify="center" align="center" css={{ w: 800, h: 200 }}>

@@ -1,9 +1,9 @@
-import React from 'react';
-import { HMSTrackID } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSTrackID } from "@100mslive/react-sdk";
 export declare const isSameTile: ({ trackId, videoTrackID, audioTrackID, }: {
     trackId: HMSTrackID;
-    videoTrackID?: string | undefined;
-    audioTrackID?: string | undefined;
+    videoTrackID?: string;
+    audioTrackID?: string;
 }) => boolean;
 export declare const TileMenuContent: ({ videoTrackID, audioTrackID, isLocal, isScreenshare, showSpotlight, showPinAction, peerID, canMinimise, closeSheetOnClick, openNameChangeModal, openRoleChangeModal, }: {
     videoTrackID: string;
@@ -13,8 +13,8 @@ export declare const TileMenuContent: ({ videoTrackID, audioTrackID, isLocal, is
     showSpotlight: boolean;
     showPinAction: boolean;
     peerID: string;
-    canMinimise?: boolean | undefined;
-    closeSheetOnClick?: (() => void) | undefined;
-    openNameChangeModal?: (() => void) | undefined;
-    openRoleChangeModal?: (() => void) | undefined;
+    canMinimise?: boolean;
+    closeSheetOnClick?: () => void;
+    openNameChangeModal?: () => void;
+    openRoleChangeModal?: () => void;
 }) => React.JSX.Element | null;

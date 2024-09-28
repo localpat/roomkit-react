@@ -1,4 +1,4 @@
-import { HMSPeer } from '@100mslive/react-sdk';
+import { HMSPeer } from "@100mslive/react-sdk";
 export declare const useGroupOnStageActions: ({ peers }: {
     peers: HMSPeer[];
 }) => {

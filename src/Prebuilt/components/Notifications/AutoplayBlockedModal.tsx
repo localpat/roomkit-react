@@ -1,15 +1,15 @@
-import React from 'react';
-import { useAutoplayError } from '@100mslive/react-sdk';
-import { Button, Dialog, Text } from '../../..';
+import React from "react";
+import { useAutoplayError } from "@100mslive/react-sdk";
+import { Button, Dialog, Text } from "../../..";
 // @ts-ignore: No implicit Any
-import { DialogContent, DialogRow } from '../../primitives/DialogContent';
+import { DialogContent, DialogRow } from "../../primitives/DialogContent";
 
 export function AutoplayBlockedModal() {
   const { error, resetError, unblockAudio } = useAutoplayError();
   return (
     <Dialog.Root
       open={!!error}
-      onOpenChange={value => {
+      onOpenChange={(value) => {
         if (!value) {
           unblockAudio();
         }
@@ -19,7 +19,8 @@ export function AutoplayBlockedModal() {
       <DialogContent title="Permission Error" closeable={false}>
         <DialogRow>
           <Text variant="md">
-            The browser wants us to get a confirmation for playing the Audio. Please allow audio to proceed.
+            The browser wants us to get a confirmation for playing the Audio.
+            Please allow audio to proceed.
           </Text>
         </DialogRow>
         <DialogRow justify="end">

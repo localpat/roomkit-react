@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSPollQuestion } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSPollQuestion } from "@100mslive/react-sdk";
 export declare const SavedQuestion: ({ question, index, length, convertToDraft, }: {
     question: HMSPollQuestion & {
         draftID: number;

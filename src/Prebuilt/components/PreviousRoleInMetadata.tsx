@@ -1,6 +1,9 @@
-import { useEffect } from 'react';
-import { selectLocalPeerRoleName, useHMSVanillaStore } from '@100mslive/react-sdk';
-import { useMyMetadata } from './hooks/useMetadata';
+import { useEffect } from "react";
+import {
+  selectLocalPeerRoleName,
+  useHMSVanillaStore,
+} from "@100mslive/react-sdk";
+import { useMyMetadata } from "./hooks/useMetadata";
 
 export const PreviousRoleInMetadata = () => {
   const vanillaStore = useHMSVanillaStore();
@@ -8,7 +11,7 @@ export const PreviousRoleInMetadata = () => {
 
   useEffect(() => {
     let previousRole = vanillaStore.getState(selectLocalPeerRoleName);
-    const unsubscribe = vanillaStore.subscribe(currentRole => {
+    const unsubscribe = vanillaStore.subscribe((currentRole) => {
       if (previousRole !== currentRole && currentRole) {
         updateMetaData({ prevRole: previousRole });
         previousRole = currentRole;

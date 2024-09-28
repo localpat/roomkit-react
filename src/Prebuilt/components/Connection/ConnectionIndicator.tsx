@@ -1,22 +1,27 @@
-import React from 'react';
-import { HMSPeerType, selectConnectionQualityByPeerID, selectPeerTypeByID, useHMSStore } from '@100mslive/react-sdk';
-import { PoorConnectivityIcon } from '@100mslive/react-icons';
-import { styled, Tooltip, useTheme } from '../../..';
+import React from "react";
+import {
+  HMSPeerType,
+  selectConnectionQualityByPeerID,
+  selectPeerTypeByID,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { PoorConnectivityIcon } from "@100mslive/react-icons";
+import { styled, Tooltip, useTheme } from "../../..";
 // @ts-ignore
-import { getColor, getTooltipText } from './connectionQualityUtils';
+import { getColor, getTooltipText } from "./connectionQualityUtils";
 
-const Wrapper = styled('span', {
-  width: '28px',
-  height: '28px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '$round',
+const Wrapper = styled("span", {
+  width: "28px",
+  height: "28px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "$round",
   variants: {
     isTile: {
       true: {
-        width: 'unset',
-        height: 'unset',
+        width: "unset",
+        height: "unset",
       },
     },
   },
@@ -31,17 +36,27 @@ export const ConnectionIndicator = ({
   isTile?: boolean;
   hideBg?: boolean;
 }) => {
-  const downlinkQuality = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkQuality;
+  const downlinkQuality = useHMSStore(
+    selectConnectionQualityByPeerID(peerId)
+  )?.downlinkQuality;
   const peerType = useHMSStore(selectPeerTypeByID(peerId));
   const { theme } = useTheme();
   const defaultColor = theme.colors.on_surface_low;
-  if (downlinkQuality === -1 || downlinkQuality === undefined || peerType === HMSPeerType.SIP) {
+  if (
+    downlinkQuality === -1 ||
+    downlinkQuality === undefined ||
+    peerType === HMSPeerType.SIP
+  ) {
     return null;
   }
   if (downlinkQuality === 0) {
     return (
       <Tooltip side="left" title={getTooltipText(downlinkQuality)}>
-        <Wrapper isTile={isTile} css={{ color: '#ED4C5A' }} data-testid="tile_network">
+        <Wrapper
+          isTile={isTile}
+          css={{ color: "#ED4C5A" }}
+          data-testid="tile_network"
+        >
           <PoorConnectivityIcon />
         </Wrapper>
       </Tooltip>
@@ -50,7 +65,11 @@ export const ConnectionIndicator = ({
   const size = isTile ? 12 : 16;
   return (
     <Tooltip side="left" title={getTooltipText(downlinkQuality)}>
-      <Wrapper isTile={isTile} data-testid="tile_network" css={{ backgroundColor: hideBg ? '' : '$surface_bright' }}>
+      <Wrapper
+        isTile={isTile}
+        data-testid="tile_network"
+        css={{ backgroundColor: hideBg ? "" : "$surface_bright" }}
+      >
         <svg
           width={size}
           height={size}
@@ -58,9 +77,9 @@ export const ConnectionIndicator = ({
           xmlns="http://www.w3.org/2000/svg"
           xmlSpace="preserve"
           style={{
-            fillRule: 'evenodd',
-            clipRule: 'evenodd',
-            strokeLinejoin: 'round',
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            strokeLinejoin: "round",
             strokeMiterlimit: 2,
           }}
         >

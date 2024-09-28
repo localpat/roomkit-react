@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { HMSPoll } from '@100mslive/react-sdk';
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { HMSPoll } from "@100mslive/react-sdk";
 // @ts-ignore
-import { QuestionCard } from './QuestionCard';
+import { QuestionCard } from "./QuestionCard";
 // @ts-ignore
-import { getIndexToShow } from '../../../common/utils';
+import { getIndexToShow } from "../../../common/utils";
 
 export const TimedView = ({
   poll,
@@ -14,8 +14,12 @@ export const TimedView = ({
   localPeerResponses?: Record<number, number | number[] | undefined>;
   updateSavedResponses: Dispatch<SetStateAction<Record<any, any>>>;
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(getIndexToShow(localPeerResponses));
-  const activeQuestion = poll.questions?.find(question => question.index === currentIndex);
+  const [currentIndex, setCurrentIndex] = useState(
+    getIndexToShow(localPeerResponses)
+  );
+  const activeQuestion = poll.questions?.find(
+    (question) => question.index === currentIndex
+  );
   const attemptedAll = (poll.questions?.length || 0) < currentIndex;
 
   // Handles increments so only one question is shown at a time in quiz
@@ -29,12 +33,12 @@ export const TimedView = ({
 
   return (
     <>
-      {poll.questions.map(question => {
+      {poll.questions.map((question) => {
         return attemptedAll || activeQuestion?.index === question.index ? (
           <QuestionCard
             key={question.index}
             pollID={poll.id}
-            isQuiz={poll.type === 'quiz'}
+            isQuiz={poll.type === "quiz"}
             startedBy={poll.startedBy}
             pollState={poll.state}
             index={question.index}

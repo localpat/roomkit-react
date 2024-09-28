@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useMedia } from 'react-use';
-import { selectLocalPeer, useHMSStore } from '@100mslive/react-sdk';
-import { config as cssConfig } from '../../../Theme';
-import { InsetTile } from '../InsetTile';
-import { Pagination } from '../Pagination';
-import { SecondaryTiles } from '../SecondaryTiles';
-import { Grid } from './Grid';
-import { LayoutProps } from './interface';
-import { ProminenceLayout } from './ProminenceLayout';
+import React, { useEffect, useState } from "react";
+import { useMedia } from "react-use";
+import { selectLocalPeer, useHMSStore } from "@100mslive/react-sdk";
+import { config as cssConfig } from "../../../Theme";
+import { InsetTile } from "../InsetTile";
+import { Pagination } from "../Pagination";
+import { SecondaryTiles } from "../SecondaryTiles";
+import { Grid } from "./Grid";
+import { LayoutProps } from "./interface";
+import { ProminenceLayout } from "./ProminenceLayout";
 // @ts-ignore: No implicit Any
-import { useUISettings } from '../AppData/useUISettings';
-import { useRoleProminencePeers } from '../hooks/useRoleProminencePeers';
-import { usePagesWithTiles, useTileLayout } from '../hooks/useTileLayout';
-import { UI_SETTINGS } from '../../common/constants';
+import { useUISettings } from "../AppData/useUISettings";
+import { useRoleProminencePeers } from "../hooks/useRoleProminencePeers";
+import { usePagesWithTiles, useTileLayout } from "../hooks/useTileLayout";
+import { UI_SETTINGS } from "../../common/constants";
 
 export function RoleProminence({
   isInsetEnabled = false,
@@ -22,7 +22,11 @@ export function RoleProminence({
   onPageSize,
   edgeToEdge,
 }: LayoutProps) {
-  const { prominentPeers, secondaryPeers } = useRoleProminencePeers(prominentRoles, peers, isInsetEnabled);
+  const { prominentPeers, secondaryPeers } = useRoleProminencePeers(
+    prominentRoles,
+    peers,
+    isInsetEnabled
+  );
   const localPeer = useHMSStore(selectLocalPeer);
   const isMobile = useMedia(cssConfig.media.md);
   let maxTileCount = useUISettings(UI_SETTINGS.maxTileCount);
@@ -52,15 +56,22 @@ export function RoleProminence({
       {!edgeToEdge && (
         <Pagination
           page={page}
-          onPageChange={page => {
+          onPageChange={(page) => {
             setPage(page);
             onPageChange?.(page);
           }}
           numPages={pagesWithTiles.length}
         />
       )}
-      <SecondaryTiles peers={secondaryPeers} isInsetEnabled={isInsetEnabled} edgeToEdge={edgeToEdge} />
-      {isInsetEnabled && localPeer && prominentPeers.length > 0 && !prominentPeers.includes(localPeer) && <InsetTile />}
+      <SecondaryTiles
+        peers={secondaryPeers}
+        isInsetEnabled={isInsetEnabled}
+        edgeToEdge={edgeToEdge}
+      />
+      {isInsetEnabled &&
+        localPeer &&
+        prominentPeers.length > 0 &&
+        !prominentPeers.includes(localPeer) && <InsetTile />}
     </ProminenceLayout.Root>
   );
 }

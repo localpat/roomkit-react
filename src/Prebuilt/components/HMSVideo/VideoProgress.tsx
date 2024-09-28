@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Box, Flex, Slider } from '../../..';
-import { useHMSPlayerContext } from './PlayerContext';
-import { getDuration, getPercentage } from './utils';
+import React, { useCallback, useEffect, useState } from "react";
+import { Box, Flex, Slider } from "../../..";
+import { useHMSPlayerContext } from "./PlayerContext";
+import { getDuration, getPercentage } from "./utils";
 
 export const VideoProgress = ({
   seekProgress,
@@ -20,10 +20,14 @@ export const VideoProgress = ({
       return;
     }
     const duration = getDuration(videoEl);
-    const videoProgress = Math.floor(getPercentage(videoEl.currentTime, duration));
+    const videoProgress = Math.floor(
+      getPercentage(videoEl.currentTime, duration)
+    );
     let bufferProgress = 0;
     if (videoEl.buffered.length > 0) {
-      bufferProgress = Math.floor(getPercentage(videoEl.buffered?.end(0), duration));
+      bufferProgress = Math.floor(
+        getPercentage(videoEl.buffered?.end(0), duration)
+      );
     }
     if (!isNaN(videoProgress)) {
       setVideoProgress(videoProgress);
@@ -43,9 +47,9 @@ export const VideoProgress = ({
       return;
     }
     setProgress();
-    videoEl.addEventListener('timeupdate', timeupdateHandler);
+    videoEl.addEventListener("timeupdate", timeupdateHandler);
     return function cleanup() {
-      videoEl?.removeEventListener('timeupdate', timeupdateHandler);
+      videoEl?.removeEventListener("timeupdate", timeupdateHandler);
     };
   }, [setProgress, timeupdateHandler, videoEl]);
 
@@ -55,7 +59,9 @@ export const VideoProgress = ({
     if (!videoEl) {
       return;
     }
-    const duration = isFinite(videoEl.duration) ? videoEl.duration : videoEl.seekable?.end(0) || 0;
+    const duration = isFinite(videoEl.duration)
+      ? videoEl.duration
+      : videoEl.seekable?.end(0) || 0;
     const currentTime = (progress1 * duration) / 100;
     hlsPlayer?.seekTo(currentTime);
     setProgress();
@@ -65,12 +71,15 @@ export const VideoProgress = ({
     return null;
   }
   return (
-    <Flex align="center" css={{ cursor: 'pointer', h: '$2', alignSelf: 'stretch' }}>
+    <Flex
+      align="center"
+      css={{ cursor: "pointer", h: "$2", alignSelf: "stretch" }}
+    >
       <Slider
         id="video-actual-rest"
         css={{
-          cursor: 'pointer',
-          h: '$2',
+          cursor: "pointer",
+          h: "$2",
           zIndex: 1,
           transition: `all .2s ease .5s`,
         }}
@@ -82,17 +91,17 @@ export const VideoProgress = ({
         onValueChange={onProgress}
         onPointerDown={() => setSeekProgress(true)}
         onPointerUp={() => setSeekProgress(false)}
-        thumbStyles={{ w: '$6', h: '$6' }}
+        thumbStyles={{ w: "$6", h: "$6" }}
       />
       <Box
         id="video-buffer"
         css={{
-          h: '$2',
+          h: "$2",
           width: `${bufferProgress - videoProgress}%`,
-          background: '$on_surface_high',
-          position: 'absolute',
+          background: "$on_surface_high",
+          position: "absolute",
           left: `${videoProgress}%`,
-          opacity: '25%',
+          opacity: "25%",
         }}
       />
     </Flex>

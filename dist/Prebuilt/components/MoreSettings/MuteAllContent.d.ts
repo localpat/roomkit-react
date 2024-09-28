@@ -1,15 +1,15 @@
-import React from 'react';
-import { HMSRoleName, HMSTrackSource, HMSTrackType } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSRoleName, HMSTrackSource, HMSTrackType } from "@100mslive/react-sdk";
 export declare const MuteAllContent: (props: {
     muteAll: () => Promise<void>;
-    roles?: string[] | undefined;
+    roles?: HMSRoleName[];
     enabled: boolean;
     setEnabled: (value: boolean) => void;
-    trackType?: HMSTrackType | undefined;
+    trackType?: HMSTrackType;
     setTrackType: (value: HMSTrackType) => void;
-    selectedRole?: string | undefined;
+    selectedRole?: HMSRoleName;
     setRole: (value: HMSRoleName) => void;
-    selectedSource?: string | undefined;
+    selectedSource?: HMSTrackSource;
     setSource: (value: HMSTrackSource) => void;
     isMobile: boolean;
 }) => React.JSX.Element;

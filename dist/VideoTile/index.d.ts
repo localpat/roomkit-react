@@ -1,1 +1,1 @@
-export { StyledVideoTile } from './StyledVideoTile';
+export { StyledVideoTile } from "./StyledVideoTile";

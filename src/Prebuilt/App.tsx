@@ -1,7 +1,17 @@
-import React, { MutableRefObject, useEffect, useRef } from 'react';
-import { HMSStatsStoreWrapper, HMSStoreWrapper, IHMSNotifications } from '@100mslive/hms-video-store';
-import { Layout, Logo, Screens, Theme, Typography } from '@100mslive/types-prebuilt';
-import { match } from 'ts-pattern';
+import React, { MutableRefObject, useEffect, useRef } from "react";
+import {
+  HMSStatsStoreWrapper,
+  HMSStoreWrapper,
+  IHMSNotifications,
+} from "@100mslive/hms-video-store";
+import {
+  Layout,
+  Logo,
+  Screens,
+  Theme,
+  Typography,
+} from "@100mslive/types-prebuilt";
+import { match } from "ts-pattern";
 import {
   HMSActions,
   HMSReactiveStore,
@@ -9,47 +19,55 @@ import {
   selectIsConnectedToRoom,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { AppData } from './components/AppData/AppData';
+} from "@100mslive/react-sdk";
+import { AppData } from "./components/AppData/AppData";
 // @ts-ignore: No implicit Any
-import AuthToken from './components/AuthToken';
-import { ConferenceScreen } from './components/ConferenceScreen';
+import AuthToken from "./components/AuthToken";
+import { ConferenceScreen } from "./components/ConferenceScreen";
 // @ts-ignore: No implicit Any
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from "./components/ErrorBoundary";
 // @ts-ignore: No implicit Any
-import { Init } from './components/init/Init';
+import { Init } from "./components/init/Init";
 // @ts-ignore: No implicit Any
-import { KeyboardHandler } from './components/Input/KeyboardInputManager';
-import { LeaveScreen } from './components/LeaveScreen';
-import { MwebLandscapePrompt } from './components/MwebLandscapePrompt';
-import { Notifications } from './components/Notifications';
-import { PIPProvider } from './components/PIP/PIPProvider';
-import { PreviewScreen } from './components/Preview/PreviewScreen';
+import { KeyboardHandler } from "./components/Input/KeyboardInputManager";
+import { LeaveScreen } from "./components/LeaveScreen";
+import { MwebLandscapePrompt } from "./components/MwebLandscapePrompt";
+import { Notifications } from "./components/Notifications";
+import { PIPProvider } from "./components/PIP/PIPProvider";
+import { PreviewScreen } from "./components/Preview/PreviewScreen";
 // @ts-ignore: No implicit Any
-import { ToastContainer } from './components/Toast/ToastContainer';
-import { VBHandler } from './components/VirtualBackground/VBHandler';
-import { Sheet } from './layouts/Sheet';
-import { RoomLayoutContext, RoomLayoutProvider, useRoomLayout } from './provider/roomLayoutProvider';
-import { DialogContainerProvider } from '../context/DialogContext';
-import { Box } from '../Layout';
-import { globalStyles, HMSThemeProvider } from '../Theme';
-import { HMSPrebuiltContext } from './AppContext';
-import { AppStateContext, PrebuiltStates, useAppStateManager } from './AppStateContext';
+import { ToastContainer } from "./components/Toast/ToastContainer";
+import { VBHandler } from "./components/VirtualBackground/VBHandler";
+import { Sheet } from "./layouts/Sheet";
+import {
+  RoomLayoutContext,
+  RoomLayoutProvider,
+  useRoomLayout,
+} from "./provider/roomLayoutProvider";
+import { DialogContainerProvider } from "../context/DialogContext";
+import { Box } from "../Layout";
+import { globalStyles, HMSThemeProvider } from "../Theme";
+import { HMSPrebuiltContext } from "./AppContext";
+import {
+  AppStateContext,
+  PrebuiltStates,
+  useAppStateManager,
+} from "./AppStateContext";
 // @ts-ignore: No implicit Any
-import { FlyingEmoji } from './plugins/FlyingEmoji';
+import { FlyingEmoji } from "./plugins/FlyingEmoji";
 // @ts-ignore: No implicit Any
-import { RemoteStopScreenshare } from './plugins/RemoteStopScreenshare';
+import { RemoteStopScreenshare } from "./plugins/RemoteStopScreenshare";
 // @ts-ignore: No implicit Any
-import { useIsNotificationDisabled } from './components/AppData/useUISettings';
-import { useAutoStartStreaming } from './components/hooks/useAutoStartStreaming';
+import { useIsNotificationDisabled } from "./components/AppData/useUISettings";
+import { useAutoStartStreaming } from "./components/hooks/useAutoStartStreaming";
 import {
   useRoomLayoutLeaveScreen,
   useRoomLayoutPreviewScreen,
-} from './provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+} from "./provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 // @ts-ignore: No implicit Any
-import { FeatureFlags } from './services/FeatureFlags';
+import { FeatureFlags } from "./services/FeatureFlags";
 // @ts-ignore: No implicit Any
-import { DEFAULT_PORTAL_CONTAINER } from './common/constants';
+import { DEFAULT_PORTAL_CONTAINER } from "./common/constants";
 
 export type HMSPrebuiltOptions = {
   userName?: string;
@@ -83,22 +101,25 @@ export type HMSPrebuiltRefType = {
   hmsNotifications: IHMSNotifications;
 };
 
-export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps>(
+export const HMSPrebuilt = React.forwardRef<
+  HMSPrebuiltRefType,
+  HMSPrebuiltProps
+>(
   (
     {
-      roomCode = '',
-      authToken = '',
+      roomCode = "",
+      authToken = "",
       containerSelector = DEFAULT_PORTAL_CONTAINER,
       logo,
       typography,
       themes,
-      options: { userName = '', userId = '', endpoints } = {},
+      options: { userName = "", userId = "", endpoints } = {},
       screens,
       leaveOnUnload = true,
       onLeave,
       onJoin,
     },
-    ref,
+    ref
   ) => {
     const reactiveStore = useRef<HMSPrebuiltRefType>();
     const [hydrated, setHydrated] = React.useState(false);
@@ -124,7 +145,9 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
       if (!ref || !reactiveStore.current) {
         return;
       }
-      (ref as MutableRefObject<HMSPrebuiltRefType>).current = { ...reactiveStore.current };
+      (ref as MutableRefObject<HMSPrebuiltRefType>).current = {
+        ...reactiveStore.current,
+      };
     }, [ref]);
 
     useEffect(() => {
@@ -143,10 +166,10 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
           event: string;
         }
       | undefined;
-    const tokenByRoomCodeEndpoint: string = endpointsObj?.tokenByRoomCode || '';
-    const initEndpoint: string = endpointsObj?.init || '';
-    const eventEndpoint: string = endpointsObj?.event || '';
-    const roomLayoutEndpoint: string = endpointsObj?.roomLayout || '';
+    const tokenByRoomCodeEndpoint: string = endpointsObj?.tokenByRoomCode || "";
+    const initEndpoint: string = endpointsObj?.init || "";
+    const eventEndpoint: string = endpointsObj?.event || "";
+    const roomLayoutEndpoint: string = endpointsObj?.roomLayout || "";
 
     const overrideLayout: Partial<Layout> = {
       logo,
@@ -161,7 +184,7 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
           either "roomCode" or "authToken".
           Please check if you are providing the above values for initialising prebuilt.
         `);
-      throw Error('Incorrect initializing params for HMSPrebuilt component');
+      throw Error("Incorrect initializing params for HMSPrebuilt component");
     }
 
     if (!hydrated) {
@@ -196,13 +219,16 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
             stats={reactiveStore.current?.hmsStats}
             leaveOnUnload={leaveOnUnload}
           >
-            <RoomLayoutProvider roomLayoutEndpoint={roomLayoutEndpoint} overrideLayout={overrideLayout}>
+            <RoomLayoutProvider
+              roomLayoutEndpoint={roomLayoutEndpoint}
+              overrideLayout={overrideLayout}
+            >
               <RoomLayoutContext.Consumer>
-                {data => {
+                {(data) => {
                   const layout = data?.layout;
                   const theme: Theme = layout?.themes?.[0] || ({} as Theme);
                   const { typography } = layout || {};
-                  let fontFamily = ['sans-serif'];
+                  let fontFamily = ["sans-serif"];
                   if (typography?.font_family) {
                     fontFamily = [`${typography?.font_family}`, ...fontFamily];
                   }
@@ -224,19 +250,23 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
                     >
                       <PIPProvider>
                         <Init />
-                        <DialogContainerProvider dialogContainerSelector={containerSelector}>
+                        <DialogContainerProvider
+                          dialogContainerSelector={containerSelector}
+                        >
                           <Box
                             className={DEFAULT_PORTAL_CONTAINER.slice(1)} // Skips the '.' in the selector
                             css={{
-                              bg: '$background_dim',
-                              size: '100%',
-                              lineHeight: '1.5',
-                              '-webkit-text-size-adjust': '100%',
-                              position: 'relative',
+                              bg: "$background_dim",
+                              size: "100%",
+                              lineHeight: "1.5",
+                              "-webkit-text-size-adjust": "100%",
+                              position: "relative",
                             }}
                           >
                             <AppRoutes
-                              authTokenByRoomCodeEndpoint={tokenByRoomCodeEndpoint}
+                              authTokenByRoomCodeEndpoint={
+                                tokenByRoomCodeEndpoint
+                              }
                               defaultAuthToken={authToken}
                             />
                           </Box>
@@ -251,10 +281,10 @@ export const HMSPrebuilt = React.forwardRef<HMSPrebuiltRefType, HMSPrebuiltProps
         </HMSPrebuiltContext.Provider>
       </ErrorBoundary>
     );
-  },
+  }
 );
 
-HMSPrebuilt.displayName = 'HMSPrebuilt';
+HMSPrebuilt.displayName = "HMSPrebuilt";
 
 const AppStates = ({ activeState }: { activeState: PrebuiltStates }) => {
   const { isPreviewScreenEnabled } = useRoomLayoutPreviewScreen();
@@ -262,8 +292,14 @@ const AppStates = ({ activeState }: { activeState: PrebuiltStates }) => {
   useAutoStartStreaming();
 
   return match({ activeState, isPreviewScreenEnabled, isLeaveScreenEnabled })
-    .with({ activeState: PrebuiltStates.PREVIEW, isPreviewScreenEnabled: true }, () => <PreviewScreen />)
-    .with({ activeState: PrebuiltStates.LEAVE, isLeaveScreenEnabled: true }, () => <LeaveScreen />)
+    .with(
+      { activeState: PrebuiltStates.PREVIEW, isPreviewScreenEnabled: true },
+      () => <PreviewScreen />
+    )
+    .with(
+      { activeState: PrebuiltStates.LEAVE, isLeaveScreenEnabled: true },
+      () => <LeaveScreen />
+    )
     .otherwise(() => <ConferenceScreen />);
 };
 
@@ -276,9 +312,9 @@ const BackSwipe = () => {
         await hmsActions.leave();
       }
     };
-    window.addEventListener('popstate', onRouteLeave);
+    window.addEventListener("popstate", onRouteLeave);
     return () => {
-      window.removeEventListener('popstate', onRouteLeave);
+      window.removeEventListener("popstate", onRouteLeave);
     };
   }, [hmsActions, isConnectedToRoom]);
   return null;

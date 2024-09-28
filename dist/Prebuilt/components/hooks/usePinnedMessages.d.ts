@@ -1,5 +1,5 @@
-import { HMSMessage } from '@100mslive/react-sdk';
-export declare type PinnedMessage = {
+import { HMSMessage } from "@100mslive/react-sdk";
+export type PinnedMessage = {
     text: string;
     id: string;
     pinnedBy: string;

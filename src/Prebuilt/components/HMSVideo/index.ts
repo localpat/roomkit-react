@@ -1,11 +1,14 @@
 // @ts-ignore
-import { LeftControls, RightControls, VideoControls } from './Controls';
+import { LeftControls, RightControls, VideoControls } from "./Controls";
 // @ts-ignore
-import { HMSVideo } from './HMSVideo';
-import { PlayPauseSeekControls, PlayPauseSeekOverlayControls } from './PlayPauseSeekControls';
-import { VideoProgress } from './VideoProgress';
-import { VideoTime } from './VideoTime';
-import { VolumeControl } from './VolumeControl';
+import { HMSVideo } from "./HMSVideo";
+import {
+  PlayPauseSeekControls,
+  PlayPauseSeekOverlayControls,
+} from "./PlayPauseSeekControls";
+import { VideoProgress } from "./VideoProgress";
+import { VideoTime } from "./VideoTime";
+import { VolumeControl } from "./VolumeControl";
 
 export const HMSVideoPlayer = {
   Root: HMSVideo,

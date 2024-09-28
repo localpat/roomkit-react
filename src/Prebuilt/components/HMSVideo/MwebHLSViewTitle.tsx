@@ -1,14 +1,17 @@
-import React from 'react';
-import { ChevronDownIcon } from '@100mslive/react-icons';
-import { Flex } from '../../../Layout';
-import { Text } from '../../../Text';
+import React from "react";
+import { ChevronDownIcon } from "@100mslive/react-icons";
+import { Flex } from "../../../Layout";
+import { Text } from "../../../Text";
 // @ts-ignore: No implicit any
-import { Logo } from '../Header/HeaderComponents';
-import { RoomDetailsRow } from '../RoomDetails/RoomDetailsRow';
-import { useRoomLayoutHeader } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import { Logo } from "../Header/HeaderComponents";
+import { RoomDetailsRow } from "../RoomDetails/RoomDetailsRow";
+import { useRoomLayoutHeader } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 // @ts-ignore
-import { useIsSidepaneTypeOpen, useSidepaneToggle } from '../AppData/useSidepane';
-import { SIDE_PANE_OPTIONS } from '../../common/constants';
+import {
+  useIsSidepaneTypeOpen,
+  useSidepaneToggle,
+} from "../AppData/useSidepane";
+import { SIDE_PANE_OPTIONS } from "../../common/constants";
 
 /*
 	player handler --> left -> go live with timer or live, right -> expand icon 
@@ -19,7 +22,9 @@ import { SIDE_PANE_OPTIONS } from '../../common/constants';
 export const HLSViewTitle = () => {
   const { title, details, description } = useRoomLayoutHeader();
   const toggleDetailsPane = useSidepaneToggle(SIDE_PANE_OPTIONS.ROOM_DETAILS);
-  const isDetailSidepaneOpen = useIsSidepaneTypeOpen(SIDE_PANE_OPTIONS.ROOM_DETAILS);
+  const isDetailSidepaneOpen = useIsSidepaneTypeOpen(
+    SIDE_PANE_OPTIONS.ROOM_DETAILS
+  );
 
   if (isDetailSidepaneOpen) {
     return (
@@ -28,23 +33,23 @@ export const HLSViewTitle = () => {
         align="center"
         justify="between"
         css={{
-          position: 'relative',
-          h: 'fit-content',
-          w: '100%',
-          borderBottom: '1px solid $border_bright',
-          p: '$8',
-          backgroundColor: '$surface_dim',
+          position: "relative",
+          h: "fit-content",
+          w: "100%",
+          borderBottom: "1px solid $border_bright",
+          p: "$8",
+          backgroundColor: "$surface_dim",
         }}
       >
-        <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+        <Text variant="sub2" css={{ fontWeight: "$semiBold" }}>
           About Session
         </Text>
         <Flex
           onClick={toggleDetailsPane}
           css={{
-            color: '$on_surface_high',
-            cursor: 'pointer',
-            '&:hover': { opacity: '0.8' },
+            color: "$on_surface_high",
+            cursor: "pointer",
+            "&:hover": { opacity: "0.8" },
           }}
         >
           <ChevronDownIcon />
@@ -57,25 +62,29 @@ export const HLSViewTitle = () => {
       gap="4"
       align="center"
       css={{
-        position: 'relative',
-        h: 'fit-content',
-        w: '100%',
-        borderBottom: '1px solid $border_bright',
-        p: '$8',
-        backgroundColor: '$surface_dim',
+        position: "relative",
+        h: "fit-content",
+        w: "100%",
+        borderBottom: "1px solid $border_bright",
+        p: "$8",
+        backgroundColor: "$surface_dim",
       }}
     >
       <Logo />
       <Flex direction="column">
         {title ? (
-          <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+          <Text variant="sub2" css={{ fontWeight: "$semiBold" }}>
             {title}
           </Text>
         ) : null}
         <Flex>
           <RoomDetailsRow details={details} />
           {description ? (
-            <Text variant="caption" css={{ color: '$on_surface_medium' }} onClick={toggleDetailsPane}>
+            <Text
+              variant="caption"
+              css={{ color: "$on_surface_medium" }}
+              onClick={toggleDetailsPane}
+            >
               &nbsp;...more
             </Text>
           ) : null}

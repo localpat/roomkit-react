@@ -1,5 +1,5 @@
-import React from 'react';
-import { CSS } from '../../../Theme';
+import React from "react";
+import { CSS } from "../../../Theme";
 export declare const LeaveCard: ({ icon, title, subtitle, onClick, bg, titleColor, css, }: {
     icon: React.JSX.Element;
     title: string;
@@ -7,5 +7,5 @@ export declare const LeaveCard: ({ icon, title, subtitle, onClick, bg, titleColo
     onClick: () => void;
     titleColor: string;
     bg: string;
-    css?: CSS | undefined;
+    css?: CSS;
 }) => React.JSX.Element;

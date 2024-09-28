@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { HMSPoll } from '@100mslive/react-sdk';
-import { PeerParticipationSummary } from './PeerParticipationSummary';
+import React, { Dispatch, SetStateAction } from "react";
+import { HMSPoll } from "@100mslive/react-sdk";
+import { PeerParticipationSummary } from "./PeerParticipationSummary";
 // @ts-ignore
-import { QuestionCard } from './QuestionCard';
+import { QuestionCard } from "./QuestionCard";
 
 export const StandardView = ({
   poll,
@@ -17,8 +17,8 @@ export const StandardView = ({
     return null;
   }
 
-  const isQuiz = poll.type === 'quiz';
-  const isStopped = poll.state === 'stopped';
+  const isQuiz = poll.type === "quiz";
+  const isStopped = poll.state === "stopped";
 
   return (
     <>

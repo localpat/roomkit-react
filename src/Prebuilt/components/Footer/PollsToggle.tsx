@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
-import { QuizActiveIcon, QuizIcon } from '@100mslive/react-icons';
-import { Tooltip } from '../../..';
+import React, { useEffect } from "react";
+import { QuizActiveIcon, QuizIcon } from "@100mslive/react-icons";
+import { Tooltip } from "../../..";
 // @ts-ignore: No implicit Any
-import IconButton from '../../IconButton';
+import IconButton from "../../IconButton";
 // @ts-ignore: No implicit Any
-import { useIsSidepaneTypeOpen, usePollViewToggle } from '../AppData/useSidepane';
-import { useUnreadPollQuizPresent } from '../hooks/useUnreadPollQuizPresent';
+import {
+  useIsSidepaneTypeOpen,
+  usePollViewToggle,
+} from "../AppData/useSidepane";
+import { useUnreadPollQuizPresent } from "../hooks/useUnreadPollQuizPresent";
 // @ts-ignore: No implicit Any
-import { SIDE_PANE_OPTIONS } from '../../common/constants';
+import { SIDE_PANE_OPTIONS } from "../../common/constants";
 
 export const PollsToggle = () => {
   const isPollsOpen = useIsSidepaneTypeOpen(SIDE_PANE_OPTIONS.POLLS);
@@ -21,13 +24,16 @@ export const PollsToggle = () => {
   }, [isPollsOpen, unreadPollQuiz, setUnreadPollQuiz]);
 
   return (
-    <Tooltip key="polls" title={`${isPollsOpen ? 'Close' : 'Open'} polls and quizzes`}>
+    <Tooltip
+      key="polls"
+      title={`${isPollsOpen ? "Close" : "Open"} polls and quizzes`}
+    >
       <IconButton
         onClick={() => {
           togglePollView();
           setUnreadPollQuiz(false);
         }}
-        css={{ bg: isPollsOpen ? '$surface_brighter' : '' }}
+        css={{ bg: isPollsOpen ? "$surface_brighter" : "" }}
         data-testid="polls_btn"
       >
         {unreadPollQuiz ? <QuizActiveIcon /> : <QuizIcon />}

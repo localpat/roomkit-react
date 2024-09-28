@@ -1,4 +1,9 @@
-import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot } from './Accordion';
+import {
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionRoot,
+} from "./Accordion";
 
 export const Accordion = {
   Root: AccordionRoot,

@@ -1,29 +1,29 @@
-import { styled } from '../Theme';
+import { styled } from "../Theme";
 
-const Root = styled('div', {
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
+const Root = styled("div", {
+  height: "100%",
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
 });
 
-const Container = styled('div', {
-  height: '100%',
-  width: '100%',
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  overflow: 'hidden',
+const Container = styled("div", {
+  height: "100%",
+  width: "100%",
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+  overflow: "hidden",
 });
 
-const View = styled('div', {
-  height: '100%',
-  width: '100%',
-  position: 'absolute',
-  display: 'flex',
-  placeContent: 'center',
-  flexWrap: 'wrap',
-  alignItems: 'center',
+const View = styled("div", {
+  height: "100%",
+  width: "100%",
+  position: "absolute",
+  display: "flex",
+  placeContent: "center",
+  flexWrap: "wrap",
+  alignItems: "center",
 });
 
 interface VideoListType {

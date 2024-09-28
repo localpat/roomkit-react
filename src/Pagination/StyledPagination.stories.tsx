@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@100mslive/react-icons';
-import { StyledPagination } from '.';
+import React, { useCallback, useEffect, useState } from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@100mslive/react-icons";
+import { StyledPagination } from ".";
 
 type PaginationProps = {
   page: number;
@@ -9,7 +9,11 @@ type PaginationProps = {
   numPages: number;
 };
 
-const PaginationComponent = ({ page: propsPage, setPage: propsSetPage, numPages }: PaginationProps) => {
+const PaginationComponent = ({
+  page: propsPage,
+  setPage: propsSetPage,
+  numPages,
+}: PaginationProps) => {
   const [page, setPage] = useState(propsPage);
 
   const disableLeft = page === 0;
@@ -20,7 +24,7 @@ const PaginationComponent = ({ page: propsPage, setPage: propsSetPage, numPages 
       setPage(page);
       propsSetPage(page);
     },
-    [propsSetPage],
+    [propsSetPage]
   );
 
   const nextPage = () => {
@@ -41,40 +45,53 @@ const PaginationComponent = ({ page: propsPage, setPage: propsSetPage, numPages 
         disabled={disableLeft}
         onClick={prevPage}
         type="button"
-        css={{ padding: 0, border: 'none', backgroundColor: 'transparent' }}
+        css={{ padding: 0, border: "none", backgroundColor: "transparent" }}
       >
-        <ChevronLeftIcon width={16} height={16} style={{ cursor: disableLeft ? 'not-allowed' : 'pointer' }} />
+        <ChevronLeftIcon
+          width={16}
+          height={16}
+          style={{ cursor: disableLeft ? "not-allowed" : "pointer" }}
+        />
       </StyledPagination.Chevron>
       <StyledPagination.Dots>
         {[...Array(numPages)].map((_, i) => (
-          <StyledPagination.Dot key={i} active={page === i} onClick={() => handlePageChange(i)} type="button" />
+          <StyledPagination.Dot
+            key={i}
+            active={page === i}
+            onClick={() => handlePageChange(i)}
+            type="button"
+          />
         ))}
       </StyledPagination.Dots>
       <StyledPagination.Chevron
         disabled={disableRight}
         onClick={nextPage}
         type="button"
-        css={{ padding: 0, border: 'none', backgroundColor: 'transparent' }}
+        css={{ padding: 0, border: "none", backgroundColor: "transparent" }}
       >
-        <ChevronRightIcon width={16} height={16} style={{ cursor: disableRight ? 'not-allowed' : 'pointer' }} />
+        <ChevronRightIcon
+          width={16}
+          height={16}
+          style={{ cursor: disableRight ? "not-allowed" : "pointer" }}
+        />
       </StyledPagination.Chevron>
     </StyledPagination.Root>
   );
 };
 
 export default {
-  title: 'UI Components/Pagination',
+  title: "UI Components/Pagination",
   component: PaginationComponent,
   argTypes: {
-    setPage: { action: { type: 'click' } },
-    page: { control: { type: 'number' }, defaultValue: 0 },
-    numPages: { control: { type: 'number' }, defaultValue: 5 },
+    setPage: { action: { type: "click" } },
+    page: { control: { type: "number" }, defaultValue: 0 },
+    numPages: { control: { type: "number" }, defaultValue: 5 },
   },
 } as ComponentMeta<typeof PaginationComponent>;
 
-const Template: ComponentStory<typeof PaginationComponent> = args => {
+const Template: ComponentStory<typeof PaginationComponent> = (args) => {
   return <PaginationComponent {...args} />;
 };
 
 export const Example = Template.bind({});
-Example.storyName = 'Pagination';
+Example.storyName = "Pagination";

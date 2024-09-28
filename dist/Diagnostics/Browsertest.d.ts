@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 export declare const operatingSystemIconInfo: {
     tizen: {
         key: string;
         val: string;
         icon: string;
     };
-    'mac os': {
+    "mac os": {
         key: string;
         val: string;
         icon: string;
@@ -62,7 +62,7 @@ export declare const browserTypeIconInfo: {
         val: string;
         icon: string;
     };
-    'mobile safari': {
+    "mobile safari": {
         key: string;
         val: string;
         icon: string;

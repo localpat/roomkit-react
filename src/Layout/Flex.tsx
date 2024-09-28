@@ -1,69 +1,69 @@
-import { styled } from '../Theme';
+import { styled } from "../Theme";
 
 /**
  * @see https://tailwindcss.com/docs/space
  */
 const gapStyles = (value: number) => {
   return {
-    '& > * + *': {
-      marginRight: '0',
+    "& > * + *": {
+      marginRight: "0",
       marginLeft: `${0.25 * value}rem`,
     },
   };
 };
 
-export const Flex = styled('div', {
-  display: 'flex',
+export const Flex = styled("div", {
+  display: "flex",
   variants: {
     justify: {
       start: {
-        justifyContent: 'flex-start',
+        justifyContent: "flex-start",
       },
       end: {
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
       },
       center: {
-        justifyContent: 'center',
+        justifyContent: "center",
       },
       between: {
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
       },
       around: {
-        justifyContent: 'space-around',
+        justifyContent: "space-around",
       },
       evenly: {
-        justifyContent: 'space-evenly',
+        justifyContent: "space-evenly",
       },
     },
     align: {
       start: {
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
       },
       end: {
-        alignItems: 'flex-end',
+        alignItems: "flex-end",
       },
       center: {
-        alignItems: 'center',
+        alignItems: "center",
       },
       baseline: {
-        alignItems: 'baseline',
+        alignItems: "baseline",
       },
       strech: {
-        alignItems: 'stretch',
+        alignItems: "stretch",
       },
     },
     direction: {
       row: {
-        flexDirection: 'row',
+        flexDirection: "row",
       },
       column: {
-        flexDirection: 'column',
+        flexDirection: "column",
       },
       rowReverse: {
-        flexDirection: 'row-reverse',
+        flexDirection: "row-reverse",
       },
       columnReverse: {
-        flexDirection: 'column-reverse',
+        flexDirection: "column-reverse",
       },
     },
     gap: {

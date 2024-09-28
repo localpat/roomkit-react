@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   DeviceType,
   selectIsLocalVideoEnabled,
@@ -7,7 +7,7 @@ import {
   useDevices,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 import {
   BluetoothIcon,
   CameraFlipIcon,
@@ -16,14 +16,14 @@ import {
   HeadphonesIcon,
   SpeakerIcon,
   TelePhoneIcon,
-} from '@100mslive/react-icons';
-import { HorizontalDivider } from '../../../Divider';
-import { Label } from '../../../Label';
-import { Box, Flex } from '../../../Layout';
-import { Sheet } from '../../../Sheet';
-import { Text } from '../../../Text';
-import IconButton from '../../IconButton';
-import { ToastManager } from '../Toast/ToastManager';
+} from "@100mslive/react-icons";
+import { HorizontalDivider } from "../../../Divider";
+import { Label } from "../../../Label";
+import { Box, Flex } from "../../../Layout";
+import { Sheet } from "../../../Sheet";
+import { Text } from "../../../Text";
+import IconButton from "../../IconButton";
+import { ToastManager } from "../Toast/ToastManager";
 
 export const CamaraFlipActions = () => {
   const actions = useHMSActions();
@@ -45,8 +45,8 @@ export const CamaraFlipActions = () => {
             await actions.switchCamera();
           } catch (e) {
             ToastManager.addToast({
-              title: `Error while flipping camera ${e.message || ''}`,
-              variant: 'error',
+              title: `Error while flipping camera ${e.message || ""}`,
+              variant: "error",
             });
           }
         }}
@@ -63,7 +63,7 @@ export const AudioActions = () => {
 
   // don't show speaker selector where the API is not supported, and use
   // a generic word("Audio") for Mic. In some cases(Chrome Android for example) this changes both mic and speaker keeping them in sync.
-  const shouldShowAudioOutput = 'setSinkId' in HTMLMediaElement.prototype;
+  const shouldShowAudioOutput = "setSinkId" in HTMLMediaElement.prototype;
   const { audioInput, audioOutput } = allDevices;
   let availableAudioDevices = audioInput;
   let selectedAudio = selectedDeviceIDs.audioInput;
@@ -72,34 +72,47 @@ export const AudioActions = () => {
     selectedAudio = selectedDeviceIDs.audioOutput;
   }
   const hmsActions = useHMSActions();
-  const audioFiltered = availableAudioDevices?.find(item => !!item.label);
-  const currentSelection = availableAudioDevices?.find(item => item.deviceId === selectedAudio);
+  const audioFiltered = availableAudioDevices?.find((item) => !!item.label);
+  const currentSelection = availableAudioDevices?.find(
+    (item) => item.deviceId === selectedAudio
+  );
 
   if (!audioFiltered) {
     return null;
   }
   let AudioIcon = <SpeakerIcon />;
-  if (currentSelection && currentSelection.label.toLowerCase().includes('bluetooth')) {
+  if (
+    currentSelection &&
+    currentSelection.label.toLowerCase().includes("bluetooth")
+  ) {
     AudioIcon = <BluetoothIcon />;
-  } else if (currentSelection && currentSelection.label.toLowerCase().includes('wired')) {
+  } else if (
+    currentSelection &&
+    currentSelection.label.toLowerCase().includes("wired")
+  ) {
     AudioIcon = <HeadphonesIcon />;
-  } else if (currentSelection && currentSelection.label.toLowerCase().includes('earpiece')) {
+  } else if (
+    currentSelection &&
+    currentSelection.label.toLowerCase().includes("earpiece")
+  ) {
     AudioIcon = <TelePhoneIcon />;
   }
   return (
     <AudioSelectionSheet
       audioDevices={availableAudioDevices}
       audioSelected={selectedAudio}
-      onChange={async deviceId => {
+      onChange={async (deviceId) => {
         try {
           await updateDevice({
             deviceId,
-            deviceType: shouldShowAudioOutput ? DeviceType.audioOutput : DeviceType.audioInput,
+            deviceType: shouldShowAudioOutput
+              ? DeviceType.audioOutput
+              : DeviceType.audioInput,
           });
         } catch (e) {
           ToastManager.addToast({
-            title: `Error while changing audio device ${e.message || ''}`,
-            variant: 'error',
+            title: `Error while changing audio device ${e.message || ""}`,
+            variant: "error",
           });
         }
       }}
@@ -116,14 +129,19 @@ export const AudioActions = () => {
   );
 };
 
-const AudioSelectionSheet = ({ audioDevices, audioSelected, onChange, children }) => {
+const AudioSelectionSheet = ({
+  audioDevices,
+  audioSelected,
+  onChange,
+  children,
+}) => {
   return (
     <Sheet.Root>
       <Sheet.Trigger asChild>{children}</Sheet.Trigger>
       <Sheet.Content>
-        <Sheet.Title css={{ py: '$10', px: '$8', alignItems: 'center' }}>
-          <Flex direction="row" justify="between" css={{ w: '100%' }}>
-            <Text variant="h6" css={{ display: 'flex' }}>
+        <Sheet.Title css={{ py: "$10", px: "$8", alignItems: "center" }}>
+          <Flex direction="row" justify="between" css={{ w: "100%" }}>
+            <Text variant="h6" css={{ display: "flex" }}>
               Audio
             </Text>
             <Sheet.Close>
@@ -137,12 +155,12 @@ const AudioSelectionSheet = ({ audioDevices, audioSelected, onChange, children }
         <Flex
           direction="column"
           css={{
-            px: '$8',
-            maxHeight: '80vh',
-            overflowY: 'auto',
+            px: "$8",
+            maxHeight: "80vh",
+            overflowY: "auto",
           }}
         >
-          {audioDevices.map(audioDevice => {
+          {audioDevices.map((audioDevice) => {
             return (
               <SelectWithLabel
                 key={audioDevice.deviceId}
@@ -164,24 +182,24 @@ const SelectWithLabel = ({ label, icon = <></>, checked, id, onChange }) => {
     <Flex
       align="center"
       css={{
-        my: '$2',
-        py: '$8',
-        w: '100%',
-        borderBottom: '1px solid $border_default',
+        my: "$2",
+        py: "$8",
+        w: "100%",
+        borderBottom: "1px solid $border_default",
       }}
       onClick={onChange}
     >
       <Label
         htmlFor={id}
         css={{
-          fontSize: '$md',
-          fontWeight: '$semiBold',
-          color: '$on_surface_high',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '$8',
-          flex: '1 1 0',
+          fontSize: "$md",
+          fontWeight: "$semiBold",
+          color: "$on_surface_high",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "$8",
+          flex: "1 1 0",
         }}
       >
         {icon}

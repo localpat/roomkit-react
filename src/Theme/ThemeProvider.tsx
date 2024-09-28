@@ -1,7 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { Theme } from './stitches.config';
-import { createTheme, theme } from './stitches.config';
-import useSSR from './useSSR';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { Theme } from "./stitches.config";
+import { createTheme, theme } from "./stitches.config";
+import useSSR from "./useSSR";
 
 const defaultAspectRatio = {
   width: 1,
@@ -10,7 +16,7 @@ const defaultAspectRatio = {
 
 export enum ThemeTypes {
   // eslint-disable-next-line no-unused-vars
-  default = 'default',
+  default = "default",
 }
 
 export type ThemeContextValue = {
@@ -40,7 +46,8 @@ const defaultContext = {
     return;
   },
 };
-export const ThemeContext = React.createContext<ThemeContextValue>(defaultContext);
+export const ThemeContext =
+  React.createContext<ThemeContextValue>(defaultContext);
 
 /**
  * Wrap this around your root component to get access to theme
@@ -49,7 +56,9 @@ export const ThemeContext = React.createContext<ThemeContextValue>(defaultContex
  *  <App />
  * </ThemeProvider>
  */
-export const HMSThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderProps>> = ({
+export const HMSThemeProvider: React.FC<
+  React.PropsWithChildren<ThemeProviderProps>
+> = ({
   themeType,
   theme: userTheme,
   aspectRatio = defaultAspectRatio,
@@ -57,10 +66,13 @@ export const HMSThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderPro
 }) => {
   const systemTheme = ThemeTypes.default;
   const [currentTheme, setCurrentTheme] = useState(themeType || systemTheme);
-  const previousClassName = useRef('');
+  const previousClassName = useRef("");
   const { isBrowser } = useSSR();
   const updatedTheme = useMemo(() => {
-    const updatedTheme = createTheme({ themeType: currentTheme, theme: userTheme || {} });
+    const updatedTheme = createTheme({
+      themeType: currentTheme,
+      theme: userTheme || {},
+    });
     if (!isBrowser) {
       return updatedTheme;
     }
@@ -88,7 +100,12 @@ export const HMSThemeProvider: React.FC<React.PropsWithChildren<ThemeProviderPro
 
   return (
     <ThemeContext.Provider
-      value={{ themeType: currentTheme, theme: updatedTheme as unknown as Theme, aspectRatio, toggleTheme }}
+      value={{
+        themeType: currentTheme,
+        theme: updatedTheme as unknown as Theme,
+        aspectRatio,
+        toggleTheme,
+      }}
     >
       {children}
     </ThemeContext.Provider>

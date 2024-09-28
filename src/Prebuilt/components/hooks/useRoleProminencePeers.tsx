@@ -1,9 +1,13 @@
-import { useMemo } from 'react';
-import { HMSPeer } from '@100mslive/react-sdk';
+import { useMemo } from "react";
+import { HMSPeer } from "@100mslive/react-sdk";
 // @ts-ignore: No implicit Any
-import { usePinnedTrack } from '../AppData/useUISettings';
+import { usePinnedTrack } from "../AppData/useUISettings";
 
-export const useRoleProminencePeers = (prominentRoles: string[], peers: HMSPeer[], isInsetEnabled: boolean) => {
+export const useRoleProminencePeers = (
+  prominentRoles: string[],
+  peers: HMSPeer[],
+  isInsetEnabled: boolean
+) => {
   const pinnedTrack = usePinnedTrack();
 
   const [prominentPeers, secondaryPeers] = useMemo(() => {
@@ -17,10 +21,14 @@ export const useRoleProminencePeers = (prominentRoles: string[], peers: HMSPeer[
           }
           return acc;
         }
-        if (peer.isLocal && isInsetEnabled && !prominentRoles?.includes(peer.roleName || '')) {
+        if (
+          peer.isLocal &&
+          isInsetEnabled &&
+          !prominentRoles?.includes(peer.roleName || "")
+        ) {
           return acc;
         }
-        if (prominentRoles?.includes(peer.roleName || '')) {
+        if (prominentRoles?.includes(peer.roleName || "")) {
           acc[0].push(peer);
         } else {
           acc[1].push(peer);
@@ -28,7 +36,7 @@ export const useRoleProminencePeers = (prominentRoles: string[], peers: HMSPeer[
 
         return acc;
       },
-      [[], []],
+      [[], []]
     );
   }, [peers, isInsetEnabled, prominentRoles, pinnedTrack]);
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { useMedia } from 'react-use';
-import { ConferencingScreen } from '@100mslive/types-prebuilt';
+import React from "react";
+import { useMedia } from "react-use";
+import { ConferencingScreen } from "@100mslive/types-prebuilt";
 import {
   HMSPeer,
   HMSRole,
@@ -11,13 +11,13 @@ import {
   selectRolesMap,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { config as cssConfig } from '../../../Theme';
+} from "@100mslive/react-sdk";
+import { config as cssConfig } from "../../../Theme";
 // @ts-ignore: No implicit Any
-import { ToastManager } from '../Toast/ToastManager';
-import { DesktopLeaveRoom } from './DesktopLeaveRoom';
-import { MwebLeaveRoom } from './MwebLeaveRoom';
-import { useLandscapeHLSStream, useMobileHLSStream } from '../../common/hooks';
+import { ToastManager } from "../Toast/ToastManager";
+import { DesktopLeaveRoom } from "./DesktopLeaveRoom";
+import { MwebLeaveRoom } from "./MwebLeaveRoom";
+import { useLandscapeHLSStream, useMobileHLSStream } from "../../common/hooks";
 
 export const LeaveRoom = ({
   screenType,
@@ -30,12 +30,14 @@ export const LeaveRoom = ({
   const permissions = useHMSStore(selectPermissions);
   const isMobile = useMedia(cssConfig.media.md);
   const rolesMap: Record<string, HMSRole> = useHMSStore(selectRolesMap);
-  const streamingPermissionRoles = Object.keys(rolesMap).filter(roleName => {
+  const streamingPermissionRoles = Object.keys(rolesMap).filter((roleName) => {
     const roleObj = rolesMap[roleName];
     return roleObj.permissions.hlsStreaming;
   });
   const peersWithStreamingRights = useHMSStore(
-    selectPeersByCondition((peer: HMSPeer) => streamingPermissionRoles.includes(peer.roleName || '')),
+    selectPeersByCondition((peer: HMSPeer) =>
+      streamingPermissionRoles.includes(peer.roleName || "")
+    )
   );
   const hlsState = useHMSStore(selectHLSState);
   const hmsActions = useHMSActions();
@@ -45,22 +47,30 @@ export const LeaveRoom = ({
   const stopStream = async () => {
     try {
       if (permissions?.hlsStreaming) {
-        console.log('Stopping HLS stream');
+        console.log("Stopping HLS stream");
         await hmsActions.stopHLSStreaming();
-        ToastManager.addToast({ title: 'Stopping the stream' });
+        ToastManager.addToast({ title: "Stopping the stream" });
       }
     } catch (e) {
-      console.error('Error stopping stream', e);
-      ToastManager.addToast({ title: 'Error in stopping the stream', type: 'error' });
+      console.error("Error stopping stream", e);
+      ToastManager.addToast({
+        title: "Error in stopping the stream",
+        type: "error",
+      });
     }
   };
 
   const endRoom = async () => {
-    await hmsActions.endRoom(false, 'End Room');
+    await hmsActions.endRoom(false, "End Room");
   };
 
-  const leaveRoom = async (options: { endStream?: boolean } = { endStream: false }) => {
-    if (options.endStream || (hlsState.running && peersWithStreamingRights.length === 1)) {
+  const leaveRoom = async (
+    options: { endStream?: boolean } = { endStream: false }
+  ) => {
+    if (
+      options.endStream ||
+      (hlsState.running && peersWithStreamingRights.length === 1)
+    ) {
       await stopStream();
     }
     await hmsActions.leave();
@@ -70,11 +80,26 @@ export const LeaveRoom = ({
     return null;
   }
   if (isMobileHLSStream || isLandscapeHLSStream) {
-    return <MwebLeaveRoom leaveRoom={leaveRoom} endRoom={endRoom} container={container} />;
+    return (
+      <MwebLeaveRoom
+        leaveRoom={leaveRoom}
+        endRoom={endRoom}
+        container={container}
+      />
+    );
   }
   return isMobile ? (
-    <MwebLeaveRoom leaveRoom={leaveRoom} endRoom={endRoom} container={container} />
+    <MwebLeaveRoom
+      leaveRoom={leaveRoom}
+      endRoom={endRoom}
+      container={container}
+    />
   ) : (
-    <DesktopLeaveRoom leaveRoom={leaveRoom} screenType={screenType} endRoom={endRoom} container={container} />
+    <DesktopLeaveRoom
+      leaveRoom={leaveRoom}
+      screenType={screenType}
+      endRoom={endRoom}
+      container={container}
+    />
   );
 };

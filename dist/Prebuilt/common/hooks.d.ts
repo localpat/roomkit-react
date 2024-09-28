@@ -1,5 +1,5 @@
-import { HMSHLSPlayer } from '@100mslive/hls-player';
-import { HMSPeer } from '@100mslive/react-sdk';
+import { HMSHLSPlayer } from "@100mslive/hls-player";
+import { HMSPeer } from "@100mslive/react-sdk";
 /**
  * Hook to execute a callback when alone in room(after a certain 5d of time)
  * @param {number} thresholdMs The threshold(in ms) after which the callback is executed,

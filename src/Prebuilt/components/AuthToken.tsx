@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSessionStorage } from 'react-use';
-import { match } from 'ts-pattern';
-import { v4 as uuid } from 'uuid';
-import { HMSException, useHMSActions } from '@100mslive/react-sdk';
-import { Dialog } from '../../Modal';
-import { Text } from '../../Text';
-import { useHMSPrebuiltContext } from '../AppContext';
-import { PrebuiltStates } from '../AppStateContext';
+import React, { useEffect, useRef, useState } from "react";
+import { useSessionStorage } from "react-use";
+import { match } from "ts-pattern";
+import { v4 as uuid } from "uuid";
+import { HMSException, useHMSActions } from "@100mslive/react-sdk";
+import { Dialog } from "../../Modal";
+import { Text } from "../../Text";
+import { useHMSPrebuiltContext } from "../AppContext";
+import { PrebuiltStates } from "../AppStateContext";
 // @ts-ignore: No implicit Any
-import errorImage from '../images/transaction_error.svg';
+import errorImage from "../images/transaction_error.svg";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey } from './AppData/useUISettings';
+import { useSetAppDataByKey } from "./AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { UserPreferencesKeys } from './hooks/useUserPreferences';
-import { APP_DATA } from '../common/constants';
+import { UserPreferencesKeys } from "./hooks/useUserPreferences";
+import { APP_DATA } from "../common/constants";
 
 /**
  * query params exposed -
@@ -31,10 +31,14 @@ const AuthToken = React.memo<{
 }>(({ authTokenByRoomCodeEndpoint, defaultAuthToken, activeState }) => {
   const hmsActions = useHMSActions();
   const { roomCode, userId } = useHMSPrebuiltContext();
-  const [error, setError] = useState({ title: '', body: '' });
+  const [error, setError] = useState({ title: "", body: "" });
   const authToken = defaultAuthToken;
-  const [tokenInAppData, setAuthTokenInAppData] = useSetAppDataByKey(APP_DATA.authToken);
-  const [savedUserId, setSavedUserId] = useSessionStorage<string>(UserPreferencesKeys.USER_ID);
+  const [tokenInAppData, setAuthTokenInAppData] = useSetAppDataByKey(
+    APP_DATA.authToken
+  );
+  const [savedUserId, setSavedUserId] = useSessionStorage<string>(
+    UserPreferencesKeys.USER_ID
+  );
   const progressRef = useRef<boolean | null>(null);
 
   useEffect(() => {
@@ -43,12 +47,16 @@ const AuthToken = React.memo<{
       return;
     }
 
-    if (tokenInAppData || progressRef.current || activeState === PrebuiltStates.LEAVE) {
+    if (
+      tokenInAppData ||
+      progressRef.current ||
+      activeState === PrebuiltStates.LEAVE
+    ) {
       return;
     }
 
     if (!roomCode) {
-      console.error('room code not provided');
+      console.error("room code not provided");
       return;
     }
 
@@ -60,9 +68,12 @@ const AuthToken = React.memo<{
 
     progressRef.current = true;
     hmsActions
-      .getAuthTokenByRoomCode({ roomCode, userId: userIdForAuthToken }, { endpoint: authTokenByRoomCodeEndpoint })
-      .then(token => setAuthTokenInAppData(token))
-      .catch(error => setError(convertError(error)))
+      .getAuthTokenByRoomCode(
+        { roomCode, userId: userIdForAuthToken },
+        { endpoint: authTokenByRoomCodeEndpoint }
+      )
+      .then((token) => setAuthTokenInAppData(token))
+      .catch((error) => setError(convertError(error)))
       .finally(() => {
         progressRef.current = false;
       });
@@ -84,19 +95,21 @@ const AuthToken = React.memo<{
       <Dialog.Root open={true}>
         <Dialog.Content
           css={{
-            maxWidth: '$100',
-            boxSizing: 'border-box',
-            p: '$10 $12',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            maxWidth: "$100",
+            boxSizing: "border-box",
+            p: "$10 $12",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <img src={errorImage} height={80} width={80} alt="Token Error" />
-          <Text variant="h4" css={{ textAlign: 'center', mb: '$4', mt: '$10' }}>
+          <Text variant="h4" css={{ textAlign: "center", mb: "$4", mt: "$10" }}>
             {error.title}
           </Text>
-          <Text css={{ c: '$on_surface_medium', textAlign: 'center' }}>{error.body}</Text>
+          <Text css={{ c: "$on_surface_medium", textAlign: "center" }}>
+            {error.body}
+          </Text>
         </Dialog.Content>
       </Dialog.Root>
     );
@@ -105,43 +118,43 @@ const AuthToken = React.memo<{
 });
 
 const convertError = (error: HMSException) => {
-  console.error('[error]', { error });
+  console.error("[error]", { error });
   console.warn(
-    'If you think this is a mistake on our side, please reach out to us over Discord:',
-    'https://discord.com/invite/kGdmszyzq2',
+    "If you think this is a mistake on our side, please reach out to us over Discord:",
+    "https://discord.com/invite/kGdmszyzq2"
   );
   return match([error.action, error.code])
-    .with(['GET_TOKEN', 403], () => ({
-      title: 'Psst! This room is currently inactive.',
-      body: 'Please feel free to join another open room for more conversations. Thanks for stopping by!',
+    .with(["GET_TOKEN", 403], () => ({
+      title: "Psst! This room is currently inactive.",
+      body: "Please feel free to join another open room for more conversations. Thanks for stopping by!",
     }))
 
-    .with(['GET_TOKEN', 404], () => ({
-      title: 'Room code does not exist',
-      body: 'We could not find a room code corresponding to this link.',
+    .with(["GET_TOKEN", 404], () => ({
+      title: "Room code does not exist",
+      body: "We could not find a room code corresponding to this link.",
     }))
-    .with(['GET_TOKEN', 2003], () => ({
-      title: 'Endpoint is not reachable',
+    .with(["GET_TOKEN", 2003], () => ({
+      title: "Endpoint is not reachable",
       body: `Endpoint is not reachable. ${error.description}.`,
     }))
     .otherwise(() =>
       // @ts-ignore
       match(error.response?.status)
         .with(404, () => ({
-          title: 'Room does not exist',
-          body: 'We could not find a room corresponding to this link.',
+          title: "Room does not exist",
+          body: "We could not find a room corresponding to this link.",
         }))
         .with(403, () => ({
-          title: 'Accessing room using this link format is disabled',
-          body: 'You can re-enable this from the developer section in Dashboard.',
+          title: "Accessing room using this link format is disabled",
+          body: "You can re-enable this from the developer section in Dashboard.",
         }))
         .otherwise(() => {
-          console.error('Token API Error', error);
+          console.error("Token API Error", error);
           return {
-            title: 'Error fetching token',
-            body: 'An error occurred while fetching the app token. Please look into logs for more details.',
+            title: "Error fetching token",
+            body: "An error occurred while fetching the app token. Please look into logs for more details.",
           };
-        }),
+        })
     );
 };
 

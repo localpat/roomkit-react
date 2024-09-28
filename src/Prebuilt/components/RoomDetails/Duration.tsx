@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Flex } from '../../../Layout';
-import { Text } from '../../../Text';
-import { getFormattedTime } from '../Polls/common/utils';
+import React, { useEffect, useState } from "react";
+import { Flex } from "../../../Layout";
+import { Text } from "../../../Text";
+import { getFormattedTime } from "../Polls/common/utils";
 
 export const Duration = ({ timestamp }: { timestamp: Date }) => {
-  const [elapsedTime, setElapsedTime] = useState(getFormattedTime(Date.now() - timestamp.getTime(), false));
+  const [elapsedTime, setElapsedTime] = useState(
+    getFormattedTime(Date.now() - timestamp.getTime(), false)
+  );
 
   useEffect(() => {
     const timerAdded = setInterval(() => {
@@ -17,8 +19,8 @@ export const Duration = ({ timestamp }: { timestamp: Date }) => {
   }, [timestamp]);
 
   return (
-    <Flex css={{ color: '$on_surface_medium' }}>
-      <Text variant="xs" css={{ color: 'inherit' }}>
+    <Flex css={{ color: "$on_surface_medium" }}>
+      <Text variant="xs" css={{ color: "inherit" }}>
         Started {elapsedTime} ago
       </Text>
     </Flex>

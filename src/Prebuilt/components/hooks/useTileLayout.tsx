@@ -1,22 +1,36 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useMeasure, useMedia } from 'react-use';
+import { useEffect, useMemo, useState } from "react";
+import { useMeasure, useMedia } from "react-use";
 import {
   getPeersWithTiles,
   HMSPeer,
   selectTracksMap,
   TrackWithPeerAndDimensions,
   useHMSVanillaStore,
-} from '@100mslive/react-sdk';
-import { config as cssConfig } from '../../../Theme';
+} from "@100mslive/react-sdk";
+import { config as cssConfig } from "../../../Theme";
 
-const aspectRatioConfig = { default: [1 / 1, 4 / 3, 16 / 9], mobile: [1 / 1, 3 / 4, 9 / 16] };
+const aspectRatioConfig = {
+  default: [1 / 1, 4 / 3, 16 / 9],
+  mobile: [1 / 1, 3 / 4, 9 / 16],
+};
 
-export const usePagesWithTiles = ({ peers, maxTileCount }: { peers: HMSPeer[]; maxTileCount: number }) => {
+export const usePagesWithTiles = ({
+  peers,
+  maxTileCount,
+}: {
+  peers: HMSPeer[];
+  maxTileCount: number;
+}) => {
   const vanillaStore = useHMSVanillaStore();
   const tracksMap = vanillaStore.getState(selectTracksMap);
   const peersWithTiles = useMemo(
-    () => getPeersWithTiles(peers, tracksMap, () => false) as TrackWithPeerAndDimensions[],
-    [peers, tracksMap],
+    () =>
+      getPeersWithTiles(
+        peers,
+        tracksMap,
+        () => false
+      ) as TrackWithPeerAndDimensions[],
+    [peers, tracksMap]
   );
   const noOfPages = Math.ceil(peersWithTiles.length / maxTileCount);
   const pagesList = useMemo(() => {
@@ -47,7 +61,9 @@ export const useTileLayout = ({
   const vanillaStore = useHMSVanillaStore();
   const [ref, { width, height }] = useMeasure<HTMLDivElement>();
   const isMobile = useMedia(cssConfig.media.lg);
-  const [pagesWithTiles, setPagesWithTiles] = useState<TrackWithPeerAndDimensions[][]>([]);
+  const [pagesWithTiles, setPagesWithTiles] = useState<
+    TrackWithPeerAndDimensions[][]
+  >([]);
 
   useEffect(() => {
     if (width === 0 || height === 0) {
@@ -91,7 +107,7 @@ export const useTileLayout = ({
         if (edgeToEdge) {
           tileHeight = maxRowHeight;
         } else {
-          const calcHeights = aspectRatios.map(aR => tileWidth / aR);
+          const calcHeights = aspectRatios.map((aR) => tileWidth / aR);
           for (const h of calcHeights) {
             if (h < maxRowHeight) {
               if (tileHeight < h) {
@@ -104,7 +120,7 @@ export const useTileLayout = ({
           // find the max possible width instead
           if (tileHeight === 0) {
             tileHeight = maxRowHeight;
-            const calcWidths = aspectRatios.map(aR => tileHeight * aR);
+            const calcWidths = aspectRatios.map((aR) => tileHeight * aR);
             tileWidth = 0;
             for (const w of calcWidths) {
               if (w < width) {
@@ -122,6 +138,14 @@ export const useTileLayout = ({
       }
     }
     setPagesWithTiles([...pageList]);
-  }, [width, height, maxTileCount, pageList, vanillaStore, isMobile, edgeToEdge]);
+  }, [
+    width,
+    height,
+    maxTileCount,
+    pageList,
+    vanillaStore,
+    isMobile,
+    edgeToEdge,
+  ]);
   return { pagesWithTiles, ref };
 };

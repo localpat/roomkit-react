@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 export declare const ChatToggle: ({ onClick }: {
-    onClick?: (() => void) | undefined;
+    onClick?: () => void;
 }) => React.JSX.Element;

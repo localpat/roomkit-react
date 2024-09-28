@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const HMSVideoPlayer: {
     Root: any;
     Progress: ({ seekProgress, setSeekProgress, }: {

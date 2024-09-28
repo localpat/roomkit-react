@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 export declare const ConnectionIndicator: ({ peerId, isTile, hideBg, }: {
     peerId: string;
-    isTile?: boolean | undefined;
-    hideBg?: boolean | undefined;
+    isTile?: boolean;
+    hideBg?: boolean;
 }) => React.JSX.Element | null;

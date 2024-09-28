@@ -1,5 +1,8 @@
-import { useEffect } from 'react';
-import { HMSNotificationTypes, useHMSNotifications } from '@100mslive/react-sdk';
+import { useEffect } from "react";
+import {
+  HMSNotificationTypes,
+  useHMSNotifications,
+} from "@100mslive/react-sdk";
 
 const notificationTypes = [
   HMSNotificationTypes.TRACK_ADDED,

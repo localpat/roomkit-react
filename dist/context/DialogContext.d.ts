@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 export declare const DialogContainerContext: React.Context<string>;
 export declare function DialogContainerProvider({ children, dialogContainerSelector, }: {
     children: ReactNode;

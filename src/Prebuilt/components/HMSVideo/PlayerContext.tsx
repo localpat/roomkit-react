@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { HMSHLSPlayer } from '@100mslive/hls-player';
+import React, { useContext } from "react";
+import { HMSHLSPlayer } from "@100mslive/hls-player";
 
 type IHMSPlayerContext = {
   hlsPlayer?: HMSHLSPlayer;

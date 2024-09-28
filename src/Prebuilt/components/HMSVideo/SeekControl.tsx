@@ -1,5 +1,5 @@
-import React, { MouseEventHandler } from 'react';
-import { IconButton, Tooltip } from '../../..';
+import React, { MouseEventHandler } from "react";
+import { IconButton, Tooltip } from "../../..";
 
 export const SeekControl = ({
   title,
@@ -14,7 +14,11 @@ export const SeekControl = ({
 }) => {
   return (
     <Tooltip title={title} side="top">
-      <IconButton onClick={onClick} data-testid="backward_forward_arrow_btn" css={css}>
+      <IconButton
+        onClick={onClick}
+        data-testid="backward_forward_arrow_btn"
+        css={css}
+      >
         {children}
       </IconButton>
     </Tooltip>

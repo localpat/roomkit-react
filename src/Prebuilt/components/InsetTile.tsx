@@ -1,38 +1,51 @@
-import React, { useEffect, useRef } from 'react';
-import Draggable from 'react-draggable';
-import { useMedia } from 'react-use';
+import React, { useEffect, useRef } from "react";
+import Draggable from "react-draggable";
+import { useMedia } from "react-use";
 import {
   selectIsAllowedToPublish,
   selectLocalPeer,
   selectPeerByID,
   selectVideoTrackByID,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { ExpandIcon } from '@100mslive/react-icons';
-import { Box, Flex } from '../../Layout';
-import { Text } from '../../Text';
-import { config as cssConfig } from '../../Theme';
+} from "@100mslive/react-sdk";
+import { ExpandIcon } from "@100mslive/react-icons";
+import { Box, Flex } from "../../Layout";
+import { Text } from "../../Text";
+import { config as cssConfig } from "../../Theme";
 // @ts-ignore: No implicit Any
-import IconButton from '../IconButton';
+import IconButton from "../IconButton";
 // @ts-ignore: No implicit Any
-import { AudioVideoToggle } from './AudioVideoToggle';
+import { AudioVideoToggle } from "./AudioVideoToggle";
 // @ts-ignore: No implicit Any
-import VideoTile from './VideoTile';
+import VideoTile from "./VideoTile";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey } from './AppData/useUISettings';
-import { useVideoTileContext } from './hooks/useVideoTileLayout';
+import { useSetAppDataByKey } from "./AppData/useUISettings";
+import { useVideoTileContext } from "./hooks/useVideoTileLayout";
 // @ts-ignore: No implicit Any
-import { APP_DATA } from '../common/constants';
+import { APP_DATA } from "../common/constants";
 
-const MinimisedTile = ({ setMinimised }: { setMinimised: (value: boolean) => void }) => {
+const MinimisedTile = ({
+  setMinimised,
+}: {
+  setMinimised: (value: boolean) => void;
+}) => {
   return (
-    <Flex align="center" css={{ gap: '$6', r: '$1', bg: '$surface_default', p: '$4', color: '$on_surface_high' }}>
+    <Flex
+      align="center"
+      css={{
+        gap: "$6",
+        r: "$1",
+        bg: "$surface_default",
+        p: "$4",
+        color: "$on_surface_high",
+      }}
+    >
       <AudioVideoToggle hideOptions={true} />
       <Text>You</Text>
       <IconButton
         className="__cancel-drag-event"
         onClick={() => setMinimised(false)}
-        css={{ bg: 'transparent', border: 'transparent' }}
+        css={{ bg: "transparent", border: "transparent" }}
       >
         <ExpandIcon />
       </IconButton>
@@ -73,8 +86,8 @@ export const InsetTile = ({ peerId }: { peerId?: string }) => {
     if (!node || !window.ResizeObserver) {
       return;
     }
-    const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
         if (entry.target === node.parentElement) {
           // reset to original position on resize
           node.style.transform = `translate(0,0)`;
@@ -97,12 +110,12 @@ export const InsetTile = ({ peerId }: { peerId?: string }) => {
       <Box
         ref={nodeRef}
         css={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           right: 0,
           zIndex: 10,
-          boxShadow: '0 0 8px 0 rgba(0,0,0,0.3)',
-          r: '$2',
+          boxShadow: "0 0 8px 0 rgba(0,0,0,0.3)",
+          r: "$2",
           ...(!minimised
             ? {
                 aspectRatio: aspectRatio,
@@ -118,12 +131,12 @@ export const InsetTile = ({ peerId }: { peerId?: string }) => {
             peerId={peer?.id}
             trackId={peer?.videoTrack}
             rootCSS={{
-              size: '100%',
+              size: "100%",
               padding: 0,
             }}
             width={width}
             height={height}
-            containerCSS={{ background: '$surface_default' }}
+            containerCSS={{ background: "$surface_default" }}
             canMinimise
             isDragabble
             {...videoTileProps}

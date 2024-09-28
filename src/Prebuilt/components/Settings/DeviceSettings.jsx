@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { useMedia } from 'react-use';
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { useMedia } from "react-use";
 import {
   DeviceType,
   selectIsLocalVideoEnabled,
@@ -8,16 +8,24 @@ import {
   useDevices,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { MicOnIcon, SpeakerIcon, VideoOnIcon } from '@100mslive/react-icons';
-import { Box, Button, Dropdown, Flex, StyledVideoTile, Text, Video } from '../../../';
-import { config as cssConfig } from '../../../Theme';
-import { DialogDropdownTrigger } from '../../primitives/DropdownTrigger';
-import { useUISettings } from '../AppData/useUISettings';
-import { useAudioOutputTest } from '../hooks/useAudioOutputTest';
-import { useDropdownSelection } from '../hooks/useDropdownSelection';
-import { settingOverflow } from './common';
-import { TEST_AUDIO_URL, UI_SETTINGS } from '../../common/constants';
+} from "@100mslive/react-sdk";
+import { MicOnIcon, SpeakerIcon, VideoOnIcon } from "@100mslive/react-icons";
+import {
+  Box,
+  Button,
+  Dropdown,
+  Flex,
+  StyledVideoTile,
+  Text,
+  Video,
+} from "../../../";
+import { config as cssConfig } from "../../../Theme";
+import { DialogDropdownTrigger } from "../../primitives/DropdownTrigger";
+import { useUISettings } from "../AppData/useUISettings";
+import { useAudioOutputTest } from "../hooks/useAudioOutputTest";
+import { useDropdownSelection } from "../hooks/useDropdownSelection";
+import { settingOverflow } from "./common";
+import { TEST_AUDIO_URL, UI_SETTINGS } from "../../common/constants";
 
 /**
  * wrap the button on click of whom settings should open, this component will take care of the rest,
@@ -31,7 +39,7 @@ const Settings = ({ setHide }) => {
   const isVideoOn = useHMSStore(selectIsLocalVideoEnabled);
   // don't show speaker selector where the API is not supported, and use
   // a generic word("Audio") for Mic. In some cases(Chrome Android for example) this changes both mic and speaker keeping them in sync.
-  const shouldShowAudioOutput = 'setSinkId' in HTMLMediaElement.prototype;
+  const shouldShowAudioOutput = "setSinkId" in HTMLMediaElement.prototype;
   const mirrorLocalVideo = useUISettings(UI_SETTINGS.mirrorLocalVideo);
   const trackSelector = selectVideoTrackByID(videoTrackId);
   const hmsActions = useHMSActions();
@@ -47,9 +55,13 @@ const Settings = ({ setHide }) => {
   /**
    * Chromium browsers return an audioOutput with empty label when no permissions are given
    */
-  const audioOutputFiltered = audioOutput?.filter(item => !!item.label) ?? [];
+  const audioOutputFiltered = audioOutput?.filter((item) => !!item.label) ?? [];
 
-  if (!videoInput?.length && !audioInput?.length && !audioOutputFiltered?.length) {
+  if (
+    !videoInput?.length &&
+    !audioInput?.length &&
+    !audioOutputFiltered?.length
+  ) {
     setHide(true);
   }
 
@@ -60,14 +72,17 @@ const Settings = ({ setHide }) => {
           {isVideoOn && (
             <StyledVideoTile.Container
               css={{
-                w: '90%',
-                px: '$10',
-                height: '$48',
-                bg: 'transparent',
-                m: '$10 auto',
+                w: "90%",
+                px: "$10",
+                height: "$48",
+                bg: "transparent",
+                m: "$10 auto",
               }}
             >
-              <Video trackId={videoTrackId} mirror={track?.facingMode !== 'environment' && mirrorLocalVideo} />
+              <Video
+                trackId={videoTrackId}
+                mirror={track?.facingMode !== "environment" && mirrorLocalVideo}
+              />
             </StyledVideoTile.Container>
           )}
           <DeviceSelector
@@ -75,7 +90,7 @@ const Settings = ({ setHide }) => {
             devices={videoInput}
             icon={<VideoOnIcon />}
             selection={selectedDeviceIDs.videoInput}
-            onChange={deviceId =>
+            onChange={(deviceId) =>
               updateDevice({
                 deviceId,
                 deviceType: DeviceType.videoInput,
@@ -87,11 +102,11 @@ const Settings = ({ setHide }) => {
 
       {audioInput?.length ? (
         <DeviceSelector
-          title={shouldShowAudioOutput ? 'Microphone' : 'Audio'}
+          title={shouldShowAudioOutput ? "Microphone" : "Audio"}
           icon={<MicOnIcon />}
           devices={audioInput}
           selection={selectedDeviceIDs.audioInput}
-          onChange={deviceId =>
+          onChange={(deviceId) =>
             updateDevice({
               deviceId,
               deviceType: DeviceType.audioInput,
@@ -106,7 +121,7 @@ const Settings = ({ setHide }) => {
           icon={<SpeakerIcon />}
           devices={audioOutput}
           selection={selectedDeviceIDs.audioOutput}
-          onChange={deviceId =>
+          onChange={(deviceId) =>
             updateDevice({
               deviceId,
               deviceType: DeviceType.audioOutput,
@@ -120,33 +135,40 @@ const Settings = ({ setHide }) => {
   );
 };
 
-const DeviceSelector = ({ title, devices, selection, onChange, icon, children = null }) => {
+const DeviceSelector = ({
+  title,
+  devices,
+  selection,
+  onChange,
+  icon,
+  children = null,
+}) => {
   const [open, setOpen] = useState(false);
   const selectionBg = useDropdownSelection();
   const ref = useRef(null);
 
   return (
-    <Box css={{ mb: '$10' }}>
-      <Text css={{ mb: '$4' }}>{title}</Text>
+    <Box css={{ mb: "$10" }}>
+      <Text css={{ mb: "$4" }}>{title}</Text>
       <Flex
         align="center"
         css={{
-          gap: '$4',
-          '@md': {
-            flexDirection: children ? 'column' : 'row',
-            alignItems: children ? 'start' : 'center',
+          gap: "$4",
+          "@md": {
+            flexDirection: children ? "column" : "row",
+            alignItems: children ? "start" : "center",
           },
         }}
       >
         <Box
           css={{
-            position: 'relative',
-            flex: '1 1 0',
+            position: "relative",
+            flex: "1 1 0",
             minWidth: 0,
-            w: '100%',
-            maxWidth: '100%',
-            '@md': {
-              mb: children ? '$8' : 0,
+            w: "100%",
+            maxWidth: "100%",
+            "@md": {
+              mb: children ? "$8" : 0,
             },
           }}
         >
@@ -154,19 +176,29 @@ const DeviceSelector = ({ title, devices, selection, onChange, icon, children = 
             <DialogDropdownTrigger
               ref={ref}
               icon={icon}
-              title={devices.find(({ deviceId }) => deviceId === selection)?.label || 'Select device from list'}
+              title={
+                devices.find(({ deviceId }) => deviceId === selection)?.label ||
+                "Select device from list"
+              }
               open={open}
             />
             <Dropdown.Portal>
-              <Dropdown.Content align="start" sideOffset={8} css={{ w: ref.current?.clientWidth, zIndex: 1001 }}>
-                {devices.map(device => {
+              <Dropdown.Content
+                align="start"
+                sideOffset={8}
+                css={{ w: ref.current?.clientWidth, zIndex: 1001 }}
+              >
+                {devices.map((device) => {
                   return (
                     <Dropdown.Item
                       key={device.label}
                       onSelect={() => onChange(device.deviceId)}
                       css={{
-                        px: '$9',
-                        bg: device.deviceId === selection ? selectionBg : undefined,
+                        px: "$9",
+                        bg:
+                          device.deviceId === selection
+                            ? selectionBg
+                            : undefined,
                       }}
                     >
                       {device.label}
@@ -184,24 +216,26 @@ const DeviceSelector = ({ title, devices, selection, onChange, icon, children = 
 };
 
 const TestAudio = ({ id }) => {
-  const { playing, setPlaying, audioRef } = useAudioOutputTest({ deviceId: id });
+  const { playing, setPlaying, audioRef } = useAudioOutputTest({
+    deviceId: id,
+  });
   return (
     <>
       <Button
         variant="standard"
         css={{
           flexShrink: 0,
-          p: '$6 $9',
-          '@md': {
-            w: '100%',
+          p: "$6 $9",
+          "@md": {
+            w: "100%",
           },
         }}
         onClick={() => audioRef.current?.play()}
         disabled={playing}
       >
         <SpeakerIcon />
-        &nbsp;Test{' '}
-        <Text as="span" css={{ display: 'none', '@md': { display: 'inline' } }}>
+        &nbsp;Test{" "}
+        <Text as="span" css={{ display: "none", "@md": { display: "inline" } }}>
           &nbsp; speaker
         </Text>
       </Button>
@@ -210,7 +244,7 @@ const TestAudio = ({ id }) => {
         src={TEST_AUDIO_URL}
         onEnded={() => setPlaying(false)}
         onPlay={() => setPlaying(true)}
-        css={{ display: 'none' }}
+        css={{ display: "none" }}
       />
     </>
   );

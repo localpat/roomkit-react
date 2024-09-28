@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 export declare const RequestPrompt: ({ open, onOpenChange, title, body, actionText, onAction, disableActions, }: {
-    open?: boolean | undefined;
+    open?: boolean;
     onOpenChange: (value: boolean) => void;
     title: string;
     body: React.ReactNode;
-    actionText?: string | undefined;
+    actionText?: string;
     onAction: () => void;
-    disableActions?: boolean | undefined;
+    disableActions?: boolean;
 }) => React.JSX.Element;

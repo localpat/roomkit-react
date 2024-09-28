@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useMedia } from 'react-use';
-import { PeopleAddIcon } from '@100mslive/react-icons';
-import { Flex } from '../../../Layout';
-import { config as cssConfig } from '../../../Theme';
-import { WaitingView } from '../../layouts/WaitingView';
-import { InsetTile } from '../InsetTile';
-import { Pagination } from '../Pagination';
-import { Grid } from './Grid';
-import { LayoutProps } from './interface';
+import React, { useEffect, useState } from "react";
+import { useMedia } from "react-use";
+import { PeopleAddIcon } from "@100mslive/react-icons";
+import { Flex } from "../../../Layout";
+import { config as cssConfig } from "../../../Theme";
+import { WaitingView } from "../../layouts/WaitingView";
+import { InsetTile } from "../InsetTile";
+import { Pagination } from "../Pagination";
+import { Grid } from "./Grid";
+import { LayoutProps } from "./interface";
 // @ts-ignore: No implicit Any
-import { useUISettings } from '../AppData/useUISettings';
-import { usePagesWithTiles, useTileLayout } from '../hooks/useTileLayout';
-import { UI_SETTINGS } from '../../common/constants';
+import { useUISettings } from "../AppData/useUISettings";
+import { usePagesWithTiles, useTileLayout } from "../hooks/useTileLayout";
+import { UI_SETTINGS } from "../../common/constants";
 
-export function EqualProminence({ isInsetEnabled = false, peers, onPageChange, onPageSize, edgeToEdge }: LayoutProps) {
+export function EqualProminence({
+  isInsetEnabled = false,
+  peers,
+  onPageChange,
+  onPageSize,
+  edgeToEdge,
+}: LayoutProps) {
   const isMobile = useMedia(cssConfig.media.md);
   let maxTileCount = useUISettings(UI_SETTINGS.maxTileCount);
   maxTileCount = isMobile ? Math.min(maxTileCount, 6) : maxTileCount;
@@ -37,12 +43,15 @@ export function EqualProminence({ isInsetEnabled = false, peers, onPageChange, o
   }, [pageSize, onPageSize]);
 
   return (
-    <Flex direction="column" css={{ flex: '1 1 0', h: '100%', position: 'relative', minWidth: 0 }}>
+    <Flex
+      direction="column"
+      css={{ flex: "1 1 0", h: "100%", position: "relative", minWidth: 0 }}
+    >
       <Grid tiles={pagesWithTiles[page]} ref={ref} edgeToEdge={edgeToEdge} />
       {!edgeToEdge && (
         <Pagination
           page={page}
-          onPageChange={page => {
+          onPageChange={(page) => {
             setPage(page);
             onPageChange?.(page);
           }}
@@ -53,7 +62,13 @@ export function EqualProminence({ isInsetEnabled = false, peers, onPageChange, o
         <WaitingView
           title="You're the first to join"
           subtitle="Sit back and relax till others join"
-          icon={<PeopleAddIcon width="56px" height="56px" style={{ color: 'white' }} />}
+          icon={
+            <PeopleAddIcon
+              width="56px"
+              height="56px"
+              style={{ color: "white" }}
+            />
+          }
         />
       ) : null}
       {isInsetEnabled && <InsetTile />}

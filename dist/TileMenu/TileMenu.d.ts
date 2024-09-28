@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSPeerID } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSPeerID } from "@100mslive/react-sdk";
 export interface TileMenuProps {
     peerId: HMSPeerID;
 }

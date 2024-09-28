@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
-import { HMSNotificationTypes, useHMSNotifications } from '@100mslive/react-sdk';
+import { useEffect, useRef } from "react";
+import {
+  HMSNotificationTypes,
+  useHMSNotifications,
+} from "@100mslive/react-sdk";
 // @ts-ignore: No implicit Any
-import { ToastConfig } from '../Toast/ToastConfig';
+import { ToastConfig } from "../Toast/ToastConfig";
 // @ts-ignore: No implicit Any
-import { ToastManager } from '../Toast/ToastManager';
+import { ToastManager } from "../Toast/ToastManager";
 
 const notificationTypes = [
   HMSNotificationTypes.RECONNECTED,
@@ -22,13 +25,15 @@ export const ReconnectNotifications = () => {
     if (notification.type === HMSNotificationTypes.RECONNECTED) {
       notificationId = ToastManager.replaceToast(
         notificationId,
-        ToastConfig.RECONNECTED.single([4005, 4006].includes(prevErrorCode.current)),
+        ToastConfig.RECONNECTED.single(
+          [4005, 4006].includes(prevErrorCode.current)
+        )
       );
     } else if (notification.type === HMSNotificationTypes.RECONNECTING) {
       prevErrorCode.current = notification.data?.code || 0;
       notificationId = ToastManager.replaceToast(
         notificationId,
-        ToastConfig.RECONNECTING.single(notification.data?.message),
+        ToastConfig.RECONNECTING.single(notification.data?.message)
       );
     }
   }, [notification]);

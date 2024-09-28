@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { PIPContext } from './context';
+import React, { useCallback, useMemo, useState } from "react";
+import { PIPContext } from "./context";
 
 type PIPProviderProps = {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ type PIPProviderProps = {
 
 export const PIPProvider = ({ children }: PIPProviderProps) => {
   // Detect if the feature is available.
-  const isSupported = 'documentPictureInPicture' in window;
+  const isSupported = "documentPictureInPicture" in window;
 
   // Expose pipWindow that is currently active
   const [pipWindow, setPipWindow] = useState<Window | null>(null);
@@ -34,13 +34,13 @@ export const PIPProvider = ({ children }: PIPProviderProps) => {
       });
 
       // Detect when window is closed by user
-      pip.addEventListener('pagehide', () => {
+      pip.addEventListener("pagehide", () => {
         setPipWindow(null);
       });
 
       setPipWindow(pip);
     },
-    [pipWindow],
+    [pipWindow]
   );
 
   const value = useMemo(() => {

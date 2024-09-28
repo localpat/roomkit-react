@@ -8,7 +8,7 @@ export declare class VBPlugin {
     getName: () => any;
     setBlur: (blurPower: number) => Promise<void>;
     setBackground: (mediaURL: string) => Promise<void>;
-    setPreset: (preset: 'quality' | 'balanced') => Promise<void>;
+    setPreset: (preset: "quality" | "balanced") => Promise<void>;
     getPreset: () => any;
     removeEffects: () => Promise<void>;
     reset: () => void;

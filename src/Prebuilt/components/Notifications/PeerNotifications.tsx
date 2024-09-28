@@ -1,19 +1,37 @@
-import { useEffect } from 'react';
-import { HMSNotificationTypes, useHMSNotifications } from '@100mslive/react-sdk';
+import { useEffect } from "react";
+import {
+  HMSNotificationTypes,
+  useHMSNotifications,
+} from "@100mslive/react-sdk";
 // @ts-ignore: No implicit Any
-import { ToastBatcher } from '../Toast/ToastBatcher';
+import { ToastBatcher } from "../Toast/ToastBatcher";
 // @ts-ignore: No implicit Any
-import { useSetSubscribedChatSelector, useSubscribedNotifications } from '../AppData/useUISettings';
+import {
+  useSetSubscribedChatSelector,
+  useSubscribedNotifications,
+} from "../AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { CHAT_SELECTOR, SUBSCRIBED_NOTIFICATIONS } from '../../common/constants';
+import {
+  CHAT_SELECTOR,
+  SUBSCRIBED_NOTIFICATIONS,
+} from "../../common/constants";
 
-const notificationTypes = [HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT];
+const notificationTypes = [
+  HMSNotificationTypes.PEER_JOINED,
+  HMSNotificationTypes.PEER_LEFT,
+];
 
 export const PeerNotifications = () => {
   const notification = useHMSNotifications(notificationTypes);
-  const isPeerJoinSubscribed = useSubscribedNotifications(SUBSCRIBED_NOTIFICATIONS.PEER_JOINED);
-  const isPeerLeftSubscribed = useSubscribedNotifications(SUBSCRIBED_NOTIFICATIONS.PEER_LEFT);
-  const [selectedPeer, setPeerSelector] = useSetSubscribedChatSelector(CHAT_SELECTOR.PEER);
+  const isPeerJoinSubscribed = useSubscribedNotifications(
+    SUBSCRIBED_NOTIFICATIONS.PEER_JOINED
+  );
+  const isPeerLeftSubscribed = useSubscribedNotifications(
+    SUBSCRIBED_NOTIFICATIONS.PEER_LEFT
+  );
+  const [selectedPeer, setPeerSelector] = useSetSubscribedChatSelector(
+    CHAT_SELECTOR.PEER
+  );
 
   useEffect(() => {
     if (!notification?.data) {
@@ -39,7 +57,13 @@ export const PeerNotifications = () => {
         return;
     }
     ToastBatcher.showToast({ notification });
-  }, [notification, isPeerJoinSubscribed, isPeerLeftSubscribed, selectedPeer.id, setPeerSelector]);
+  }, [
+    notification,
+    isPeerJoinSubscribed,
+    isPeerLeftSubscribed,
+    selectedPeer.id,
+    setPeerSelector,
+  ]);
 
   return null;
 };

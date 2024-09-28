@@ -1,10 +1,22 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { useHMSActions } from '@100mslive/react-sdk';
-import { AlertTriangleIcon, ChangeRoleIcon, CheckIcon } from '@100mslive/react-icons';
-import { Button, Checkbox, Dialog, Dropdown, Flex, Loading, Text } from '../../../';
-import { DialogContent, DialogRow } from '../../primitives/DialogContent';
-import { DialogDropdownTrigger } from '../../primitives/DropdownTrigger';
-import { useFilteredRoles } from '../../common/hooks';
+import React, { useCallback, useRef, useState } from "react";
+import { useHMSActions } from "@100mslive/react-sdk";
+import {
+  AlertTriangleIcon,
+  ChangeRoleIcon,
+  CheckIcon,
+} from "@100mslive/react-icons";
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  Dropdown,
+  Flex,
+  Loading,
+  Text,
+} from "../../../";
+import { DialogContent, DialogRow } from "../../primitives/DialogContent";
+import { DialogDropdownTrigger } from "../../primitives/DropdownTrigger";
+import { useFilteredRoles } from "../../common/hooks";
 
 export const BulkRoleChangeModal = ({ onOpenChange }) => {
   const roles = useFilteredRoles();
@@ -12,22 +24,25 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
   const ref = useRef(null);
   const roleRef = useRef(null);
   const [selectedBulkRole, setBulkRole] = useState([]);
-  const [selectedRole, setRole] = useState('');
+  const [selectedRole, setRole] = useState("");
   const [bulkRoleDialog, setBulkRoleDialog] = useState(false);
   const [roleDialog, setRoleDialog] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
 
   const changeBulkRole = useCallback(async () => {
     if (selectedBulkRole.length > 0 && selectedRole) {
       try {
         setIsSubmiting(true);
-        await hmsActions.changeRoleOfPeersWithRoles(selectedBulkRole, selectedRole);
+        await hmsActions.changeRoleOfPeersWithRoles(
+          selectedBulkRole,
+          selectedRole
+        );
         setIsSubmiting(false);
-        setErrorMessage('');
+        setErrorMessage("");
         onOpenChange(false);
       } catch (err) {
-        setErrorMessage(err?.message ? err?.message : 'Unknown error');
+        setErrorMessage(err?.message ? err?.message : "Unknown error");
         setIsSubmiting(false);
       }
     }
@@ -40,7 +55,7 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
           <Text>For Roles: </Text>
           <Dropdown.Root
             open={bulkRoleDialog}
-            onOpenChange={value => {
+            onOpenChange={(value) => {
               if (value) {
                 setBulkRoleDialog(value);
               }
@@ -49,10 +64,14 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
           >
             <DialogDropdownTrigger
               ref={ref}
-              title={selectedBulkRole.length === 0 ? 'Select Multiple Roles' : selectedBulkRole.toString()}
+              title={
+                selectedBulkRole.length === 0
+                  ? "Select Multiple Roles"
+                  : selectedBulkRole.toString()
+              }
               css={{
-                w: '70%',
-                p: '$8',
+                w: "70%",
+                p: "$8",
               }}
               open={bulkRoleDialog}
             />
@@ -65,19 +84,26 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
               }}
             >
               {roles &&
-                roles.map(role => {
+                roles.map((role) => {
                   return (
                     <Dropdown.CheckboxItem
                       key={role}
                       checked={selectedBulkRole.includes(role)}
-                      onCheckedChange={value => {
-                        setBulkRole(selection => {
-                          return value ? [...selection, role] : selection.filter(selectedRole => selectedRole !== role);
+                      onCheckedChange={(value) => {
+                        setBulkRole((selection) => {
+                          return value
+                            ? [...selection, role]
+                            : selection.filter(
+                                (selectedRole) => selectedRole !== role
+                              );
                         });
-                        setErrorMessage('');
+                        setErrorMessage("");
                       }}
                     >
-                      <Checkbox.Root css={{ margin: '$2' }} checked={selectedBulkRole.includes(role)}>
+                      <Checkbox.Root
+                        css={{ margin: "$2" }}
+                        checked={selectedBulkRole.includes(role)}
+                      >
                         <Checkbox.Indicator>
                           <CheckIcon width={16} height={16} />
                         </Checkbox.Indicator>
@@ -91,25 +117,30 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
         </DialogRow>
         <DialogRow>
           <Text>To Role: </Text>
-          <Dropdown.Root open={roleDialog} onOpenChange={value => setRoleDialog(value)}>
+          <Dropdown.Root
+            open={roleDialog}
+            onOpenChange={(value) => setRoleDialog(value)}
+          >
             <DialogDropdownTrigger
               ref={roleRef}
-              title={selectedRole || 'Select Role'}
+              title={selectedRole || "Select Role"}
               css={{
-                w: '70%',
-                p: '$8',
+                w: "70%",
+                p: "$8",
               }}
               open={roleDialog}
             />
-            <Dropdown.Content css={{ w: roleRef.current?.clientWidth, zIndex: 1000 }}>
+            <Dropdown.Content
+              css={{ w: roleRef.current?.clientWidth, zIndex: 1000 }}
+            >
               {roles &&
-                roles.map(role => {
+                roles.map((role) => {
                   return (
                     <Dropdown.Item
                       key={role}
                       onSelect={() => {
                         setRole(role);
-                        setErrorMessage('');
+                        setErrorMessage("");
                       }}
                     >
                       {role}
@@ -121,15 +152,22 @@ export const BulkRoleChangeModal = ({ onOpenChange }) => {
         </DialogRow>
         <DialogRow>
           {errorMessage && (
-            <Flex gap={2} css={{ c: '$alert_error_default', w: '70%', ml: 'auto' }}>
+            <Flex
+              gap={2}
+              css={{ c: "$alert_error_default", w: "70%", ml: "auto" }}
+            >
               <AlertTriangleIcon />
-              <Text css={{ c: 'inherit' }}>{errorMessage}</Text>
+              <Text css={{ c: "inherit" }}>{errorMessage}</Text>
             </Flex>
           )}
         </DialogRow>
         <DialogRow justify="end">
-          <Button variant="primary" onClick={changeBulkRole} disabled={!(selectedRole && selectedBulkRole.length > 0)}>
-            {isSubmiting && <Loading css={{ color: '$on_primary_medium' }} />}
+          <Button
+            variant="primary"
+            onClick={changeBulkRole}
+            disabled={!(selectedRole && selectedBulkRole.length > 0)}
+          >
+            {isSubmiting && <Loading css={{ color: "$on_primary_medium" }} />}
             Apply
           </Button>
         </DialogRow>

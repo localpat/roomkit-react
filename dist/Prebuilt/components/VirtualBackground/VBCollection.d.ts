@@ -1,13 +1,13 @@
-import React from 'react';
-import { HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background/hmsvbplugin';
+import React from "react";
+import { HMSVirtualBackgroundTypes } from "@100mslive/hms-virtual-background/hmsvbplugin";
 export declare const VBCollection: ({ options, title, activeBackground, }: {
     options: {
-        title?: string | undefined;
-        icon?: React.JSX.Element | undefined;
-        onClick?: (() => Promise<void>) | undefined;
-        mediaURL?: string | undefined;
+        title?: string;
+        icon?: React.JSX.Element;
+        onClick?: () => Promise<void>;
+        mediaURL?: string;
         value: string | HMSVirtualBackgroundTypes;
-        supported?: boolean | undefined;
+        supported?: boolean;
     }[];
     title: string;
     activeBackground: string;

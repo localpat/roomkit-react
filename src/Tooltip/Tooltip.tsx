@@ -1,20 +1,25 @@
-import React, { PropsWithChildren, useState } from 'react';
-import * as BaseTooltip from '@radix-ui/react-tooltip';
-import { CSS, styled } from '../Theme';
-import { slideDownAndFade, slideLeftAndFade, slideRightAndFade, slideUpAndFade } from '../utils';
+import React, { PropsWithChildren, useState } from "react";
+import * as BaseTooltip from "@radix-ui/react-tooltip";
+import { CSS, styled } from "../Theme";
+import {
+  slideDownAndFade,
+  slideLeftAndFade,
+  slideRightAndFade,
+  slideUpAndFade,
+} from "../utils";
 
 const TooltipBox = styled(BaseTooltip.Content, {
-  fontFamily: '$sans',
-  borderRadius: '$2',
-  padding: '$2 $4',
-  fontSize: '$xs',
+  fontFamily: "$sans",
+  borderRadius: "$2",
+  padding: "$2 $4",
+  fontSize: "$xs",
   zIndex: 11,
-  color: '$on_surface_high',
-  backgroundColor: '$surface_bright',
-  '@media (prefers-reduced-motion: no-preference)': {
-    animationDuration: '400ms',
-    animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    willChange: 'transform, opacity',
+  color: "$on_surface_high",
+  backgroundColor: "$surface_bright",
+  "@media (prefers-reduced-motion: no-preference)": {
+    animationDuration: "400ms",
+    animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+    willChange: "transform, opacity",
     '&[data-state="delayed-open"]': {
       '&[data-side="top"]': { animationName: slideDownAndFade() },
       '&[data-side="right"]': { animationName: slideLeftAndFade() },
@@ -25,20 +30,20 @@ const TooltipBox = styled(BaseTooltip.Content, {
   variants: {
     outlined: {
       true: {
-        backgroundColor: '$background_dim',
-        border: 'solid $space$px $border_bright',
+        backgroundColor: "$background_dim",
+        border: "solid $space$px $border_bright",
       },
     },
   },
 });
 
 const TooltipTrigger = styled(BaseTooltip.Trigger, {
-  fontFamily: '$sans',
+  fontFamily: "$sans",
 });
 
 const TooltipRoot = BaseTooltip.Root;
-export type alignTooltip = 'end' | 'center' | 'start' | undefined;
-export type sideTooltip = 'bottom' | 'left' | 'right' | 'top' | undefined;
+export type alignTooltip = "end" | "center" | "start" | undefined;
+export type sideTooltip = "bottom" | "left" | "right" | "top" | undefined;
 
 export const Tooltip: React.FC<
   PropsWithChildren<{
@@ -57,8 +62,8 @@ export const Tooltip: React.FC<
   triggerCss,
   boxCss,
   outlined = true,
-  side = 'bottom',
-  align = 'center',
+  side = "bottom",
+  align = "center",
   disabled = false,
   delayDuration = 200,
 }) => {
@@ -66,11 +71,21 @@ export const Tooltip: React.FC<
 
   return (
     <BaseTooltip.Provider>
-      <TooltipRoot delayDuration={delayDuration} open={open && !disabled} onOpenChange={setOpen}>
+      <TooltipRoot
+        delayDuration={delayDuration}
+        open={open && !disabled}
+        onOpenChange={setOpen}
+      >
         <TooltipTrigger css={{ ...triggerCss }} asChild>
           {children}
         </TooltipTrigger>
-        <TooltipBox sideOffset={10} side={side} align={align} outlined={outlined} css={{ ...boxCss }}>
+        <TooltipBox
+          sideOffset={10}
+          side={side}
+          align={align}
+          outlined={outlined}
+          css={{ ...boxCss }}
+        >
           {title}
         </TooltipBox>
       </TooltipRoot>

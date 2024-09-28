@@ -1,43 +1,43 @@
-import React from 'react';
-import { VariantProps } from '@stitches/react';
-import { PersonIcon } from '@100mslive/react-icons';
-import { styled } from '../Theme';
-import { getAvatarBg } from './getAvatarBg';
-import { flexCenter } from '../utils/styles';
+import React from "react";
+import { VariantProps } from "@stitches/react";
+import { PersonIcon } from "@100mslive/react-icons";
+import { styled } from "../Theme";
+import { getAvatarBg } from "./getAvatarBg";
+import { flexCenter } from "../utils/styles";
 
 const getAvatarShape = (radii: string) => ({
   borderRadius: radii,
 });
 
-export const StyledAvatar = styled('div', {
+export const StyledAvatar = styled("div", {
   ...flexCenter,
-  color: '$colors$on_primary_high',
-  fontFamily: '$sans',
+  color: "$colors$on_primary_high",
+  fontFamily: "$sans",
   aspectRatio: 1,
   fontWeight: 600,
-  fontSize: '$space$9',
+  fontSize: "$space$9",
   variants: {
     shape: {
-      circle: getAvatarShape('$round'),
-      square: getAvatarShape('$1'),
+      circle: getAvatarShape("$round"),
+      square: getAvatarShape("$1"),
     },
     size: {
       small: {
-        height: '$16 !important',
-        fontSize: '$space$6',
+        height: "$16 !important",
+        fontSize: "$space$6",
       },
       medium: {
-        height: '$18 !important',
-        fontSize: '$space$10',
+        height: "$18 !important",
+        fontSize: "$space$10",
       },
       large: {
-        height: '$20 !important',
-        fontSize: '$space$12',
+        height: "$20 !important",
+        fontSize: "$space$12",
       },
     },
   },
   defaultVariants: {
-    shape: 'circle',
+    shape: "circle",
   },
 });
 
@@ -50,7 +50,7 @@ export const Avatar: React.FC<Props> = ({ name, css, ...props }) => {
   const info = getAvatarBg(name);
   let { color } = info;
   if (!name) {
-    color = '#7E47EB';
+    color = "#7E47EB";
   }
   return (
     <StyledAvatar css={{ bg: color, ...css }} {...props}>

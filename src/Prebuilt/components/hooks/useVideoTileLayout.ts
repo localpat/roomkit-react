@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
 type TileContextType = {
   enableSpotlightingPeer: boolean;
@@ -6,7 +6,7 @@ type TileContextType = {
   roundedVideoTile?: boolean;
   hideAudioMuteOnTile?: boolean;
   hideAudioLevelOnTile?: boolean;
-  objectFit?: 'cover' | 'contain';
+  objectFit?: "cover" | "contain";
   hideMetadataOnTile?: boolean;
 };
 
@@ -16,7 +16,7 @@ export const VideoTileContext = React.createContext<TileContextType>({
   roundedVideoTile: true,
   hideAudioMuteOnTile: false,
   hideAudioLevelOnTile: false,
-  objectFit: 'contain',
+  objectFit: "contain",
   hideMetadataOnTile: false,
 });
 

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { selectDominantSpeaker, useHMSStore } from '@100mslive/react-sdk';
-import { VolumeOneIcon } from '@100mslive/react-icons';
-import { Flex, styled, Text, textEllipsis } from '../../../';
-import { useRoomLayout } from '../../provider/roomLayoutProvider';
+import React, { useEffect, useState } from "react";
+import { selectDominantSpeaker, useHMSStore } from "@100mslive/react-sdk";
+import { VolumeOneIcon } from "@100mslive/react-icons";
+import { Flex, styled, Text, textEllipsis } from "../../../";
+import { useRoomLayout } from "../../provider/roomLayoutProvider";
 
 export const SpeakerTag = () => {
   const dominantSpeaker = useHMSStore(selectDominantSpeaker);
@@ -12,10 +12,18 @@ export const SpeakerTag = () => {
       <Flex
         align="center"
         justify="center"
-        css={{ flex: '1 1 0', color: '$on_surface_high', '@md': { display: 'none' } }}
+        css={{
+          flex: "1 1 0",
+          color: "$on_surface_high",
+          "@md": { display: "none" },
+        }}
       >
         <VolumeOneIcon />
-        <Text variant="sm" css={{ ...textEllipsis(200), ml: '$2' }} title={dominantSpeaker.name}>
+        <Text
+          variant="sm"
+          css={{ ...textEllipsis(200), ml: "$2" }}
+          title={dominantSpeaker.name}
+        >
           {dominantSpeaker.name}
         </Text>
       </Flex>
@@ -23,12 +31,12 @@ export const SpeakerTag = () => {
   );
 };
 
-const LogoImg = styled('img', {
-  maxHeight: '$14',
-  w: 'auto',
-  objectFit: 'contain',
-  '@md': {
-    maxHeight: '$12',
+const LogoImg = styled("img", {
+  maxHeight: "$14",
+  w: "auto",
+  objectFit: "contain",
+  "@md": {
+    maxHeight: "$12",
   },
 });
 
@@ -48,7 +56,7 @@ export const Logo = () => {
     <LogoImg
       src={logo}
       alt="Brand Logo"
-      onError={e => {
+      onError={(e) => {
         e.target.onerror = null;
         setHideImage(true);
       }}

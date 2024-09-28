@@ -1,52 +1,52 @@
-import React from 'react';
-import * as BaseSwitch from '@radix-ui/react-switch';
-import { styled } from '../Theme';
+import React from "react";
+import * as BaseSwitch from "@radix-ui/react-switch";
+import { styled } from "../Theme";
 
 const SwitchRoot = styled(BaseSwitch.Root, {
-  all: 'unset',
-  width: '30px',
-  height: '14px',
-  border: 'solid $space$px $secondary_default',
-  borderRadius: '$3',
-  p: '$2',
-  position: 'relative',
-  cursor: 'pointer',
+  all: "unset",
+  width: "30px",
+  height: "14px",
+  border: "solid $space$px $secondary_default",
+  borderRadius: "$3",
+  p: "$2",
+  position: "relative",
+  cursor: "pointer",
   '&[data-state="checked"]': {
-    backgroundColor: '$primary_default',
-    border: 'solid $space$px $primary_default',
+    backgroundColor: "$primary_default",
+    border: "solid $space$px $primary_default",
   },
-  '&:focus': {
-    outline: 'none',
+  "&:focus": {
+    outline: "none",
   },
-  '&[disabled]': {
+  "&[disabled]": {
     opacity: 0.5,
-    cursor: 'not-allowed',
+    cursor: "not-allowed",
   },
 });
 
 const SwitchThumb = styled(BaseSwitch.Thumb, {
-  display: 'block',
-  top: '3px',
-  position: 'absolute',
-  width: '$md',
-  height: '$md',
-  backgroundColor: '$secondary_default',
-  borderRadius: '$round',
-  transition: 'right 500ms ease-in',
-  left: '$2',
+  display: "block",
+  top: "3px",
+  position: "absolute",
+  width: "$md",
+  height: "$md",
+  backgroundColor: "$secondary_default",
+  borderRadius: "$round",
+  transition: "right 500ms ease-in",
+  left: "$2",
   '&[data-state="checked"]': {
-    left: 'unset',
-    right: '$2',
-    backgroundColor: '$on_primary_high',
+    left: "unset",
+    right: "$2",
+    backgroundColor: "$on_primary_high",
   },
 });
 
 type SwitchProps = React.ComponentProps<typeof SwitchRoot>;
 
-export const Switch: React.FC<SwitchProps> = props => (
+export const Switch: React.FC<SwitchProps> = (props) => (
   <SwitchRoot {...props}>
     <SwitchThumb />
   </SwitchRoot>
 );
 
-Switch.displayName = 'Switch';
+Switch.displayName = "Switch";

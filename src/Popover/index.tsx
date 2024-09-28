@@ -1,12 +1,19 @@
-import { Arrow, Close, Content, Popover as Root, Portal, Trigger } from '@radix-ui/react-popover';
-import { styled } from '../Theme';
-import { popoverAnimation } from '../utils/animations';
+import {
+  Arrow,
+  Close,
+  Content,
+  Popover as Root,
+  Portal,
+  Trigger,
+} from "@radix-ui/react-popover";
+import { styled } from "../Theme";
+import { popoverAnimation } from "../utils/animations";
 
 const StyledContent = styled(Content, {
-  padding: '$6',
-  borderRadius: '$2',
-  backgroundColor: '$background_default',
-  boxShadow: '$sm',
+  padding: "$6",
+  borderRadius: "$2",
+  backgroundColor: "$background_default",
+  boxShadow: "$sm",
   zIndex: 12,
   ...popoverAnimation,
 });
@@ -16,11 +23,11 @@ const StyledArrow = styled(Arrow, {
 });
 
 const StyledTrigger = styled(Trigger, {
-  '&:hover': {
-    cursor: 'pointer',
+  "&:hover": {
+    cursor: "pointer",
   },
-  '&:focus-visible': {
-    boxShadow: '0 0 0 3px $colors$primary_default',
+  "&:focus-visible": {
+    boxShadow: "0 0 0 3px $colors$primary_default",
   },
 });
 

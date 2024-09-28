@@ -1,6 +1,6 @@
-import React from 'react';
-import { HMSException } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSException } from "@100mslive/react-sdk";
 export declare function PermissionErrorNotificationModal(): React.JSX.Element;
 export declare const PermissionErrorModal: ({ error }: {
-    error?: HMSException | undefined;
+    error?: HMSException;
 }) => React.JSX.Element | null;

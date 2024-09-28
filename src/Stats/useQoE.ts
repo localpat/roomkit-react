@@ -1,6 +1,10 @@
-import { useRef } from 'react';
-import { usePrevious } from 'react-use';
-import { HMSTrackID, selectHMSStats, useHMSStatsStore } from '@100mslive/react-sdk';
+import { useRef } from "react";
+import { usePrevious } from "react-use";
+import {
+  HMSTrackID,
+  selectHMSStats,
+  useHMSStatsStore,
+} from "@100mslive/react-sdk";
 
 interface UseQoEProps {
   videoTrackID?: HMSTrackID;
@@ -25,27 +29,42 @@ const clip = (value: number, min_value: number, max_value: number) => {
  *
  * https://github.com/100mslive/webrtc-benchmark/blob/daily/sssd.py#L112
  */
-export const useQoE = ({ videoTrackID, audioTrackID, isLocal = false }: UseQoEProps) => {
-  const audioTrackStats = useHMSStatsStore(selectHMSStats.trackStatsByID(audioTrackID));
-  const videoTrackStats = useHMSStatsStore(selectHMSStats.trackStatsByID(videoTrackID));
+export const useQoE = ({
+  videoTrackID,
+  audioTrackID,
+  isLocal = false,
+}: UseQoEProps) => {
+  const audioTrackStats = useHMSStatsStore(
+    selectHMSStats.trackStatsByID(audioTrackID)
+  );
+  const videoTrackStats = useHMSStatsStore(
+    selectHMSStats.trackStatsByID(videoTrackID)
+  );
   const prevVideoTrackStats = usePrevious(videoTrackStats);
   const prevAudioTrackStats = usePrevious(audioTrackStats);
 
   const prevJitterBufferDelayMs = useRef<number>(0);
 
-  if (isLocal || (videoTrackID && !videoTrackStats) || (audioTrackID && !audioTrackStats)) {
+  if (
+    isLocal ||
+    (videoTrackID && !videoTrackStats) ||
+    (audioTrackID && !audioTrackStats)
+  ) {
     return;
   }
 
   const resolutionNorm =
-    ((videoTrackStats?.frameWidth || 0) * (videoTrackStats?.frameHeight || 0)) / EXPECTED_RESOLUTION;
+    ((videoTrackStats?.frameWidth || 0) * (videoTrackStats?.frameHeight || 0)) /
+    EXPECTED_RESOLUTION;
 
   const framesDecodedInLastSec =
     videoTrackStats?.framesDecoded && prevVideoTrackStats?.framesDecoded
       ? videoTrackStats.framesDecoded - prevVideoTrackStats.framesDecoded
       : 0;
   let freezeDurationNorm =
-    1 - ((videoTrackStats?.totalFreezesDuration || 0) - (prevVideoTrackStats?.totalFreezesDuration || 0));
+    1 -
+    ((videoTrackStats?.totalFreezesDuration || 0) -
+      (prevVideoTrackStats?.totalFreezesDuration || 0));
   freezeDurationNorm = freezeDurationNorm < 0 ? 0.5 : freezeDurationNorm;
   freezeDurationNorm = framesDecodedInLastSec === 0 ? 0 : freezeDurationNorm;
 
@@ -53,18 +72,25 @@ export const useQoE = ({ videoTrackID, audioTrackID, isLocal = false }: UseQoEPr
 
   const prevJBDelay = prevVideoTrackStats?.jitterBufferDelay || 0;
   const prevJBEmittedCount = prevVideoTrackStats?.jitterBufferEmittedCount || 0;
-  const currentJBDelay = (videoTrackStats?.jitterBufferDelay || 0) - prevJBDelay;
-  const currentJBEmittedCount = (videoTrackStats?.jitterBufferEmittedCount || 0) - prevJBEmittedCount;
+  const currentJBDelay =
+    (videoTrackStats?.jitterBufferDelay || 0) - prevJBDelay;
+  const currentJBEmittedCount =
+    (videoTrackStats?.jitterBufferEmittedCount || 0) - prevJBEmittedCount;
 
   const jitterBufferDelayMs =
-    currentJBEmittedCount > 0 ? (currentJBDelay * 1000) / currentJBEmittedCount : prevJitterBufferDelayMs.current;
+    currentJBEmittedCount > 0
+      ? (currentJBDelay * 1000) / currentJBEmittedCount
+      : prevJitterBufferDelayMs.current;
   prevJitterBufferDelayMs.current = jitterBufferDelayMs;
   const delayNorm = 1 - Math.min(1, jitterBufferDelayMs / 2000);
 
   const prevConcealedSamples =
-    (prevAudioTrackStats?.concealedSamples || 0) - (prevAudioTrackStats?.silentConcealedSamples || 0);
+    (prevAudioTrackStats?.concealedSamples || 0) -
+    (prevAudioTrackStats?.silentConcealedSamples || 0);
   const currentConcealedSamples =
-    (audioTrackStats?.concealedSamples || 0) - (audioTrackStats?.silentConcealedSamples || 0) - prevConcealedSamples;
+    (audioTrackStats?.concealedSamples || 0) -
+    (audioTrackStats?.silentConcealedSamples || 0) -
+    prevConcealedSamples;
 
   const audioConcealedNorm = 1 - currentConcealedSamples / 48000;
 

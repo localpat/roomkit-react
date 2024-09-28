@@ -1,4 +1,4 @@
-import { HMSActions, HMSPeer, HMSTrack } from '@100mslive/react-sdk';
+import { HMSActions, HMSPeer, HMSTrack } from "@100mslive/react-sdk";
 /**
  * video elements are stitched together as a canvas which is converted to
  * another video element converted to PIP.

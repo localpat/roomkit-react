@@ -1,8 +1,11 @@
 // Open issue with eslint-plugin-import https://github.com/import-js/eslint-plugin-import/issues/1810
 // eslint-disable-next-line
-import { HMSVBPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background/hmsvbplugin';
-import { parsedUserAgent } from '@100mslive/react-sdk';
-import { isSafari } from '../../common/constants';
+import {
+  HMSVBPlugin,
+  HMSVirtualBackgroundTypes,
+} from "@100mslive/hms-virtual-background/hmsvbplugin";
+import { parsedUserAgent } from "@100mslive/react-sdk";
+import { isSafari } from "../../common/constants";
 export class VBPlugin {
   private hmsPlugin?: HMSVBPlugin;
   private effectsPlugin?: any;
@@ -14,14 +17,29 @@ export class VBPlugin {
     if (effectsSDKKey) {
       try {
         // eslint-disable-next-line
-        const effects = await import('@100mslive/hms-virtual-background/hmseffectsplugin');
-        this.effectsPlugin = new effects.HMSEffectsPlugin(effectsSDKKey, onInit);
+        const effects = await import(
+          "@100mslive/hms-virtual-background/hmseffectsplugin"
+        );
+        this.effectsPlugin = new effects.HMSEffectsPlugin(
+          effectsSDKKey,
+          onInit
+        );
       } catch (error) {
-        console.error('Failed to initialise HMSEffectsPlugin:', error, 'Using HMSVBPlugin');
-        this.hmsPlugin = new HMSVBPlugin(HMSVirtualBackgroundTypes.NONE, HMSVirtualBackgroundTypes.NONE);
+        console.error(
+          "Failed to initialise HMSEffectsPlugin:",
+          error,
+          "Using HMSVBPlugin"
+        );
+        this.hmsPlugin = new HMSVBPlugin(
+          HMSVirtualBackgroundTypes.NONE,
+          HMSVirtualBackgroundTypes.NONE
+        );
       }
     } else {
-      this.hmsPlugin = new HMSVBPlugin(HMSVirtualBackgroundTypes.NONE, HMSVirtualBackgroundTypes.NONE);
+      this.hmsPlugin = new HMSVBPlugin(
+        HMSVirtualBackgroundTypes.NONE,
+        HMSVirtualBackgroundTypes.NONE
+      );
     }
   };
 
@@ -40,7 +58,9 @@ export class VBPlugin {
       return this.effectsPlugin.getBlurAmount();
     } else {
       // Treating HMS VB intensity as a fixed value
-      return this.hmsPlugin?.getBackground() === HMSVirtualBackgroundTypes.BLUR ? 1 : 0;
+      return this.hmsPlugin?.getBackground() === HMSVirtualBackgroundTypes.BLUR
+        ? 1
+        : 0;
     }
   };
 
@@ -49,14 +69,19 @@ export class VBPlugin {
   };
 
   getName = () => {
-    return this.effectsPlugin ? this.effectsPlugin?.getName() : this.hmsPlugin?.getName();
+    return this.effectsPlugin
+      ? this.effectsPlugin?.getName()
+      : this.hmsPlugin?.getName();
   };
 
   setBlur = async (blurPower: number) => {
     if (this.effectsPlugin) {
       this.effectsPlugin?.setBlur(blurPower);
     } else {
-      await this.hmsPlugin?.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+      await this.hmsPlugin?.setBackground(
+        HMSVirtualBackgroundTypes.BLUR,
+        HMSVirtualBackgroundTypes.BLUR
+      );
     }
   };
 
@@ -64,37 +89,46 @@ export class VBPlugin {
     if (this.effectsPlugin) {
       this.effectsPlugin?.setBackground(mediaURL);
     } else {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       let retries = 0;
       const MAX_RETRIES = 3;
-      img.alt = 'VB';
+      img.alt = "VB";
       img.src = mediaURL;
       try {
-        await this.hmsPlugin?.setBackground(img, HMSVirtualBackgroundTypes.IMAGE);
+        await this.hmsPlugin?.setBackground(
+          img,
+          HMSVirtualBackgroundTypes.IMAGE
+        );
       } catch (e) {
         console.error(e);
         if (retries++ < MAX_RETRIES) {
-          await this.hmsPlugin?.setBackground(img, HMSVirtualBackgroundTypes.IMAGE);
+          await this.hmsPlugin?.setBackground(
+            img,
+            HMSVirtualBackgroundTypes.IMAGE
+          );
         }
       }
     }
   };
 
-  setPreset = async (preset: 'quality' | 'balanced') => {
+  setPreset = async (preset: "quality" | "balanced") => {
     if (this.effectsPlugin) {
       await this.effectsPlugin.setPreset(preset);
     }
   };
 
   getPreset = () => {
-    return this.effectsPlugin?.getPreset() || '';
+    return this.effectsPlugin?.getPreset() || "";
   };
 
   removeEffects = async () => {
     if (this.effectsPlugin) {
       this.effectsPlugin?.removeEffects();
     } else {
-      await this.hmsPlugin?.setBackground(HMSVirtualBackgroundTypes.NONE, HMSVirtualBackgroundTypes.NONE);
+      await this.hmsPlugin?.setBackground(
+        HMSVirtualBackgroundTypes.NONE,
+        HMSVirtualBackgroundTypes.NONE
+      );
     }
   };
 
@@ -107,8 +141,8 @@ export class VBPlugin {
     if (!isSafari) {
       return true;
     }
-    const browserVersion = parsedUserAgent?.getBrowser()?.version || '16';
-    if (browserVersion && parseInt(browserVersion.split('.')[0]) < 17) {
+    const browserVersion = parsedUserAgent?.getBrowser()?.version || "16";
+    if (browserVersion && parseInt(browserVersion.split(".")[0]) < 17) {
       return false;
     }
     return true;

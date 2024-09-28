@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 export declare function HLSAutoplayBlockedPrompt({ open, unblockAutoPlay, }: {
     open: boolean;
     unblockAutoPlay: () => Promise<void>;

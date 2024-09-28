@@ -1,13 +1,13 @@
-import React from 'react';
-import { Flex } from '../../Layout';
-import { Text } from '../../Text';
-import { CSS } from '../../Theme';
+import React from "react";
+import { Flex } from "../../Layout";
+import { Text } from "../../Text";
+import { CSS } from "../../Theme";
 
 const Chip = ({
   icon = <></>,
-  content = '',
-  backgroundColor = '$surface_default',
-  textColor = '$on_surface_high',
+  content = "",
+  backgroundColor = "$surface_default",
+  textColor = "$on_surface_high",
   hideIfNoContent = false,
   onClick,
   css = {},
@@ -26,11 +26,17 @@ const Chip = ({
   return (
     <Flex
       align="center"
-      css={{ backgroundColor, p: '$4 $6', gap: '$2', borderRadius: '$4', ...css }}
+      css={{
+        backgroundColor,
+        p: "$4 $6",
+        gap: "$2",
+        borderRadius: "$4",
+        ...css,
+      }}
       onClick={() => onClick?.()}
     >
       {icon}
-      <Text variant="sm" css={{ fontWeight: '$semiBold', color: textColor }}>
+      <Text variant="sm" css={{ fontWeight: "$semiBold", color: textColor }}>
         {content}
       </Text>
     </Flex>

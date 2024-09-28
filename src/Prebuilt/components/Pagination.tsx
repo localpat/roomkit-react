@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@100mslive/react-icons';
-import { StyledPagination } from '../../Pagination';
+import React, { useEffect } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@100mslive/react-icons";
+import { StyledPagination } from "../../Pagination";
 
 export const Pagination = ({
   page,
@@ -36,7 +36,11 @@ export const Pagination = ({
   return (
     <StyledPagination.Root css={{ flexShrink: 0 }}>
       <StyledPagination.Chevron disabled={disableLeft} onClick={prevPage}>
-        <ChevronLeftIcon width={16} height={16} style={{ cursor: disableLeft ? 'not-allowed' : 'pointer' }} />
+        <ChevronLeftIcon
+          width={16}
+          height={16}
+          style={{ cursor: disableLeft ? "not-allowed" : "pointer" }}
+        />
       </StyledPagination.Chevron>
       {numPages <= 5 ? (
         <StyledPagination.Dots>
@@ -44,7 +48,7 @@ export const Pagination = ({
             <StyledPagination.Dot
               key={i}
               active={page === i}
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 onPageChange(i);
               }}
@@ -53,7 +57,11 @@ export const Pagination = ({
         </StyledPagination.Dots>
       ) : null}
       <StyledPagination.Chevron disabled={disableRight} onClick={nextPage}>
-        <ChevronRightIcon width={16} height={16} style={{ cursor: disableRight ? 'not-allowed' : 'pointer' }} />
+        <ChevronRightIcon
+          width={16}
+          height={16}
+          style={{ cursor: disableRight ? "not-allowed" : "pointer" }}
+        />
       </StyledPagination.Chevron>
     </StyledPagination.Root>
   );

@@ -1,9 +1,9 @@
-import type { Layout } from '@100mslive/types-prebuilt';
-export declare type useFetchRoomLayoutProps = {
+import type { Layout } from "@100mslive/types-prebuilt";
+export type useFetchRoomLayoutProps = {
     endpoint?: string;
     authToken: string;
 };
-export declare type useFetchRoomLayoutResponse = {
+export type useFetchRoomLayoutResponse = {
     layout: Layout | undefined;
     updateRoomLayoutForRole: (role: string) => void;
     setOriginalLayout: () => void;

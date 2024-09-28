@@ -1,9 +1,12 @@
-import React from 'react';
-import type { Layout } from '@100mslive/types-prebuilt';
-import { isArray, mergeWith } from 'lodash';
+import React from "react";
+import type { Layout } from "@100mslive/types-prebuilt";
+import { isArray, mergeWith } from "lodash";
 // @ts-ignore: fix types
-import { useAuthToken } from '../../components/AppData/useUISettings';
-import { useFetchRoomLayout, useFetchRoomLayoutResponse } from './hooks/useFetchRoomLayout';
+import { useAuthToken } from "../../components/AppData/useUISettings";
+import {
+  useFetchRoomLayout,
+  useFetchRoomLayoutResponse,
+} from "./hooks/useFetchRoomLayout";
 
 export type RoomLayoutProviderProps = {
   roomLayoutEndpoint?: string;
@@ -13,8 +16,12 @@ export type RoomLayoutProviderProps = {
 export const RoomLayoutContext = React.createContext<
   | {
       layout: Layout | undefined;
-      updateRoomLayoutForRole: useFetchRoomLayoutResponse['updateRoomLayoutForRole'] | undefined;
-      setOriginalLayout: useFetchRoomLayoutResponse['setOriginalLayout'] | undefined;
+      updateRoomLayoutForRole:
+        | useFetchRoomLayoutResponse["updateRoomLayoutForRole"]
+        | undefined;
+      setOriginalLayout:
+        | useFetchRoomLayoutResponse["setOriginalLayout"]
+        | undefined;
     }
   | undefined
 >(undefined);
@@ -30,24 +37,34 @@ function customizer(objValue: unknown, srcValue: unknown) {
   return undefined;
 }
 
-export const RoomLayoutProvider: React.FC<React.PropsWithChildren<RoomLayoutProviderProps>> = ({
-  children,
-  roomLayoutEndpoint,
-  overrideLayout,
-}) => {
+export const RoomLayoutProvider: React.FC<
+  React.PropsWithChildren<RoomLayoutProviderProps>
+> = ({ children, roomLayoutEndpoint, overrideLayout }) => {
   const authToken: string = useAuthToken();
-  const { layout, updateRoomLayoutForRole, setOriginalLayout } = useFetchRoomLayout({
-    authToken,
-    endpoint: roomLayoutEndpoint,
-  });
-  const mergedLayout = authToken && layout ? mergeWith(layout, overrideLayout, customizer) : layout;
+  const { layout, updateRoomLayoutForRole, setOriginalLayout } =
+    useFetchRoomLayout({
+      authToken,
+      endpoint: roomLayoutEndpoint,
+    });
+  const mergedLayout =
+    authToken && layout
+      ? mergeWith(layout, overrideLayout, customizer)
+      : layout;
   return (
-    <RoomLayoutContext.Provider value={{ layout: mergedLayout, updateRoomLayoutForRole, setOriginalLayout }}>
+    <RoomLayoutContext.Provider
+      value={{
+        layout: mergedLayout,
+        updateRoomLayoutForRole,
+        setOriginalLayout,
+      }}
+    >
       {children}
     </RoomLayoutContext.Provider>
   );
 };
 
 export const useRoomLayout = () => React.useContext(RoomLayoutContext)?.layout;
-export const useUpdateRoomLayout = () => React.useContext(RoomLayoutContext)?.updateRoomLayoutForRole;
-export const useSetOriginalLayout = () => React.useContext(RoomLayoutContext)?.setOriginalLayout;
+export const useUpdateRoomLayout = () =>
+  React.useContext(RoomLayoutContext)?.updateRoomLayoutForRole;
+export const useSetOriginalLayout = () =>
+  React.useContext(RoomLayoutContext)?.setOriginalLayout;

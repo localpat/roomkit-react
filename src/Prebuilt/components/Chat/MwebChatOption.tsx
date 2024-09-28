@@ -1,12 +1,12 @@
-import React from 'react';
-import { Flex } from '../../../Layout';
-import { Text } from '../../../Text';
+import React from "react";
+import { Flex } from "../../../Layout";
+import { Text } from "../../../Text";
 
 export const MwebChatOption = ({
   icon,
   text,
   onClick,
-  color = '$on_surface_high',
+  color = "$on_surface_high",
 }: {
   icon: React.ReactNode;
   text: string;
@@ -14,9 +14,13 @@ export const MwebChatOption = ({
   color?: string;
 }) => {
   return (
-    <Flex align="center" css={{ w: '100%', color, cursor: 'pointer', gap: '$4', p: '$8' }} onClick={onClick}>
+    <Flex
+      align="center"
+      css={{ w: "100%", color, cursor: "pointer", gap: "$4", p: "$8" }}
+      onClick={onClick}
+    >
       {icon}
-      <Text variant="sm" css={{ color, fontWeight: '$semiBold' }}>
+      <Text variant="sm" css={{ color, fontWeight: "$semiBold" }}>
         {text}
       </Text>
     </Flex>

@@ -1,5 +1,4 @@
-/// <reference types="react" />
-export declare const usePeerOnStageActions: ({ peerId, role }: {
+export declare const usePeerOnStageActions: ({ peerId, role, }: {
     peerId: string;
     role: string;
 }) => {

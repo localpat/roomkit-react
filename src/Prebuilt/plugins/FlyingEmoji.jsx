@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMedia } from 'react-use';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useMedia } from "react-use";
 import {
   selectIsLargeRoom,
   selectLocalPeerID,
@@ -8,30 +8,30 @@ import {
   useHMSActions,
   useHMSStore,
   useHMSVanillaStore,
-} from '@100mslive/react-sdk';
-import { Box, Flex } from '../../Layout';
-import { Text } from '../../Text';
-import { config as cssConfig, keyframes } from '../../Theme';
-import { EMOJI_REACTION_TYPE } from '../common/constants';
+} from "@100mslive/react-sdk";
+import { Box, Flex } from "../../Layout";
+import { Text } from "../../Text";
+import { config as cssConfig, keyframes } from "../../Theme";
+import { EMOJI_REACTION_TYPE } from "../common/constants";
 
 let emojiCount = 1;
 
 const flyAndFade = keyframes({
-  '20%': { opacity: 1 },
-  '100%': { bottom: '60%', opacity: 0 },
+  "20%": { opacity: 1 },
+  "100%": { bottom: "60%", opacity: 0 },
 });
 
 const wiggleLeftRight = keyframes({
-  '0%': { marginLeft: '-50px' },
-  '100%': { marginLeft: '50px' },
+  "0%": { marginLeft: "-50px" },
+  "100%": { marginLeft: "50px" },
 });
 
 const wiggleRightLeft = keyframes({
-  '0%': { marginLeft: '50px' },
-  '100%': { marginLeft: '-50px' },
+  "0%": { marginLeft: "50px" },
+  "100%": { marginLeft: "-50px" },
 });
 
-const getStartingPoints = isMobile => {
+const getStartingPoints = (isMobile) => {
   let arr = [];
   const min = 5;
   const max = isMobile ? 30 : 20;
@@ -62,11 +62,11 @@ export function FlyingEmoji() {
         const sender = await hmsActions.getPeer(senderId);
         senderPeerName = sender?.name;
       }
-      const nameToShow = localPeerId === senderId ? 'You' : senderPeerName;
+      const nameToShow = localPeerId === senderId ? "You" : senderPeerName;
       const startingPoint = startingPoints[emojiCount % startingPoints.length];
       const id = emojiCount++;
 
-      setEmojis(emojis => {
+      setEmojis((emojis) => {
         return [
           ...emojis,
           {
@@ -79,7 +79,7 @@ export function FlyingEmoji() {
         ];
       });
     },
-    [vanillaStore, isLargeRoom, localPeerId, startingPoints, hmsActions],
+    [vanillaStore, isLargeRoom, localPeerId, startingPoints, hmsActions]
   );
 
   useCustomEvent({
@@ -94,32 +94,34 @@ export function FlyingEmoji() {
   return (
     <Box
       css={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         bottom: 0,
         left: 0,
         right: 0,
-        overflow: 'hidden',
-        pointerEvents: 'none',
-        userSelect: 'none',
+        overflow: "hidden",
+        pointerEvents: "none",
+        userSelect: "none",
         zIndex: 999,
       }}
     >
-      {emojis.map(emoji => {
+      {emojis.map((emoji) => {
         return (
           <Flex
             key={emoji.id}
             css={{
               left: emoji.startingPoint,
-              flexDirection: 'column',
-              alignItems: 'center',
-              position: 'absolute',
+              flexDirection: "column",
+              alignItems: "center",
+              position: "absolute",
               bottom: 0,
               animation: `${flyAndFade()} 5s forwards, ${
                 emoji.wiggleType === 0 ? wiggleLeftRight() : wiggleRightLeft()
               } 1s ease-in-out infinite alternate`,
             }}
-            onAnimationEnd={() => setEmojis(emojis.filter(item => item.id !== emoji.id))}
+            onAnimationEnd={() =>
+              setEmojis(emojis.filter((item) => item.id !== emoji.id))
+            }
           >
             <Box>
               <em-emoji id={emoji.emojiId} size="48px" set="apple" />
@@ -127,24 +129,24 @@ export function FlyingEmoji() {
             {emoji.senderName ? (
               <Box
                 css={{
-                  width: 'fit-content',
-                  padding: '$2 $4',
-                  background: '$surface_bright',
-                  borderRadius: '$1',
+                  width: "fit-content",
+                  padding: "$2 $4",
+                  background: "$surface_bright",
+                  borderRadius: "$1",
                 }}
               >
                 <Text
                   css={{
-                    fontSize: '$space$6',
-                    lineHeight: '$xs',
-                    color: '$on_surface_high',
+                    fontSize: "$space$6",
+                    lineHeight: "$xs",
+                    color: "$on_surface_high",
                   }}
                 >
                   {emoji.senderName}
                 </Text>
               </Box>
             ) : (
-              ''
+              ""
             )}
           </Flex>
         );

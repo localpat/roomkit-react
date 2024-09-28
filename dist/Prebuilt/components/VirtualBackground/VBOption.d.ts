@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 export declare const VBOption: {
     Root: ({ onClick, mediaURL, isActive, children, testid, }: {
-        onClick?: (() => Promise<void>) | undefined;
-        mediaURL?: string | undefined;
+        onClick?: () => Promise<void>;
+        mediaURL?: string;
         isActive: boolean;
-        children?: React.JSX.Element[] | undefined;
+        children?: React.JSX.Element[];
         testid: string;
     }) => React.JSX.Element;
     Title: ({ children }: {
-        children?: string | undefined;
+        children?: string;
     }) => React.JSX.Element | null;
     Icon: ({ children }: {
-        children?: React.JSX.Element | undefined;
+        children?: React.JSX.Element;
     }) => React.JSX.Element | null;
 };

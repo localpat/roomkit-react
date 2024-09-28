@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Flex } from '../../../';
-import { useSetAppDataByKey } from '../AppData/useUISettings';
-import { APP_DATA } from '../../common/constants';
+import React from "react";
+import { Button, Flex } from "../../../";
+import { useSetAppDataByKey } from "../AppData/useUISettings";
+import { APP_DATA } from "../../common/constants";
 
 export const SubmitPDF = ({ pdfFile, onOpenChange }) => {
   const [, setPDFConfig] = useSetAppDataByKey(APP_DATA.pdfConfig);
@@ -10,9 +10,9 @@ export const SubmitPDF = ({ pdfFile, onOpenChange }) => {
     <Flex
       direction="row"
       css={{
-        mb: '0',
-        mt: 'auto',
-        gap: '$8',
+        mb: "0",
+        mt: "auto",
+        gap: "$8",
       }}
     >
       <Button
@@ -22,7 +22,7 @@ export const SubmitPDF = ({ pdfFile, onOpenChange }) => {
         onClick={() => {
           onOpenChange(false);
         }}
-        css={{ w: '50%' }}
+        css={{ w: "50%" }}
       >
         Cancel
       </Button>
@@ -38,7 +38,7 @@ export const SubmitPDF = ({ pdfFile, onOpenChange }) => {
         disabled={!pdfFile}
         data-testid="share_pdf_btn"
         css={{
-          w: '50%',
+          w: "50%",
         }}
       >
         Start Sharing

@@ -1,17 +1,17 @@
 const connectionTooltip = {
-  0: 'Reconnecting',
-  1: 'Very Bad Connection',
-  2: 'Bad Connection',
-  3: 'Moderate Connection',
-  4: 'Good Connection',
-  5: 'Excellent Connection',
+  0: "Reconnecting",
+  1: "Very Bad Connection",
+  2: "Bad Connection",
+  3: "Moderate Connection",
+  4: "Good Connection",
+  5: "Excellent Connection",
 };
-connectionTooltip[-1] = 'Network Unknown';
+connectionTooltip[-1] = "Network Unknown";
 
 /**
  * @param connectionScore -> 1-5 connection score for network quality
  */
-export const getTooltipText = connectionScore => {
+export const getTooltipText = (connectionScore) => {
   return connectionTooltip[connectionScore];
 };
 

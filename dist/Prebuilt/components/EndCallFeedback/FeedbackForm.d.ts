@@ -1,5 +1,5 @@
-import React from 'react';
-import { Rating } from '@100mslive/types-prebuilt/elements/feedback';
+import React from "react";
+import { Rating } from "@100mslive/types-prebuilt/elements/feedback";
 export declare const FEEBACK_INDEX: {
     THANK_YOU: number;
     INIT: number;
@@ -17,7 +17,7 @@ export declare const FeedbackContent: ({ ratings, indexSelected, setIndex, }: {
 export declare const FeedbackHeader: ({ onEmojiClicked, ratings, indexSelected, }: {
     onEmojiClicked: (index: number) => void;
     ratings: Rating[];
-    indexSelected?: number | undefined;
+    indexSelected?: number;
 }) => React.JSX.Element;
 export declare const FeedbackForm: ({ rating, comment, setComment, selectedReasons, handleCheckedChange, }: {
     rating: Rating;

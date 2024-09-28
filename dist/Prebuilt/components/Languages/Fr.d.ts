@@ -1,3 +1,3 @@
-import React from 'react';
-declare const FrButton: () => React.JSX.Element;
+import React from "react";
+declare const EnButton: () => React.JSX.Element;
 export default EnButton;

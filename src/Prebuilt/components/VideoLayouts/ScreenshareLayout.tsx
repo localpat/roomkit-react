@@ -1,22 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useMedia } from 'react-use';
-import { selectPeersScreenSharing, useHMSStore } from '@100mslive/react-sdk';
-import { config as cssConfig } from '../../../Theme';
-import { InsetTile } from '../InsetTile';
-import { Pagination } from '../Pagination';
+import React, { useEffect, useMemo, useState } from "react";
+import { useMedia } from "react-use";
+import { selectPeersScreenSharing, useHMSStore } from "@100mslive/react-sdk";
+import { config as cssConfig } from "../../../Theme";
+import { InsetTile } from "../InsetTile";
+import { Pagination } from "../Pagination";
 // @ts-ignore: No implicit Any
-import ScreenshareTile from '../ScreenshareTile';
-import { SecondaryTiles } from '../SecondaryTiles';
-import { LayoutMode } from '../Settings/LayoutSettings';
-import { LayoutProps } from './interface';
-import { ProminenceLayout } from './ProminenceLayout';
+import ScreenshareTile from "../ScreenshareTile";
+import { SecondaryTiles } from "../SecondaryTiles";
+import { LayoutMode } from "../Settings/LayoutSettings";
+import { LayoutProps } from "./interface";
+import { ProminenceLayout } from "./ProminenceLayout";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey, useSetUiSettings } from '../AppData/useUISettings';
-import { APP_DATA, UI_SETTINGS } from '../../common/constants';
+import { useSetAppDataByKey, useSetUiSettings } from "../AppData/useUISettings";
+import { APP_DATA, UI_SETTINGS } from "../../common/constants";
 
-export const ScreenshareLayout = ({ peers, onPageChange, onPageSize, edgeToEdge }: LayoutProps) => {
+export const ScreenshareLayout = ({
+  peers,
+  onPageChange,
+  onPageSize,
+  edgeToEdge,
+}: LayoutProps) => {
   const peersSharing = useHMSStore(selectPeersScreenSharing);
-  const [, setActiveScreenSharePeer] = useSetAppDataByKey(APP_DATA.activeScreensharePeerId);
+  const [, setActiveScreenSharePeer] = useSetAppDataByKey(
+    APP_DATA.activeScreensharePeerId
+  );
   const [page, setPage] = useState(0);
   const [layoutMode, setLayoutMode] = useSetUiSettings(UI_SETTINGS.layoutMode);
   const activeSharePeer = peersSharing[page];
@@ -28,10 +35,13 @@ export const ScreenshareLayout = ({ peers, onPageChange, onPageSize, edgeToEdge 
     }
     if (isMobile || layoutMode === LayoutMode.SIDEBAR) {
       return activeSharePeer
-        ? [activeSharePeer, ...peers.filter(p => p.id !== activeSharePeer?.id)] //keep active sharing peer as first tile
+        ? [
+            activeSharePeer,
+            ...peers.filter((p) => p.id !== activeSharePeer?.id),
+          ] //keep active sharing peer as first tile
         : peers;
     }
-    return peers.filter(p => p.id !== activeSharePeer?.id);
+    return peers.filter((p) => p.id !== activeSharePeer?.id);
   }, [activeSharePeer, peers, isMobile, layoutMode]);
 
   useEffect(() => {
@@ -51,7 +61,7 @@ export const ScreenshareLayout = ({ peers, onPageChange, onPageSize, edgeToEdge 
   useEffect(() => {
     setActiveScreenSharePeer(activeSharePeer?.id);
     return () => {
-      setActiveScreenSharePeer('');
+      setActiveScreenSharePeer("");
     };
   }, [activeSharePeer?.id, setActiveScreenSharePeer]);
 
@@ -59,7 +69,13 @@ export const ScreenshareLayout = ({ peers, onPageChange, onPageSize, edgeToEdge 
     <ProminenceLayout.Root edgeToEdge={edgeToEdge} hasSidebar={hasSidebar}>
       <ProminenceLayout.ProminentSection>
         <ScreenshareTile peerId={peersSharing[page]?.id} />
-        {!edgeToEdge && <Pagination page={page} onPageChange={setPage} numPages={peersSharing.length} />}
+        {!edgeToEdge && (
+          <Pagination
+            page={page}
+            onPageChange={setPage}
+            numPages={peersSharing.length}
+          />
+        )}
       </ProminenceLayout.ProminentSection>
       <SecondaryTiles
         peers={secondaryPeers}
@@ -68,7 +84,9 @@ export const ScreenshareLayout = ({ peers, onPageChange, onPageSize, edgeToEdge 
         edgeToEdge={edgeToEdge}
         hasSidebar={hasSidebar}
       />
-      {layoutMode === LayoutMode.SPOTLIGHT && activeSharePeer && <InsetTile peerId={activeSharePeer?.id} />}
+      {layoutMode === LayoutMode.SPOTLIGHT && activeSharePeer && (
+        <InsetTile peerId={activeSharePeer?.id} />
+      )}
     </ProminenceLayout.Root>
   );
 };

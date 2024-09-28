@@ -1,6 +1,11 @@
-import { match, P } from 'ts-pattern';
-import { HMSPeer, selectPermissions, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { useRoomLayoutConferencingScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import { match, P } from "ts-pattern";
+import {
+  HMSPeer,
+  selectPermissions,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { useRoomLayoutConferencingScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 
 export const useGroupOnStageActions = ({ peers }: { peers: HMSPeer[] }) => {
   const hmsActions = useHMSActions();
@@ -14,21 +19,23 @@ export const useGroupOnStageActions = ({ peers }: { peers: HMSPeer[] }) => {
   } = elements.on_stage_exp || {};
   const canChangeRole = useHMSStore(selectPermissions)?.changeRole;
 
-  const offStageRolePeers = peers.filter(peer =>
+  const offStageRolePeers = peers.filter((peer) =>
     match({ on_stage_role, bring_to_stage_label, roleName: peer.roleName })
       .with(
         {
-          on_stage_role: P.when(role => !!role),
-          bring_to_stage_label: P.when(label => !!label),
-          roleName: P.when(role => !!role && off_stage_roles.includes(role)),
+          on_stage_role: P.when((role) => !!role),
+          bring_to_stage_label: P.when((label) => !!label),
+          roleName: P.when((role) => !!role && off_stage_roles.includes(role)),
         },
-        () => true,
+        () => true
       )
-      .otherwise(() => false),
+      .otherwise(() => false)
   );
 
   const lowerAllHands = async () => {
-    return Promise.all(peers.map(peer => hmsActions.lowerRemotePeerHand(peer.id)));
+    return Promise.all(
+      peers.map((peer) => hmsActions.lowerRemotePeerHand(peer.id))
+    );
   };
 
   const bringAllToStage = () => {
@@ -36,11 +43,19 @@ export const useGroupOnStageActions = ({ peers }: { peers: HMSPeer[] }) => {
       return;
     }
     return Promise.all(
-      offStageRolePeers.map(peer => {
-        return hmsActions.changeRoleOfPeer(peer.id, on_stage_role, skip_preview_for_role_change).then(() => {
-          return skip_preview_for_role_change ? hmsActions.lowerRemotePeerHand(peer.id) : null;
-        });
-      }),
+      offStageRolePeers.map((peer) => {
+        return hmsActions
+          .changeRoleOfPeer(
+            peer.id,
+            on_stage_role,
+            skip_preview_for_role_change
+          )
+          .then(() => {
+            return skip_preview_for_role_change
+              ? hmsActions.lowerRemotePeerHand(peer.id)
+              : null;
+          });
+      })
     );
   };
 

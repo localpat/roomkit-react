@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext, ReactNode } from "react";
 
-export const DialogContainerContext = createContext('');
+export const DialogContainerContext = createContext("");
 
 export function DialogContainerProvider({
   children,
@@ -9,5 +9,9 @@ export function DialogContainerProvider({
   children: ReactNode;
   dialogContainerSelector: string;
 }) {
-  return <DialogContainerContext.Provider value={dialogContainerSelector}>{children}</DialogContainerContext.Provider>;
+  return (
+    <DialogContainerContext.Provider value={dialogContainerSelector}>
+      {children}
+    </DialogContainerContext.Provider>
+  );
 }

@@ -1,1 +1,1 @@
-export { Diagnostics } from './Diagnostics';
+export { Diagnostics } from "./Diagnostics";

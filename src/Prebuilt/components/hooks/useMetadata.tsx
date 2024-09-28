@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import {
   selectHasPeerHandRaised,
   selectLocalPeerID,
@@ -6,7 +6,7 @@ import {
   useHMSActions,
   useHMSStore,
   useHMSVanillaStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 
 export const useMyMetadata = () => {
   const hmsActions = useHMSActions();
@@ -18,11 +18,15 @@ export const useMyMetadata = () => {
   const update = async (updatedFields: Record<string, any>) => {
     try {
       // get current state from store and merge updated fields
-      const currentMetadata = vanillaStore.getState(selectPeerMetadata(localPeerId));
-      await hmsActions.changeMetadata(Object.assign(currentMetadata, updatedFields));
+      const currentMetadata = vanillaStore.getState(
+        selectPeerMetadata(localPeerId)
+      );
+      await hmsActions.changeMetadata(
+        Object.assign(currentMetadata, updatedFields)
+      );
       return true;
     } catch (error) {
-      console.error('failed to update metadata ', updatedFields);
+      console.error("failed to update metadata ", updatedFields);
     }
     return false;
   };

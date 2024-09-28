@@ -1,13 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { selectHLSState, useHMSActions, useHMSStore, useRecordingStreaming } from '@100mslive/react-sdk';
-import { Button } from '../../../Button';
-import { Flex } from '../../../Layout';
-import { Dialog } from '../../../Modal';
-import { Text } from '../../../Text';
+import React, { useCallback, useState } from "react";
+import {
+  selectHLSState,
+  useHMSActions,
+  useHMSStore,
+  useRecordingStreaming,
+} from "@100mslive/react-sdk";
+import { Button } from "../../../Button";
+import { Flex } from "../../../Layout";
+import { Dialog } from "../../../Modal";
+import { Text } from "../../../Text";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey } from '../AppData/useUISettings';
+import { useSetAppDataByKey } from "../AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { APP_DATA } from '../../common/constants';
+import { APP_DATA } from "../../common/constants";
 
 export function HLSFailureModal() {
   const hlsError = useHMSStore(selectHLSState).error || false;
@@ -31,7 +36,7 @@ export function HLSFailureModal() {
   return hlsError ? (
     <Dialog.Root
       open={openModal}
-      onOpenChange={value => {
+      onOpenChange={(value) => {
         if (!value) {
           setOpenModal(false);
         }
@@ -39,28 +44,34 @@ export function HLSFailureModal() {
     >
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content css={{ w: 'min(360px, 90%)' }}>
+        <Dialog.Content css={{ w: "min(360px, 90%)" }}>
           <Dialog.Title
             css={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              borderBottom: '1px solid $border_default',
-              mt: '$4',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderBottom: "1px solid $border_default",
+              mt: "$4",
             }}
           >
-            <Text variant="h6" css={{ fontWeight: '$semiBold' }}>
+            <Text variant="h6" css={{ fontWeight: "$semiBold" }}>
               Failed to Go Live
             </Text>
           </Dialog.Title>
-          <Text variant="sm" css={{ mb: '$10', color: '$on_surface_medium' }}>
-            Something went wrong and your live broadcast failed. Please try again.
+          <Text variant="sm" css={{ mb: "$10", color: "$on_surface_medium" }}>
+            Something went wrong and your live broadcast failed. Please try
+            again.
           </Text>
-          <Flex align="center" justify="between" css={{ w: '100%', gap: '$8' }}>
-            <Button outlined variant="standard" css={{ w: '100%' }} onClick={() => setOpenModal(false)}>
+          <Flex align="center" justify="between" css={{ w: "100%", gap: "$8" }}>
+            <Button
+              outlined
+              variant="standard"
+              css={{ w: "100%" }}
+              onClick={() => setOpenModal(false)}
+            >
               Dismiss
             </Button>
-            <Button css={{ w: '100%' }} onClick={startHLS}>
+            <Button css={{ w: "100%" }} onClick={startHLS}>
               Go Live
             </Button>
           </Flex>

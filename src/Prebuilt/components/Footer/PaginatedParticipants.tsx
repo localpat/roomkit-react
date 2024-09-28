@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { useMeasure } from 'react-use';
-import { VariableSizeList } from 'react-window';
-import { selectIsConnectedToRoom, useHMSStore, usePaginatedParticipants } from '@100mslive/react-sdk';
-import { ChevronLeftIcon, CrossIcon } from '@100mslive/react-icons';
-import { IconButton } from '../../../IconButton';
-import { Box, Flex } from '../../../Layout';
-import { Loading } from '../../../Loading';
-import { Text } from '../../../Text';
-import { Participant, ParticipantSearch } from './ParticipantList';
-import { ItemData, itemKey, ROW_HEIGHT } from './RoleAccordion';
+import React, { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useMeasure } from "react-use";
+import { VariableSizeList } from "react-window";
+import {
+  selectIsConnectedToRoom,
+  useHMSStore,
+  usePaginatedParticipants,
+} from "@100mslive/react-sdk";
+import { ChevronLeftIcon, CrossIcon } from "@100mslive/react-icons";
+import { IconButton } from "../../../IconButton";
+import { Box, Flex } from "../../../Layout";
+import { Loading } from "../../../Loading";
+import { Text } from "../../../Text";
+import { Participant, ParticipantSearch } from "./ParticipantList";
+import { ItemData, itemKey, ROW_HEIGHT } from "./RoleAccordion";
 // @ts-ignore: No implicit Any
-import { useSidepaneReset } from '../AppData/useSidepane';
+import { useSidepaneReset } from "../AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { getFormattedCount } from '../../common/utils';
+import { getFormattedCount } from "../../common/utils";
 
 const LoadMoreParticipants = ({
   hasNext,
@@ -53,7 +57,13 @@ const VirtualizedParticipantItem = React.memo(
     style: React.CSSProperties;
   }) => {
     if (!data.peerList[index]) {
-      return <LoadMoreParticipants hasNext={data.hasNext} loadMore={data.loadMorePeers} style={style} />;
+      return (
+        <LoadMoreParticipants
+          hasNext={data.hasNext}
+          loadMore={data.loadMorePeers}
+          style={style}
+        />
+      );
     }
     return (
       <Participant
@@ -63,13 +73,22 @@ const VirtualizedParticipantItem = React.memo(
         style={style}
       />
     );
-  },
+  }
 );
 
-export const PaginatedParticipants = ({ roleName, onBack }: { roleName: string; onBack: () => void }) => {
-  const { peers, total, hasNext, loadPeers, loadMorePeers } = usePaginatedParticipants({ role: roleName, limit: 20 });
-  const [search, setSearch] = useState<string>('');
-  const filteredPeers = peers.filter(p => p.name?.toLowerCase().includes(search?.toLowerCase()));
+export const PaginatedParticipants = ({
+  roleName,
+  onBack,
+}: {
+  roleName: string;
+  onBack: () => void;
+}) => {
+  const { peers, total, hasNext, loadPeers, loadMorePeers } =
+    usePaginatedParticipants({ role: roleName, limit: 20 });
+  const [search, setSearch] = useState<string>("");
+  const filteredPeers = peers.filter((p) =>
+    p.name?.toLowerCase().includes(search?.toLowerCase())
+  );
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const height = ROW_HEIGHT * (filteredPeers.length + 1);
@@ -81,16 +100,20 @@ export const PaginatedParticipants = ({ roleName, onBack }: { roleName: string; 
   }, []);
 
   return (
-    <Flex ref={ref} direction="column" css={{ size: '100%', gap: '$4' }}>
+    <Flex ref={ref} direction="column" css={{ size: "100%", gap: "$4" }}>
       <Flex align="center">
-        <Flex align="center" css={{ flex: '1 1 0', cursor: 'pointer' }} onClick={onBack}>
+        <Flex
+          align="center"
+          css={{ flex: "1 1 0", cursor: "pointer" }}
+          onClick={onBack}
+        >
           <ChevronLeftIcon />
-          <Text variant="lg" css={{ flex: '1 1 0' }}>
+          <Text variant="lg" css={{ flex: "1 1 0" }}>
             Participants
           </Text>
         </Flex>
         <IconButton
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             resetSidePane();
           }}
@@ -99,17 +122,49 @@ export const PaginatedParticipants = ({ roleName, onBack }: { roleName: string; 
           <CrossIcon />
         </IconButton>
       </Flex>
-      <ParticipantSearch onSearch={(search: string) => setSearch(search)} placeholder={`Search for ${roleName}`} />
-      <Flex direction="column" css={{ border: '1px solid $border_default', borderRadius: '$1', flex: '1 1 0' }}>
-        <Flex align="center" css={{ height: ROW_HEIGHT, borderBottom: '1px solid $border_default', px: '$8' }}>
-          <Text css={{ fontSize: '$space$7' }}>
-            {roleName}({getFormattedCount(peers.length)}/{getFormattedCount(total)})
+      <ParticipantSearch
+        onSearch={(search: string) => setSearch(search)}
+        placeholder={`Search for ${roleName}`}
+      />
+      <Flex
+        direction="column"
+        css={{
+          border: "1px solid $border_default",
+          borderRadius: "$1",
+          flex: "1 1 0",
+        }}
+      >
+        <Flex
+          align="center"
+          css={{
+            height: ROW_HEIGHT,
+            borderBottom: "1px solid $border_default",
+            px: "$8",
+          }}
+        >
+          <Text css={{ fontSize: "$space$7" }}>
+            {roleName}({getFormattedCount(peers.length)}/
+            {getFormattedCount(total)})
           </Text>
         </Flex>
-        <Box css={{ flex: '1 1 0', overflowY: 'auto', overflowX: 'hidden', mr: '-$10' }}>
+        <Box
+          css={{
+            flex: "1 1 0",
+            overflowY: "auto",
+            overflowX: "hidden",
+            mr: "-$10",
+          }}
+        >
           <VariableSizeList
-            itemSize={index => (index === filteredPeers.length + 1 ? 16 : ROW_HEIGHT)}
-            itemData={{ peerList: filteredPeers, hasNext: hasNext(), loadMorePeers, isConnected: isConnected === true }}
+            itemSize={(index) =>
+              index === filteredPeers.length + 1 ? 16 : ROW_HEIGHT
+            }
+            itemData={{
+              peerList: filteredPeers,
+              hasNext: hasNext(),
+              loadMorePeers,
+              isConnected: isConnected === true,
+            }}
             itemKey={itemKey}
             itemCount={filteredPeers.length + 1}
             width={width}

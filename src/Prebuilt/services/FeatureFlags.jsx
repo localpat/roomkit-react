@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
-import { selectRoomID, useHMSStore } from '@100mslive/react-sdk';
+import { useEffect } from "react";
+import { selectRoomID, useHMSStore } from "@100mslive/react-sdk";
 
 export class FeatureFlags {
-  static enableTranscription = process.env.REACT_APP_ENABLE_TRANSCRIPTION === 'true';
-  static enableStatsForNerds = process.env.REACT_APP_ENABLE_STATS_FOR_NERDS === 'true';
+  static enableTranscription =
+    process.env.REACT_APP_ENABLE_TRANSCRIPTION === "true";
+  static enableStatsForNerds =
+    process.env.REACT_APP_ENABLE_STATS_FOR_NERDS === "true";
   static enableWhiteboard =
     process.env.REACT_APP_ENABLE_WHITEBOARD &&
     process.env.REACT_APP_PUSHER_APP_KEY &&
@@ -17,9 +19,10 @@ export class FeatureFlags {
     window.HMS.OPTIMISE_HLS_LATENCY = false;
     // ask permissions in preview even if role doesn't have it
     window.HMS.ALWAYS_REQUEST_PERMISSIONS = false;
-    window.HMS.SHOW_NS = process.env.REACT_APP_ENV !== 'prod';
+    window.HMS.SHOW_NS = process.env.REACT_APP_ENV !== "prod";
 
-    this.enableTranscription = process.env.REACT_APP_TRANSCRIPTION_ROOM_ID === roomId;
+    this.enableTranscription =
+      process.env.REACT_APP_TRANSCRIPTION_ROOM_ID === roomId;
   }
 
   static showNS() {

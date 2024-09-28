@@ -1,5 +1,5 @@
-import React from 'react';
-declare type Props = {
+import React from "react";
+type Props = {
     /**
      * Adjusts width and height
      */
@@ -9,6 +9,6 @@ declare type Props = {
      */
     color?: string;
 };
-declare type LoadingProps = Props & React.SVGProps<SVGSVGElement>;
+type LoadingProps = Props & React.SVGProps<SVGSVGElement>;
 export declare const Loading: ({ size, color, ...props }: LoadingProps) => React.JSX.Element;
 export {};

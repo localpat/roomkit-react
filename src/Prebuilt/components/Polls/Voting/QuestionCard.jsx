@@ -1,13 +1,28 @@
 // @ts-check
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { match } from 'ts-pattern';
-import { selectLocalPeer, selectLocalPeerRoleName, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { CheckCircleIcon, ChevronDownIcon, CrossCircleIcon } from '@100mslive/react-icons';
-import { Box, Button, Flex, Text } from '../../../../';
-import { checkCorrectAnswer } from '../../../common/utils';
-import { MultipleChoiceOptions } from '../common/MultipleChoiceOptions';
-import { SingleChoiceOptions } from '../common/SingleChoiceOptions';
-import { QUESTION_TYPE } from '../../../common/constants';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { match } from "ts-pattern";
+import {
+  selectLocalPeer,
+  selectLocalPeerRoleName,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import {
+  CheckCircleIcon,
+  ChevronDownIcon,
+  CrossCircleIcon,
+} from "@100mslive/react-icons";
+import { Box, Button, Flex, Text } from "../../../../";
+import { checkCorrectAnswer } from "../../../common/utils";
+import { MultipleChoiceOptions } from "../common/MultipleChoiceOptions";
+import { SingleChoiceOptions } from "../common/SingleChoiceOptions";
+import { QUESTION_TYPE } from "../../../common/constants";
 
 export const QuestionCard = ({
   pollID,
@@ -33,7 +48,7 @@ export const QuestionCard = ({
   const roleCanViewResponse =
     !rolesThatCanViewResponses ||
     rolesThatCanViewResponses.length === 0 ||
-    rolesThatCanViewResponses.includes(localPeerRoleName || '');
+    rolesThatCanViewResponses.includes(localPeerRoleName || "");
   const [localPeerChoice, setLocalPeerChoice] = useState(localPeerResponse);
 
   useEffect(() => {
@@ -41,10 +56,12 @@ export const QuestionCard = ({
   }, [localPeerResponse]);
 
   const showVoteCount =
-    roleCanViewResponse && (localPeerChoice || (isLocalPeerCreator && pollState === 'stopped')) && !isQuiz;
+    roleCanViewResponse &&
+    (localPeerChoice || (isLocalPeerCreator && pollState === "stopped")) &&
+    !isQuiz;
 
-  const isLive = pollState === 'started';
-  const pollEnded = pollState === 'stopped';
+  const isLive = pollState === "started";
+  const pollEnded = pollState === "stopped";
   const canRespond = isLive && !localPeerChoice;
   const startTime = useRef(Date.now());
   const isCorrectAnswer = checkCorrectAnswer(answer, localPeerChoice, type);
@@ -73,10 +90,15 @@ export const QuestionCard = ({
       options: Array.from(multipleOptionAnswer),
       duration: Date.now() - startTime.current,
     };
-    await actions.interactivityCenter.addResponsesToPoll(pollID, [submittedResponse]);
-    updateSavedResponses(prev => {
+    await actions.interactivityCenter.addResponsesToPoll(pollID, [
+      submittedResponse,
+    ]);
+    updateSavedResponses((prev) => {
       const prevCopy = { ...prev };
-      prevCopy[index] = { option: singleOptionAnswer, options: Array.from(multipleOptionAnswer) };
+      prevCopy[index] = {
+        option: singleOptionAnswer,
+        options: Array.from(multipleOptionAnswer),
+      };
       return prevCopy;
     });
     startTime.current = Date.now();
@@ -93,14 +115,16 @@ export const QuestionCard = ({
   return (
     <Box
       css={{
-        backgroundColor: '$surface_bright',
-        borderRadius: '$1',
-        p: '$md',
-        mt: '$md',
+        backgroundColor: "$surface_bright",
+        borderRadius: "$1",
+        p: "$md",
+        mt: "$md",
         border:
           respondedToQuiz && !isLive
-            ? `1px solid ${isCorrectAnswer ? '$alert_success' : '$alert_error_default'}`
-            : 'none',
+            ? `1px solid ${
+                isCorrectAnswer ? "$alert_success" : "$alert_error_default"
+              }`
+            : "none",
       }}
     >
       <Flex align="center" justify="between">
@@ -110,13 +134,14 @@ export const QuestionCard = ({
             color: match({ respondedToQuiz, isLive, isCorrectAnswer })
               .when(
                 ({ respondedToQuiz, isLive }) => respondedToQuiz && !isLive,
-                ({ isCorrectAnswer }) => (isCorrectAnswer ? '$alert_success' : '$alert_error_default'),
+                ({ isCorrectAnswer }) =>
+                  isCorrectAnswer ? "$alert_success" : "$alert_error_default"
               )
-              .otherwise(() => '$on_surface_low'),
-            fontWeight: '$semiBold',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '$4',
+              .otherwise(() => "$on_surface_low"),
+            fontWeight: "$semiBold",
+            display: "flex",
+            alignItems: "center",
+            gap: "$4",
           }}
         >
           {match({ respondedToQuiz, pollEnded, isCorrectAnswer })
@@ -128,27 +153,38 @@ export const QuestionCard = ({
                 ) : (
                   <CrossCircleIcon height={16} width={16} />
                 );
-              },
+              }
             )
             .otherwise(() => null)}
           QUESTION {index} OF {totalQuestions}: {type.toUpperCase()}
         </Text>
       </Flex>
 
-      <Flex justify="between" css={{ my: '$md' }}>
-        <Text css={{ color: '$on_surface_high' }}>{text}</Text>
+      <Flex justify="between" css={{ my: "$md" }}>
+        <Text css={{ color: "$on_surface_high" }}>{text}</Text>
         <Box
-          css={{ color: '$on_surface_medium', '&:hover': { color: '$on_surface_high', cursor: 'pointer' } }}
-          onClick={() => setShowOptions(prev => !prev)}
+          css={{
+            color: "$on_surface_medium",
+            "&:hover": { color: "$on_surface_high", cursor: "pointer" },
+          }}
+          onClick={() => setShowOptions((prev) => !prev)}
         >
           <ChevronDownIcon
-            style={{ transform: showOptions ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+            style={{
+              transform: showOptions ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s ease",
+            }}
           />
         </Box>
       </Flex>
 
       <Box
-        css={{ maxHeight: showOptions ? '$80' : '0', transition: 'max-height 0.3s ease', overflowY: 'auto', mb: '$4' }}
+        css={{
+          maxHeight: showOptions ? "$80" : "0",
+          transition: "max-height 0.3s ease",
+          overflowY: "auto",
+          mb: "$4",
+        }}
       >
         {type === QUESTION_TYPE.SINGLE_CHOICE ? (
           <SingleChoiceOptions
@@ -162,7 +198,7 @@ export const QuestionCard = ({
             totalResponses={result?.totalResponses}
             showVoteCount={showVoteCount}
             localPeerResponse={localPeerChoice}
-            isStopped={pollState === 'stopped'}
+            isStopped={pollState === "stopped"}
           />
         ) : null}
 
@@ -178,12 +214,17 @@ export const QuestionCard = ({
             totalResponses={result?.totalResponses}
             showVoteCount={showVoteCount}
             localPeerResponse={localPeerChoice}
-            isStopped={pollState === 'stopped'}
+            isStopped={pollState === "stopped"}
           />
         ) : null}
       </Box>
       {isLive && (
-        <QuestionActions isValidVote={isValidVote} onVote={handleVote} response={localPeerChoice} isQuiz={isQuiz} />
+        <QuestionActions
+          isValidVote={isValidVote}
+          onVote={handleVote}
+          response={localPeerChoice}
+          isQuiz={isQuiz}
+        />
       )}
     </Box>
   );
@@ -191,16 +232,20 @@ export const QuestionCard = ({
 
 const QuestionActions = ({ isValidVote, response, isQuiz, onVote }) => {
   return (
-    <Flex align="center" justify="end" css={{ gap: '$4', w: '100%' }}>
+    <Flex align="center" justify="end" css={{ gap: "$4", w: "100%" }}>
       {response ? (
-        <Text css={{ fontWeight: '$semiBold', color: '$on_surface_medium' }}>
-          {response.skipped ? 'Skipped' : null}
-          {isQuiz && !response.skipped ? 'Answered' : null}
-          {!isQuiz && !response.skipped ? 'Voted' : null}
+        <Text css={{ fontWeight: "$semiBold", color: "$on_surface_medium" }}>
+          {response.skipped ? "Skipped" : null}
+          {isQuiz && !response.skipped ? "Answered" : null}
+          {!isQuiz && !response.skipped ? "Voted" : null}
         </Text>
       ) : (
-        <Button css={{ p: '$xs $10', fontWeight: '$semiBold' }} disabled={!isValidVote} onClick={onVote}>
-          {isQuiz ? 'Answer' : 'Vote'}
+        <Button
+          css={{ p: "$xs $10", fontWeight: "$semiBold" }}
+          disabled={!isValidVote}
+          onClick={onVote}
+        >
+          {isQuiz ? "Answer" : "Vote"}
         </Button>
       )}
     </Flex>

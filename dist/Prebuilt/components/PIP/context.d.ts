@@ -1,5 +1,4 @@
-/// <reference types="react" />
-export declare type PIPContextType = {
+export type PIPContextType = {
     isSupported: boolean;
     pipWindow: Window | null;
     requestPipWindow: (width: number, height: number) => Promise<void>;

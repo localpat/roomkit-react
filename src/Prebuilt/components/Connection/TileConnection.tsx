@@ -1,15 +1,20 @@
-import React from 'react';
+import React from "react";
 import {
   HMSPeerType,
   selectPeerTypeByID,
   selectScreenShareByPeerID,
   selectSessionStore,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { CallIcon, PinIcon, ShareScreenIcon, SpotlightIcon } from '@100mslive/react-icons';
-import { Flex, styled, Text, textEllipsis } from '../../..';
-import { ConnectionIndicator } from './ConnectionIndicator';
-import { SESSION_STORE_KEY } from '../../common/constants';
+} from "@100mslive/react-sdk";
+import {
+  CallIcon,
+  PinIcon,
+  ShareScreenIcon,
+  SpotlightIcon,
+} from "@100mslive/react-icons";
+import { Flex, styled, Text, textEllipsis } from "../../..";
+import { ConnectionIndicator } from "./ConnectionIndicator";
+import { SESSION_STORE_KEY } from "../../common/constants";
 
 const TileConnection = ({
   name,
@@ -24,7 +29,8 @@ const TileConnection = ({
   width?: string | number;
   pinned?: boolean;
 }) => {
-  const spotlighted = useHMSStore(selectSessionStore(SESSION_STORE_KEY.SPOTLIGHT)) === peerId;
+  const spotlighted =
+    useHMSStore(selectSessionStore(SESSION_STORE_KEY.SPOTLIGHT)) === peerId;
   const isPeerScreenSharing = !!useHMSStore(selectScreenShareByPeerID(peerId));
   const peerType = useHMSStore(selectPeerTypeByID(peerId));
   return (
@@ -55,8 +61,8 @@ const TileConnection = ({
               )}
               <Text
                 css={{
-                  c: '$on_surface_high',
-                  verticalAlign: 'baseline',
+                  c: "$on_surface_high",
+                  verticalAlign: "baseline",
                   ...(width ? textEllipsis((width as number) - 60) : {}),
                 }}
                 variant="xs"
@@ -72,21 +78,26 @@ const TileConnection = ({
   );
 };
 
-const IconWrapper = styled('div', { c: '$on_surface_high', ml: '$3', mt: '$1', display: 'flex' });
+const IconWrapper = styled("div", {
+  c: "$on_surface_high",
+  ml: "$3",
+  mt: "$1",
+  display: "flex",
+});
 
-const Wrapper = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'absolute',
-  bottom: '$2',
-  left: '$2',
-  backgroundColor: '$background_dim',
-  borderRadius: '$1',
-  maxWidth: '85%',
+const Wrapper = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  position: "absolute",
+  bottom: "$2",
+  left: "$2",
+  backgroundColor: "$background_dim",
+  borderRadius: "$1",
+  maxWidth: "85%",
   zIndex: 1,
-  '& p,span': {
-    p: '$2 $3',
+  "& p,span": {
+    p: "$2 $3",
   },
 });
 

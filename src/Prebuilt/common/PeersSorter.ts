@@ -1,4 +1,9 @@
-import { HMSPeer, HMSPeerID, IStoreReadOnly, selectDominantSpeaker } from '@100mslive/react-sdk';
+import {
+  HMSPeer,
+  HMSPeerID,
+  IStoreReadOnly,
+  selectDominantSpeaker,
+} from "@100mslive/react-sdk";
 
 class PeersSorter {
   storeUnsubscribe: undefined | (() => void) = undefined;
@@ -17,25 +22,36 @@ class PeersSorter {
     this.listeners = new Set();
   }
 
-  setPeersAndTilesPerPage = ({ peers, tilesPerPage }: { peers: HMSPeer[]; tilesPerPage: number }) => {
+  setPeersAndTilesPerPage = ({
+    peers,
+    tilesPerPage,
+  }: {
+    peers: HMSPeer[];
+    tilesPerPage: number;
+  }) => {
     this.speaker = undefined;
     this.tilesPerPage = tilesPerPage;
-    const peerIds = new Set(peers.map(peer => peer.id));
+    const peerIds = new Set(peers.map((peer) => peer.id));
     // remove existing peers which are no longer provided
     this.peers.forEach((_, key) => {
       if (!peerIds.has(key)) {
         this.peers.delete(key);
       }
     });
-    this.lruPeers = new Set([...this.lruPeers].filter(peerId => peerIds.has(peerId)));
-    peers.forEach(peer => {
+    this.lruPeers = new Set(
+      [...this.lruPeers].filter((peerId) => peerIds.has(peerId))
+    );
+    peers.forEach((peer) => {
       this.peers.set(peer.id, peer);
       if (this.lruPeers.size < tilesPerPage) {
         this.lruPeers.add(peer.id);
       }
     });
     if (!this.storeUnsubscribe) {
-      this.storeUnsubscribe = this.store.subscribe(this.onDominantSpeakerChange, selectDominantSpeaker);
+      this.storeUnsubscribe = this.store.subscribe(
+        this.onDominantSpeakerChange,
+        selectDominantSpeaker
+      );
     }
     this.moveSpeakerToFront(this.speaker);
   };
@@ -58,7 +74,10 @@ class PeersSorter {
       this.updateListeners();
       return;
     }
-    if (this.lruPeers.has(speaker.id) && this.lruPeers.size <= this.tilesPerPage) {
+    if (
+      this.lruPeers.has(speaker.id) &&
+      this.lruPeers.size <= this.tilesPerPage
+    ) {
       this.updateListeners();
       return;
     }
@@ -85,18 +104,18 @@ class PeersSorter {
 
   updateListeners = () => {
     const orderedPeers: HMSPeer[] = [];
-    this.lruPeers.forEach(key => {
+    this.lruPeers.forEach((key) => {
       const peer = this.peers.get(key);
       if (peer) {
         orderedPeers.push(peer);
       }
     });
-    this.peers.forEach(peer => {
+    this.peers.forEach((peer) => {
       if (!this.lruPeers.has(peer.id) && peer) {
         orderedPeers.push(peer);
       }
     });
-    this.listeners.forEach(listener => listener?.(orderedPeers));
+    this.listeners.forEach((listener) => listener?.(orderedPeers));
   };
 
   private maintainLruSize = (size: number) => {

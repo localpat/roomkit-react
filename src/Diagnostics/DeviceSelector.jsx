@@ -1,23 +1,30 @@
-import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Dropdown } from '../Dropdown';
-import { Box, Flex } from '../Layout';
-import { DialogDropdownTrigger } from '../Prebuilt/primitives/DropdownTrigger';
-import { Text } from '../Text';
+import React, { useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { Dropdown } from "../Dropdown";
+import { Box, Flex } from "../Layout";
+import { DialogDropdownTrigger } from "../Prebuilt/primitives/DropdownTrigger";
+import { Text } from "../Text";
 
-export const DeviceSelector = ({ title, devices, selection, onChange, icon, children = null }) => {
+export const DeviceSelector = ({
+  title,
+  devices,
+  selection,
+  onChange,
+  icon,
+  children = null,
+}) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   return (
-    <Box css={{ mb: '$6' }}>
-      <Text css={{ mb: '$4' }}>{title}</Text>
+    <Box css={{ mb: "$6" }}>
+      <Text css={{ mb: "$4" }}>{title}</Text>
       <Flex
         align="center"
         css={{
-          gap: '$4',
-          '@md': {
-            flexDirection: children ? 'column' : 'row',
-            alignItems: children ? 'start' : 'center',
+          gap: "$4",
+          "@md": {
+            flexDirection: children ? "column" : "row",
+            alignItems: children ? "start" : "center",
           },
         }}
       >
@@ -25,7 +32,10 @@ export const DeviceSelector = ({ title, devices, selection, onChange, icon, chil
           <DialogDropdownTrigger
             ref={ref}
             icon={icon}
-            title={devices.find(({ deviceId }) => deviceId === selection)?.label || 'Select device from list'}
+            title={
+              devices.find(({ deviceId }) => deviceId === selection)?.label ||
+              "Select device from list"
+            }
             open={open}
           />
           <Dropdown.Portal>
@@ -39,13 +49,13 @@ export const DeviceSelector = ({ title, devices, selection, onChange, icon, chil
                 zIndex: 1001,
               }}
             >
-              {devices.map(device => {
+              {devices.map((device) => {
                 return (
                   <Dropdown.Item
                     key={device.label}
                     onSelect={() => onChange(device.deviceId)}
                     css={{
-                      px: '$9',
+                      px: "$9",
                     }}
                   >
                     {device.label}

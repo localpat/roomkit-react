@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSPollQuestionOption } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSPollQuestionOption } from "@100mslive/react-sdk";
 export declare const OptionInputWithDelete: ({ index, option, handleOptionTextChange, removeOption, }: {
     index: number;
     option: HMSPollQuestionOption;

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 import {
   HMSPeerID,
   HMSTrackID,
@@ -9,11 +9,11 @@ import {
   simulcastMapping,
   useHMSStatsStore,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { Tooltip } from '../Tooltip';
-import { formatBytes } from './formatBytes';
-import { Stats } from './StyledStats';
-import { useQoE } from './useQoE';
+} from "@100mslive/react-sdk";
+import { Tooltip } from "../Tooltip";
+import { formatBytes } from "./formatBytes";
+import { Stats } from "./StyledStats";
+import { useQoE } from "./useQoE";
 
 export interface VideoTileStatsProps {
   videoTrackID?: HMSTrackID;
@@ -26,14 +26,31 @@ export interface VideoTileStatsProps {
  * This component can be used to overlay webrtc stats over the Video Tile. For the local tracks it also includes
  * remote inbound stats as sent by the SFU in receiver report.
  */
-export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = false }: VideoTileStatsProps) {
-  const audioSelector = isLocal ? selectHMSStats.localAudioTrackStatsByID : selectHMSStats.trackStatsByID;
+export function VideoTileStats({
+  videoTrackID,
+  audioTrackID,
+  peerID,
+  isLocal = false,
+}: VideoTileStatsProps) {
+  const audioSelector = isLocal
+    ? selectHMSStats.localAudioTrackStatsByID
+    : selectHMSStats.trackStatsByID;
   const audioTrackStats = useHMSStatsStore(audioSelector(audioTrackID));
-  const localVideoTrackStats = useHMSStatsStore(selectHMSStats.localVideoTrackStatsByID(videoTrackID));
-  const remoteVideoTrackStats = useHMSStatsStore(selectHMSStats.trackStatsByID(videoTrackID));
-  const videoTrackStats = isLocal ? localVideoTrackStats?.[0] : remoteVideoTrackStats;
-  const downlinkScore = useHMSStore(selectConnectionQualityByPeerID(peerID))?.downlinkQuality;
-  const availableOutgoingBitrate = useHMSStatsStore(selectHMSStats.availablePublishBitrate);
+  const localVideoTrackStats = useHMSStatsStore(
+    selectHMSStats.localVideoTrackStatsByID(videoTrackID)
+  );
+  const remoteVideoTrackStats = useHMSStatsStore(
+    selectHMSStats.trackStatsByID(videoTrackID)
+  );
+  const videoTrackStats = isLocal
+    ? localVideoTrackStats?.[0]
+    : remoteVideoTrackStats;
+  const downlinkScore = useHMSStore(
+    selectConnectionQualityByPeerID(peerID)
+  )?.downlinkQuality;
+  const availableOutgoingBitrate = useHMSStatsStore(
+    selectHMSStats.availablePublishBitrate
+  );
   const qoe = useQoE({ videoTrackID, audioTrackID, isLocal });
 
   // Viewer role - no stats to show
@@ -50,13 +67,13 @@ export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = f
                 show={isNotNullishAndNot0(availableOutgoingBitrate)}
                 label="AOBR"
                 tooltip="Available Outgoing Bitrate"
-                value={formatBytes(availableOutgoingBitrate, 'b/s')}
+                value={formatBytes(availableOutgoingBitrate, "b/s")}
               />
-              {localVideoTrackStats?.map(stat => {
+              {localVideoTrackStats?.map((stat) => {
                 if (!stat) {
                   return null;
                 }
-                const layer = stat.rid ? simulcastMapping[stat.rid as RID] : '';
+                const layer = stat.rid ? simulcastMapping[stat.rid as RID] : "";
                 return (
                   <Fragment key={`${stat.id}${stat.rid}`}>
                     {layer && <StatsRow label={layer.toUpperCase()} value="" />}
@@ -74,13 +91,15 @@ export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = f
                       show={isNotNullishAndNot0(stat.framesPerSecond)}
                       label="FPS"
                       value={`${stat.framesPerSecond} ${
-                        isNotNullishAndNot0(stat.framesDropped) ? `(${stat.framesDropped} dropped)` : ''
+                        isNotNullishAndNot0(stat.framesDropped)
+                          ? `(${stat.framesDropped} dropped)`
+                          : ""
                       }`}
                     />
                     <StatsRow
                       show={isNotNullish(stat.bitrate)}
                       label="Bitrate(V)"
-                      value={formatBytes(stat.bitrate, 'b/s')}
+                      value={formatBytes(stat.bitrate, "b/s")}
                     />
                     <Stats.Gap />
                   </Fragment>
@@ -106,7 +125,7 @@ export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = f
                 value={`${videoTrackStats?.framesPerSecond} ${
                   isNotNullishAndNot0(videoTrackStats?.framesDropped)
                     ? `(${videoTrackStats?.framesDropped} dropped)`
-                    : ''
+                    : ""
                 }`}
               />
               <StatsRow
@@ -122,7 +141,7 @@ export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = f
               <StatsRow
                 show={isNotNullish(videoTrackStats?.bitrate)}
                 label="Bitrate(V)"
-                value={formatBytes(videoTrackStats?.bitrate, 'b/s')}
+                value={formatBytes(videoTrackStats?.bitrate, "b/s")}
               />
             </Fragment>
           )}
@@ -130,16 +149,31 @@ export function VideoTileStats({ videoTrackID, audioTrackID, peerID, isLocal = f
           <StatsRow
             show={isNotNullish(audioTrackStats?.bitrate)}
             label="Bitrate(A)"
-            value={formatBytes(audioTrackStats?.bitrate, 'b/s')}
+            value={formatBytes(audioTrackStats?.bitrate, "b/s")}
           />
 
-          <StatsRow show={isNotNullish(downlinkScore)} label="CQS" value={downlinkScore} />
+          <StatsRow
+            show={isNotNullish(downlinkScore)}
+            label="CQS"
+            value={downlinkScore}
+          />
 
-          <StatsRow show={isNotNullish(videoTrackStats?.codec)} label="Codec(V)" value={videoTrackStats?.codec} />
+          <StatsRow
+            show={isNotNullish(videoTrackStats?.codec)}
+            label="Codec(V)"
+            value={videoTrackStats?.codec}
+          />
 
-          <StatsRow show={isNotNullish(audioTrackStats?.codec)} label="Codec(A)" value={audioTrackStats?.codec} />
+          <StatsRow
+            show={isNotNullish(audioTrackStats?.codec)}
+            label="Codec(A)"
+            value={audioTrackStats?.codec}
+          />
 
-          <PacketLostAndJitter audioTrackStats={audioTrackStats} videoTrackStats={videoTrackStats} />
+          <PacketLostAndJitter
+            audioTrackStats={audioTrackStats}
+            videoTrackStats={videoTrackStats}
+          />
         </tbody>
       </table>
     </Stats.Root>
@@ -156,15 +190,25 @@ const PacketLostAndJitter = ({
   // for local peer, we'll use the remote inbound stats to get packet loss and jitter, to know whether the track is
   // local we check if the stats type has outbound in it as it's being published from local. Both audio and video
   // tracks are checked in case the user has permission to publish only one of them.
-  const isLocalPeer = audioTrackStats?.type.includes('outbound') || videoTrackStats?.type.includes('outbound');
+  const isLocalPeer =
+    audioTrackStats?.type.includes("outbound") ||
+    videoTrackStats?.type.includes("outbound");
   const audioStats = isLocalPeer ? audioTrackStats?.remote : audioTrackStats;
   const videoStats = isLocalPeer ? videoTrackStats?.remote : videoTrackStats;
   return (
     <>
       <TrackPacketsLostRow label="Packet Loss(V)" stats={videoStats} />
       <TrackPacketsLostRow label="Packet Loss(A)" stats={audioStats} />
-      <StatsRow show={isNotNullish(videoStats?.jitter)} label="Jitter(V)" value={videoStats?.jitter?.toFixed(4)} />
-      <StatsRow show={isNotNullish(audioStats?.jitter)} label="Jitter(A)" value={audioStats?.jitter?.toFixed(4)} />
+      <StatsRow
+        show={isNotNullish(videoStats?.jitter)}
+        label="Jitter(V)"
+        value={videoStats?.jitter?.toFixed(4)}
+      />
+      <StatsRow
+        show={isNotNullish(audioStats?.jitter)}
+        label="Jitter(A)"
+        value={audioStats?.jitter?.toFixed(4)}
+      />
     </>
   );
 };
@@ -173,10 +217,12 @@ const TrackPacketsLostRow = ({
   stats,
   label,
 }: {
-  stats?: Pick<HMSTrackStats, 'packetsLost' | 'packetsLostRate'>;
+  stats?: Pick<HMSTrackStats, "packetsLost" | "packetsLostRate">;
   label: string;
 }) => {
-  const packetsLostRate = `${stats?.packetsLostRate ? stats.packetsLostRate.toFixed(2) : 0}/s`;
+  const packetsLostRate = `${
+    stats?.packetsLostRate ? stats.packetsLostRate.toFixed(2) : 0
+  }/s`;
 
   return (
     <StatsRow
@@ -188,9 +234,9 @@ const TrackPacketsLostRow = ({
 };
 
 const RawStatsRow = ({
-  label = '',
-  value = '',
-  tooltip = '',
+  label = "",
+  value = "",
+  tooltip = "",
   show = true,
 }: {
   label: string;
@@ -211,7 +257,7 @@ const RawStatsRow = ({
           ) : (
             statsLabel
           )}
-          {value === '' ? <Stats.Value /> : <Stats.Value>{value}</Stats.Value>}
+          {value === "" ? <Stats.Value /> : <Stats.Value>{value}</Stats.Value>}
         </Stats.Row>
       ) : null}
     </>

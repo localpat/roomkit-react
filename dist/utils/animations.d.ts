@@ -6,7 +6,7 @@ export declare const slideUp: (controller: string) => {
     (): string;
     name: string;
 };
-export declare const translateAcross: ({ xFrom, yFrom, zFrom, xTo, yTo, zTo }: {
+export declare const translateAcross: ({ xFrom, yFrom, zFrom, xTo, yTo, zTo, }: {
     xFrom?: string | undefined;
     yFrom?: string | undefined;
     zFrom?: string | undefined;
@@ -58,7 +58,7 @@ export declare const slideLeftAndFade: (start?: string) => {
     name: string;
 };
 export declare const popoverAnimation: {
-    '@media (prefers-reduced-motion: no-preference)': {
+    "@media (prefers-reduced-motion: no-preference)": {
         animationDuration: string;
         animationTimingFunction: string;
         willChange: string;
@@ -91,7 +91,7 @@ export declare const popoverAnimation: {
     };
 };
 export declare const toastAnimation: {
-    '@media (prefers-reduced-motion: no-preference)': {
+    "@media (prefers-reduced-motion: no-preference)": {
         animationDuration: string;
         animationTimingFunction: string;
         willChange: string;

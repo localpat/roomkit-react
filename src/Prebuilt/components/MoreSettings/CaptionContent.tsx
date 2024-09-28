@@ -1,17 +1,31 @@
-import React from 'react';
-import { HMSTranscriptionMode, selectIsTranscriptionEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { AlertTriangleIcon, CrossIcon } from '@100mslive/react-icons';
-import { Button } from '../../../Button';
-import { Box, Flex } from '../../../Layout';
-import { Loading } from '../../../Loading';
-import { Text } from '../../../Text';
+import React from "react";
+import {
+  HMSTranscriptionMode,
+  selectIsTranscriptionEnabled,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { AlertTriangleIcon, CrossIcon } from "@100mslive/react-icons";
+import { Button } from "../../../Button";
+import { Box, Flex } from "../../../Layout";
+import { Loading } from "../../../Loading";
+import { Text } from "../../../Text";
 // @ts-ignore: No implicit Any
-import { ToastManager } from '../Toast/ToastManager';
+import { ToastManager } from "../Toast/ToastManager";
 // @ts-ignore: No implicit Any
-import { useSetAppDataByKey, useSetIsCaptionEnabled } from '../AppData/useUISettings';
-import { CAPTION_TOAST } from '../../common/constants';
+import {
+  useSetAppDataByKey,
+  useSetIsCaptionEnabled,
+} from "../AppData/useUISettings";
+import { CAPTION_TOAST } from "../../common/constants";
 
-export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit: () => void }) => {
+export const CaptionContent = ({
+  isMobile,
+  onExit,
+}: {
+  isMobile: boolean;
+  onExit: () => void;
+}) => {
   const DURATION = 2000;
   const actions = useHMSActions();
   const isTranscriptionEnabled = useHMSStore(selectIsTranscriptionEnabled);
@@ -22,27 +36,35 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
   return (
     <>
       <Text
-        variant={isMobile ? 'md' : 'lg'}
+        variant={isMobile ? "md" : "lg"}
         css={{
-          color: '$on_surface_high',
-          fontWeight: '$semiBold',
-          display: 'flex',
-          '@md': { px: '$8' },
+          color: "$on_surface_high",
+          fontWeight: "$semiBold",
+          display: "flex",
+          "@md": { px: "$8" },
         }}
       >
-        {isTranscriptionEnabled ? 'Disable' : 'Enable'} Closed Caption (CC) for this session?
+        {isTranscriptionEnabled ? "Disable" : "Enable"} Closed Caption (CC) for
+        this session?
         <Box
-          css={{ color: 'inherit', ml: 'auto', '&:hover': { color: '$on_surface_medium', cursor: 'pointer' } }}
+          css={{
+            color: "inherit",
+            ml: "auto",
+            "&:hover": { color: "$on_surface_medium", cursor: "pointer" },
+          }}
           onClick={onExit}
         >
           <CrossIcon />
         </Box>
       </Text>
       {!isMobile ? (
-        <Text variant="sm" css={{ color: '$on_surface_medium', mt: '$4', '@md': { px: '$8' } }}>
-          This will {isTranscriptionEnabled ? 'disable' : 'enable'} Closed Captions for everyone in this room. You
-          can&nbsp;
-          {isTranscriptionEnabled ? 'enable' : 'disable'} it later.
+        <Text
+          variant="sm"
+          css={{ color: "$on_surface_medium", mt: "$4", "@md": { px: "$8" } }}
+        >
+          This will {isTranscriptionEnabled ? "disable" : "enable"} Closed
+          Captions for everyone in this room. You can&nbsp;
+          {isTranscriptionEnabled ? "enable" : "disable"} it later.
         </Text>
       ) : null}
 
@@ -50,14 +72,19 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
         justify="between"
         align="center"
         css={{
-          width: '100%',
-          gap: '$md',
-          mt: '$10',
-          '@md': { px: '$4' },
+          width: "100%",
+          gap: "$md",
+          mt: "$10",
+          "@md": { px: "$4" },
         }}
       >
         {isMobile ? null : (
-          <Button variant="standard" css={{ w: '100%' }} outlined onClick={onExit}>
+          <Button
+            variant="standard"
+            css={{ w: "100%" }}
+            outlined
+            onClick={onExit}
+          >
             Cancel
           </Button>
         )}
@@ -66,26 +93,26 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
           justify="between"
           align="center"
           css={{
-            width: '100%',
-            '@md': { px: '$4' },
+            width: "100%",
+            "@md": { px: "$4" },
           }}
         >
           {isMobile && isTranscriptionEnabled ? (
             <Button
               variant="standard"
-              css={{ w: '100%', mb: '$4' }}
+              css={{ w: "100%", mb: "$4" }}
               outlined
               onClick={() => {
                 setIsCaptionEnabled(!isCaptionEnabled);
                 onExit();
               }}
             >
-              {isCaptionEnabled ? 'Hide For Me' : 'Show For Me'}
+              {isCaptionEnabled ? "Hide For Me" : "Show For Me"}
             </Button>
           ) : null}
           <Button
-            variant={isTranscriptionEnabled ? 'danger' : 'primary'}
-            css={{ width: '100%' }}
+            variant={isTranscriptionEnabled ? "danger" : "primary"}
+            css={{ width: "100%" }}
             data-testid="popup_change_btn"
             onClick={async () => {
               try {
@@ -96,7 +123,7 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
                   setIsCaptionEnabled(false);
                   const id = ToastManager.replaceToast(toastId, {
                     title: `Disabling Closed Caption for everyone.`,
-                    variant: 'standard',
+                    variant: "standard",
                     duration: DURATION,
                     icon: <Loading color="currentColor" />,
                   });
@@ -109,16 +136,18 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
                 });
                 const id = ToastManager.replaceToast(toastId, {
                   title: `Enabling Closed Caption for everyone.`,
-                  variant: 'standard',
+                  variant: "standard",
                   duration: DURATION,
                   icon: <Loading color="currentColor" />,
                 });
                 setToastId(id);
               } catch (err) {
                 const id = ToastManager.replaceToast(toastId, {
-                  title: `Failed to ${isTranscriptionEnabled ? 'disable' : 'enable'} closed caption`,
-                  variant: 'error',
-                  icon: <AlertTriangleIcon style={{ marginRight: '0.5rem' }} />,
+                  title: `Failed to ${
+                    isTranscriptionEnabled ? "disable" : "enable"
+                  } closed caption`,
+                  variant: "error",
+                  icon: <AlertTriangleIcon style={{ marginRight: "0.5rem" }} />,
                 });
                 setToastId(id);
               } finally {
@@ -127,15 +156,23 @@ export const CaptionContent = ({ isMobile, onExit }: { isMobile: boolean; onExit
               onExit();
             }}
           >
-            {isTranscriptionEnabled ? 'Disable' : 'Enable'} for Everyone
+            {isTranscriptionEnabled ? "Disable" : "Enable"} for Everyone
           </Button>
         </Flex>
       </Flex>
       {isMobile && (
-        <Text variant="sm" css={{ color: '$on_surface_medium', pb: '$4', mb: '$8', '@md': { px: '$8', mt: '$4' } }}>
-          This will {isTranscriptionEnabled ? 'disable' : 'enable'} Closed Captions for everyone in this room. You
-          can&nbsp;
-          {isTranscriptionEnabled ? 'enable' : 'disable'} it later.
+        <Text
+          variant="sm"
+          css={{
+            color: "$on_surface_medium",
+            pb: "$4",
+            mb: "$8",
+            "@md": { px: "$8", mt: "$4" },
+          }}
+        >
+          This will {isTranscriptionEnabled ? "disable" : "enable"} Closed
+          Captions for everyone in this room. You can&nbsp;
+          {isTranscriptionEnabled ? "enable" : "disable"} it later.
         </Text>
       )}
     </>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { HMSMessage } from '@100mslive/react-sdk';
+import React from "react";
+import { HMSMessage } from "@100mslive/react-sdk";
 export declare const ChatActions: ({ showPinAction, onReply, onReplyGroup, showReply, message, sentByLocalPeer, isMobile, openSheet, setOpenSheet, }: {
     showPinAction: boolean;
     onReply: () => void;

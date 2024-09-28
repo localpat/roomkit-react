@@ -1,7 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { useClickAway } from 'react-use';
-import { ConferencingScreen, DefaultConferencingScreen_Elements } from '@100mslive/types-prebuilt';
-import { match } from 'ts-pattern';
+import React, { useRef, useState } from "react";
+import { useClickAway } from "react-use";
+import {
+  ConferencingScreen,
+  DefaultConferencingScreen_Elements,
+} from "@100mslive/types-prebuilt";
+import { match } from "ts-pattern";
 import {
   HMSTranscriptionMode,
   selectIsConnectedToRoom,
@@ -13,7 +16,7 @@ import {
   useHMSActions,
   useHMSStore,
   useRecordingStreaming,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 import {
   BrbIcon,
   ClosedCaptionIcon,
@@ -30,54 +33,64 @@ import {
   RecordIcon,
   SettingsIcon,
   VirtualBackgroundIcon,
-} from '@100mslive/react-icons';
-import { Box, Loading, Tooltip } from '../../../..';
-import { Sheet } from '../../../../Sheet';
+} from "@100mslive/react-icons";
+import { Box, Loading, Tooltip } from "../../../..";
+import { Sheet } from "../../../../Sheet";
 // @ts-ignore: No implicit any
-import IconButton from '../../../IconButton';
-import { NoiseCancellation } from '../../AudioVideoToggle';
+import IconButton from "../../../IconButton";
+import { NoiseCancellation } from "../../AudioVideoToggle";
 // @ts-ignore: No implicit any
-import { EmojiReaction } from '../../EmojiReaction';
+import { EmojiReaction } from "../../EmojiReaction";
 // @ts-ignore: No implicit any
-import { StopRecordingInSheet } from '../../Header/StreamActions';
+import { StopRecordingInSheet } from "../../Header/StreamActions";
 // @ts-ignore: No implicit any
-import SettingsModal from '../../Settings/SettingsModal';
+import SettingsModal from "../../Settings/SettingsModal";
 // @ts-ignore: No implicit any
-import { ToastManager } from '../../Toast/ToastManager';
+import { ToastManager } from "../../Toast/ToastManager";
 // @ts-ignore: No implicit any
-import { ActionTile } from '../ActionTile';
-import { CaptionModal } from '../CaptionModal';
+import { ActionTile } from "../ActionTile";
+import { CaptionModal } from "../CaptionModal";
 // @ts-ignore: No implicit any
-import { ChangeNameModal } from '../ChangeNameModal';
+import { ChangeNameModal } from "../ChangeNameModal";
 // @ts-ignore: No implicit any
-import { MuteAllModal } from '../MuteAllModal';
-import { useRoomLayoutHeader } from '../../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
-import { useSheetToggle } from '../../AppData/useSheet';
+import { MuteAllModal } from "../MuteAllModal";
+import { useRoomLayoutHeader } from "../../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
+import { useSheetToggle } from "../../AppData/useSheet";
 // @ts-ignore: No implicit any
-import { usePollViewToggle, useSidepaneToggle } from '../../AppData/useSidepane';
+import {
+  usePollViewToggle,
+  useSidepaneToggle,
+} from "../../AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { useSetIsCaptionEnabled, useShowPolls } from '../../AppData/useUISettings';
+import {
+  useSetIsCaptionEnabled,
+  useShowPolls,
+} from "../../AppData/useUISettings";
 // @ts-ignore: No implicit any
-import { useDropdownList } from '../../hooks/useDropdownList';
-import { useMyMetadata } from '../../hooks/useMetadata';
-import { useUnreadPollQuizPresent } from '../../hooks/useUnreadPollQuizPresent';
-import { useLandscapeHLSStream, useMobileHLSStream, useRecordingHandler } from '../../../common/hooks';
+import { useDropdownList } from "../../hooks/useDropdownList";
+import { useMyMetadata } from "../../hooks/useMetadata";
+import { useUnreadPollQuizPresent } from "../../hooks/useUnreadPollQuizPresent";
+import {
+  useLandscapeHLSStream,
+  useMobileHLSStream,
+  useRecordingHandler,
+} from "../../../common/hooks";
 // @ts-ignore: No implicit any
-import { getFormattedCount } from '../../../common/utils';
+import { getFormattedCount } from "../../../common/utils";
 // @ts-ignore: No implicit any
-import { SHEET_OPTIONS, SIDE_PANE_OPTIONS } from '../../../common/constants';
+import { SHEET_OPTIONS, SIDE_PANE_OPTIONS } from "../../../common/constants";
 
 const MODALS = {
-  CHANGE_NAME: 'changeName',
-  SELF_ROLE_CHANGE: 'selfRoleChange',
-  MORE_SETTINGS: 'moreSettings',
-  START_RECORDING: 'startRecording',
-  DEVICE_SETTINGS: 'deviceSettings',
-  STATS_FOR_NERDS: 'statsForNerds',
-  BULK_ROLE_CHANGE: 'bulkRoleChange',
-  MUTE_ALL: 'muteAll',
-  EMBED_URL: 'embedUrl',
-  CAPTION: 'caption',
+  CHANGE_NAME: "changeName",
+  SELF_ROLE_CHANGE: "selfRoleChange",
+  MORE_SETTINGS: "moreSettings",
+  START_RECORDING: "startRecording",
+  DEVICE_SETTINGS: "deviceSettings",
+  STATS_FOR_NERDS: "statsForNerds",
+  BULK_ROLE_CHANGE: "bulkRoleChange",
+  MUTE_ALL: "muteAll",
+  EMBED_URL: "embedUrl",
+  CAPTION: "caption",
 };
 
 export const MwebOptions = ({
@@ -90,7 +103,8 @@ export const MwebOptions = ({
   const hmsActions = useHMSActions();
   const permissions = useHMSStore(selectPermissions);
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-  const { isBrowserRecordingOn, isStreamingOn, isHLSRunning } = useRecordingStreaming();
+  const { isBrowserRecordingOn, isStreamingOn, isHLSRunning } =
+    useRecordingStreaming();
   const [openModals, setOpenModals] = useState(new Set());
   const [openOptionsSheet, setOpenOptionsSheet] = useState(false);
   const [openSettingsSheet, setOpenSettingsSheet] = useState(false);
@@ -110,14 +124,19 @@ export const MwebOptions = ({
   const toggleVB = useSidepaneToggle(SIDE_PANE_OPTIONS.VB);
   const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const { startRecording, isRecordingLoading } = useRecordingHandler();
-  const isTranscriptionAllowed = useHMSStore(selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION));
+  const isTranscriptionAllowed = useHMSStore(
+    selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION)
+  );
   const isTranscriptionEnabled = useHMSStore(selectIsTranscriptionEnabled);
 
   const [isCaptionEnabled] = useSetIsCaptionEnabled();
-  useDropdownList({ open: openModals.size > 0 || openOptionsSheet || openSettingsSheet, name: 'MoreSettings' });
+  useDropdownList({
+    open: openModals.size > 0 || openOptionsSheet || openSettingsSheet,
+    name: "MoreSettings",
+  });
 
   const updateState = (modalName: string, value: boolean) => {
-    setOpenModals(modals => {
+    setOpenModals((modals) => {
       const copy = new Set(modals);
       if (value) {
         copy.add(modalName);
@@ -135,42 +154,49 @@ export const MwebOptions = ({
       <Sheet.Root open={openOptionsSheet} onOpenChange={setOpenOptionsSheet}>
         <Tooltip title="More options">
           <Sheet.Trigger asChild data-testid="more_settings_btn">
-            <IconButton css={{ bg: isMobileHLSStream || isLandscapeHLSStream ? '$surface_default' : '' }}>
+            <IconButton
+              css={{
+                bg:
+                  isMobileHLSStream || isLandscapeHLSStream
+                    ? "$surface_default"
+                    : "",
+              }}
+            >
               <HamburgerMenuIcon />
             </IconButton>
           </Sheet.Trigger>
         </Tooltip>
-        <Sheet.Content css={{ bg: '$surface_dim', pb: '$14' }}>
+        <Sheet.Content css={{ bg: "$surface_dim", pb: "$14" }}>
           <Sheet.Title
             css={{
-              display: 'flex',
-              color: '$on_surface_high',
-              w: '100%',
-              justifyContent: 'space-between',
-              fontSize: '$md',
-              mt: '$8',
-              px: '$10',
-              pb: '$8',
-              borderBottom: '1px solid $border_default',
-              mb: '$8',
-              alignItems: 'center',
+              display: "flex",
+              color: "$on_surface_high",
+              w: "100%",
+              justifyContent: "space-between",
+              fontSize: "$md",
+              mt: "$8",
+              px: "$10",
+              pb: "$8",
+              borderBottom: "1px solid $border_default",
+              mb: "$8",
+              alignItems: "center",
             }}
           >
             Options
             <Sheet.Close>
-              <Box css={{ color: '$on_surface_high' }}>
+              <Box css={{ color: "$on_surface_high" }}>
                 <CrossIcon />
               </Box>
             </Sheet.Close>
           </Sheet.Title>
           <Box
             css={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr',
-              gridTemplateRows: 'auto',
-              gridColumnGap: '$6',
-              gridRowGap: '$8',
-              px: '$9',
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              gridTemplateRows: "auto",
+              gridColumnGap: "$6",
+              gridRowGap: "$8",
+              px: "$9",
             }}
           >
             {elements?.participant_list && (
@@ -180,7 +206,9 @@ export const MwebOptions = ({
                   setOpenOptionsSheet(false);
                 }}
               >
-                <ActionTile.Count>{getFormattedCount(peerCount)}</ActionTile.Count>
+                <ActionTile.Count>
+                  {getFormattedCount(peerCount)}
+                </ActionTile.Count>
                 <PeopleIcon />
                 <ActionTile.Title>Participants</ActionTile.Title>
               </ActionTile.Root>
@@ -195,10 +223,15 @@ export const MwebOptions = ({
                 }}
               >
                 {isHandRaised ? <HandRaiseSlashedIcon /> : <HandIcon />}
-                <ActionTile.Title>{isHandRaised ? 'Lower' : 'Raise'} Hand</ActionTile.Title>
+                <ActionTile.Title>
+                  {isHandRaised ? "Lower" : "Raise"} Hand
+                </ActionTile.Title>
               </ActionTile.Root>
             ) : null}
-            <NoiseCancellation setOpenOptionsSheet={setOpenOptionsSheet} actionTile />
+            <NoiseCancellation
+              setOpenOptionsSheet={setOpenOptionsSheet}
+              actionTile
+            />
             {isTranscriptionAllowed ? (
               <ActionTile.Root
                 onClick={() => {
@@ -206,7 +239,11 @@ export const MwebOptions = ({
                   updateState(MODALS.CAPTION, true);
                 }}
               >
-                {isTranscriptionEnabled && isCaptionEnabled ? <ClosedCaptionIcon /> : <OpenCaptionIcon />}
+                {isTranscriptionEnabled && isCaptionEnabled ? (
+                  <ClosedCaptionIcon />
+                ) : (
+                  <OpenCaptionIcon />
+                )}
                 <ActionTile.Title>Closed Caption</ActionTile.Title>
               </ActionTile.Root>
             ) : null}
@@ -222,17 +259,18 @@ export const MwebOptions = ({
               </ActionTile.Root>
             ) : null}
 
-            {elements?.emoji_reactions && !(isLandscapeHLSStream || isMobileHLSStream) && (
-              <ActionTile.Root
-                onClick={() => {
-                  setShowEmojiCard(true);
-                  setOpenOptionsSheet(false);
-                }}
-              >
-                <EmojiIcon />
-                <ActionTile.Title>Emoji Reactions</ActionTile.Title>
-              </ActionTile.Root>
-            )}
+            {elements?.emoji_reactions &&
+              !(isLandscapeHLSStream || isMobileHLSStream) && (
+                <ActionTile.Root
+                  onClick={() => {
+                    setShowEmojiCard(true);
+                    setOpenOptionsSheet(false);
+                  }}
+                >
+                  <EmojiIcon />
+                  <ActionTile.Title>Emoji Reactions</ActionTile.Title>
+                </ActionTile.Root>
+              )}
 
             {showPolls && (
               <ActionTile.Root
@@ -293,9 +331,18 @@ export const MwebOptions = ({
                 {isRecordingLoading ? <Loading /> : <RecordIcon />}
                 <ActionTile.Title>
                   {match({ isBrowserRecordingOn, isRecordingLoading })
-                    .with({ isBrowserRecordingOn: true, isRecordingLoading: false }, () => 'Recording On')
-                    .with({ isRecordingLoading: true }, () => 'Starting Recording')
-                    .with({ isRecordingLoading: false }, () => 'Start Recording')
+                    .with(
+                      { isBrowserRecordingOn: true, isRecordingLoading: false },
+                      () => "Recording On"
+                    )
+                    .with(
+                      { isRecordingLoading: true },
+                      () => "Starting Recording"
+                    )
+                    .with(
+                      { isRecordingLoading: false },
+                      () => "Start Recording"
+                    )
                     .otherwise(() => null)}
                 </ActionTile.Title>
               </ActionTile.Root>
@@ -315,35 +362,46 @@ export const MwebOptions = ({
           </Box>
         </Sheet.Content>
       </Sheet.Root>
-      <SettingsModal open={openSettingsSheet} onOpenChange={setOpenSettingsSheet} screenType={screenType} />
+      <SettingsModal
+        open={openSettingsSheet}
+        onOpenChange={setOpenSettingsSheet}
+        screenType={screenType}
+      />
       {openModals.has(MODALS.MUTE_ALL) && (
-        <MuteAllModal onOpenChange={(value: boolean) => updateState(MODALS.MUTE_ALL, value)} isMobile />
+        <MuteAllModal
+          onOpenChange={(value: boolean) => updateState(MODALS.MUTE_ALL, value)}
+          isMobile
+        />
       )}
       {openModals.has(MODALS.CHANGE_NAME) && (
         <ChangeNameModal
-          onOpenChange={(value: boolean) => updateState(MODALS.CHANGE_NAME, value)}
+          onOpenChange={(value: boolean) =>
+            updateState(MODALS.CHANGE_NAME, value)
+          }
           openParentSheet={() => setOpenOptionsSheet(true)}
         />
       )}
       {openModals.has(MODALS.CAPTION) && (
-        <CaptionModal onOpenChange={(value: boolean) => updateState(MODALS.CAPTION, value)} />
+        <CaptionModal
+          onOpenChange={(value: boolean) => updateState(MODALS.CAPTION, value)}
+        />
       )}
       {showEmojiCard && (
         <Box
           ref={emojiCardRef}
           css={{
-            maxWidth: '100%',
-            w: '100%',
-            position: 'absolute',
+            maxWidth: "100%",
+            w: "100%",
+            position: "absolute",
             left: 0,
             right: 0,
-            bottom: '$18',
-            bg: '$surface_default',
-            zIndex: '10',
-            p: '$8',
+            bottom: "$18",
+            bg: "$surface_default",
+            zIndex: "10",
+            p: "$8",
             pb: 0,
-            r: '$1',
-            mx: '$4',
+            r: "$1",
+            mx: "$4",
           }}
         >
           <EmojiReaction showCard />
@@ -360,7 +418,7 @@ export const MwebOptions = ({
               ToastManager.addToast({
                 // @ts-ignore
                 title: error.message,
-                variant: 'error',
+                variant: "error",
               });
             }
           }}

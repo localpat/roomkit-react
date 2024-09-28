@@ -3,9 +3,15 @@ import {
   selectMessagesUnreadCountByRole,
   selectUnreadHMSMessagesCount,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 
-export const useUnreadCount = ({ role, peerId }: { role?: string; peerId?: string }) => {
+export const useUnreadCount = ({
+  role,
+  peerId,
+}: {
+  role?: string;
+  peerId?: string;
+}) => {
   let unreadCountSelector;
   if (role) {
     unreadCountSelector = selectMessagesUnreadCountByRole(role);

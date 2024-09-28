@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 export declare const LayoutMode: {
     SIDEBAR: string;
     GALLERY: string;
     SPOTLIGHT: string;
 };
-export declare type LayoutModeKeys = keyof typeof LayoutMode;
+export type LayoutModeKeys = keyof typeof LayoutMode;
 export declare const LayoutModeIconMapping: {
     [x: string]: React.JSX.Element;
 };

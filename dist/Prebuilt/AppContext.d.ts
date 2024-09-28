@@ -1,5 +1,5 @@
-import React from 'react';
-declare type HMSPrebuiltContextType = {
+import React from "react";
+type HMSPrebuiltContextType = {
     roomCode: string;
     userName?: string;
     userId?: string;

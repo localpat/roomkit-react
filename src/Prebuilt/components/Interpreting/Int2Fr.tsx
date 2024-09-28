@@ -1,13 +1,17 @@
-import React from 'react';
-import { selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { Tooltip } from '../../../Tooltip';
-import IconButton from '../../IconButton';
+import React from "react";
+import {
+  selectLocalPeerID,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { Tooltip } from "../../../Tooltip";
+import IconButton from "../../IconButton";
 
 const Int2FrButton = () => {
   const hmsActions = useHMSActions();
   const localPeerId = useHMSStore(selectLocalPeerID);
   const changeRole = () => {
-    hmsActions.changeRoleOfPeer(localPeerId, 'interpreter-fr', true);
+    hmsActions.changeRoleOfPeer(localPeerId, "interpreter-fr", true);
   };
 
   return (

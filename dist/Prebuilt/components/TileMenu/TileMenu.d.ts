@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 /**
  * Taking peerID as peer won't necesarilly have tracks
  */
@@ -6,9 +6,9 @@ declare const TileMenu: ({ audioTrackID, videoTrackID, peerID, isScreenshare, ca
     audioTrackID: string;
     videoTrackID: string;
     peerID: string;
-    isScreenshare?: boolean | undefined;
-    canMinimise?: boolean | undefined;
-    enableSpotlightingPeer?: boolean | undefined;
+    isScreenshare?: boolean;
+    canMinimise?: boolean;
+    enableSpotlightingPeer?: boolean;
 }) => React.JSX.Element | null;
-export { isSameTile } from './TileMenuContent';
+export { isSameTile } from "./TileMenuContent";
 export default TileMenu;

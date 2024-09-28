@@ -1,13 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { selectPeers, selectTracksMap, useHMSActions, useHMSVanillaStore } from '@100mslive/react-sdk';
-import { PipIcon } from '@100mslive/react-icons';
-import { Flex, Tooltip } from '../../..';
-import IconButton from '../../IconButton';
-import { PictureInPicture } from './PIPManager';
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  selectPeers,
+  selectTracksMap,
+  useHMSActions,
+  useHMSVanillaStore,
+} from "@100mslive/react-sdk";
+import { PipIcon } from "@100mslive/react-icons";
+import { Flex, Tooltip } from "../../..";
+import IconButton from "../../IconButton";
+import { PictureInPicture } from "./PIPManager";
 // @ts-ignore: No implicit Any
-import { MediaSession } from './SetupMediaSession';
+import { MediaSession } from "./SetupMediaSession";
 // @ts-ignore: No implicit Any
-import { usePinnedTrack } from '../AppData/useUISettings';
+import { usePinnedTrack } from "../AppData/useUISettings";
 
 /**
  * shows a button which when clicked shows some videos in PIP, clicking
@@ -20,10 +25,14 @@ const PIPComponent = ({ content = null }) => {
 
   const onPipToggle = useCallback(() => {
     if (!isPipOn) {
-      PictureInPicture.start(hmsActions, setIsPipOn).catch(err => console.error('error in starting pip', err));
+      PictureInPicture.start(hmsActions, setIsPipOn).catch((err) =>
+        console.error("error in starting pip", err)
+      );
       MediaSession.setup(hmsActions, store);
     } else {
-      PictureInPicture.stop().catch(err => console.error('error in stopping pip', err));
+      PictureInPicture.stop().catch((err) =>
+        console.error("error in stopping pip", err)
+      );
     }
   }, [hmsActions, isPipOn, store]);
 
@@ -33,12 +42,25 @@ const PIPComponent = ({ content = null }) => {
   return (
     <>
       {content ? (
-        <Flex css={{ w: '100%' }} onClick={() => onPipToggle()} data-testid="pip_btn">
+        <Flex
+          css={{ w: "100%" }}
+          onClick={() => onPipToggle()}
+          data-testid="pip_btn"
+        >
           {content}
         </Flex>
       ) : (
-        <Tooltip title={`${isPipOn ? 'Deactivate' : 'Activate'} picture in picture view`}>
-          <IconButton active={!isPipOn} key="pip" onClick={() => onPipToggle()} data-testid="pip_btn">
+        <Tooltip
+          title={`${
+            isPipOn ? "Deactivate" : "Activate"
+          } picture in picture view`}
+        >
+          <IconButton
+            active={!isPipOn}
+            key="pip"
+            onClick={() => onPipToggle()}
+            data-testid="pip_btn"
+          >
             <PipIcon />
           </IconButton>
         </Tooltip>
@@ -57,18 +79,22 @@ export const ActivatedPIP = () => {
 
   useEffect(() => {
     function subscribeToStore() {
-      return store.subscribe(tracksMap => {
+      return store.subscribe((tracksMap) => {
         let pipPeers = store.getState(selectPeers);
         if (pinnedTrack) {
-          pipPeers = pipPeers.filter(peer => pinnedTrack.peerId === peer.id);
+          pipPeers = pipPeers.filter((peer) => pinnedTrack.peerId === peer.id);
         }
-        PictureInPicture.updatePeersAndTracks(pipPeers, tracksMap).catch(err => {
-          console.error('error in updating pip', err);
-        });
+        PictureInPicture.updatePeersAndTracks(pipPeers, tracksMap).catch(
+          (err) => {
+            console.error("error in updating pip", err);
+          }
+        );
       }, selectTracksMap);
     }
-    let unsubscribe: (() => void) | undefined = PictureInPicture.isOn() ? subscribeToStore() : undefined;
-    PictureInPicture.listenToStateChange(isOn => {
+    let unsubscribe: (() => void) | undefined = PictureInPicture.isOn()
+      ? subscribeToStore()
+      : undefined;
+    PictureInPicture.listenToStateChange((isOn) => {
       if (isOn) {
         if (!unsubscribe) {
           unsubscribe = subscribeToStore();

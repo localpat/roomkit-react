@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from "react";
 import {
   HMSNotificationTypes,
   HMSRoleChangeRequest,
@@ -13,30 +13,36 @@ import {
   useHMSNotifications,
   useHMSStore,
   useHMSVanillaStore,
-} from '@100mslive/react-sdk';
-import { GroupIcon } from '@100mslive/react-icons';
-import { Box, Button } from '../../..';
-import { useRoomLayout, useUpdateRoomLayout } from '../../provider/roomLayoutProvider';
+} from "@100mslive/react-sdk";
+import { GroupIcon } from "@100mslive/react-icons";
+import { Box, Button } from "../../..";
+import {
+  useRoomLayout,
+  useUpdateRoomLayout,
+} from "../../provider/roomLayoutProvider";
 // @ts-ignore: No implicit Any
-import { ToastManager } from '../Toast/ToastManager';
-import { AutoplayBlockedModal } from './AutoplayBlockedModal';
-import { ChatNotifications } from './ChatNotifications';
-import { HandRaisedNotifications } from './HandRaisedNotifications';
-import { InitErrorModal } from './InitErrorModal';
-import { PeerNotifications } from './PeerNotifications';
-import { PermissionErrorNotificationModal } from './PermissionErrorModal';
-import { ReconnectNotifications } from './ReconnectNotifications';
-import { TrackBulkUnmuteModal } from './TrackBulkUnmuteModal';
-import { TrackNotifications } from './TrackNotifications';
-import { TrackUnmuteModal } from './TrackUnmuteModal';
-import { TranscriptionNotifications } from './TranscriptionNotifications';
-import { useRoomLayoutConferencingScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import { ToastManager } from "../Toast/ToastManager";
+import { AutoplayBlockedModal } from "./AutoplayBlockedModal";
+import { ChatNotifications } from "./ChatNotifications";
+import { HandRaisedNotifications } from "./HandRaisedNotifications";
+import { InitErrorModal } from "./InitErrorModal";
+import { PeerNotifications } from "./PeerNotifications";
+import { PermissionErrorNotificationModal } from "./PermissionErrorModal";
+import { ReconnectNotifications } from "./ReconnectNotifications";
+import { TrackBulkUnmuteModal } from "./TrackBulkUnmuteModal";
+import { TrackNotifications } from "./TrackNotifications";
+import { TrackUnmuteModal } from "./TrackUnmuteModal";
+import { TranscriptionNotifications } from "./TranscriptionNotifications";
+import { useRoomLayoutConferencingScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 // @ts-ignore: No implicit Any
-import { usePollViewToggle } from '../AppData/useSidepane';
+import { usePollViewToggle } from "../AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { useIsNotificationDisabled, useSubscribedNotifications } from '../AppData/useUISettings';
-import { usePIPWindow } from '../PIP/usePIPWindow';
-import { ROLE_CHANGE_DECLINED } from '../../common/constants';
+import {
+  useIsNotificationDisabled,
+  useSubscribedNotifications,
+} from "../AppData/useUISettings";
+import { usePIPWindow } from "../PIP/usePIPWindow";
+import { ROLE_CHANGE_DECLINED } from "../../common/constants";
 
 const pollToastKey: Record<string, string> = {};
 
@@ -55,14 +61,20 @@ export function Notifications() {
   const logoURL = useRoomLayout()?.logo?.url;
   const { pipWindow } = usePIPWindow();
 
-  const handleRoleChangeDenied = useCallback((request: HMSRoleChangeRequest & { peerName: string }) => {
-    ToastManager.addToast({
-      title: `${request.peerName} denied your request to join the ${request.role.name} role`,
-      variant: 'error',
-    });
-  }, []);
+  const handleRoleChangeDenied = useCallback(
+    (request: HMSRoleChangeRequest & { peerName: string }) => {
+      ToastManager.addToast({
+        title: `${request.peerName} denied your request to join the ${request.role.name} role`,
+        variant: "error",
+      });
+    },
+    []
+  );
 
-  useCustomEvent({ type: ROLE_CHANGE_DECLINED, onEvent: handleRoleChangeDenied });
+  useCustomEvent({
+    type: ROLE_CHANGE_DECLINED,
+    onEvent: handleRoleChangeDenied,
+  });
 
   useEffect(() => {
     if (!notification || isNotificationDisabled) {
@@ -70,20 +82,27 @@ export function Notifications() {
     }
     switch (notification.type) {
       case HMSNotificationTypes.NAME_UPDATED:
-        console.log(notification.data.id + ' changed their name to ' + notification.data.name);
+        console.log(
+          notification.data.id +
+            " changed their name to " +
+            notification.data.name
+        );
         break;
       case HMSNotificationTypes.ERROR:
-        if (notification.data?.isTerminal && notification.data?.action !== 'INIT') {
+        if (
+          notification.data?.isTerminal &&
+          notification.data?.action !== "INIT"
+        ) {
           if ([500, 6008].includes(notification.data?.code)) {
             ToastManager.addToast({
               title: `Error: ${notification.data?.message}`,
             });
-          } else if (notification.data?.message === 'role limit reached') {
+          } else if (notification.data?.message === "role limit reached") {
             ToastManager.addToast({
-              title: 'The room is currently full, try joining later',
+              title: "The room is currently full, try joining later",
               close: true,
               icon: (
-                <Box css={{ color: '$alert_error_default' }}>
+                <Box css={{ color: "$alert_error_default" }}>
                   <GroupIcon />
                 </Box>
               ),
@@ -92,17 +111,21 @@ export function Notifications() {
             ToastManager.addToast({
               title:
                 notification.data?.message ||
-                'We couldn’t reconnect you. When you’re back online, try joining the room.',
+                "We couldn’t reconnect you. When you’re back online, try joining the room.",
               close: false,
             });
           }
           return;
         }
         // Autoplay error or user denied screen share (cancelled browser pop-up)
-        if (notification.data?.code === 3008 || notification.data?.code === 3001 || notification.data?.code === 3011) {
+        if (
+          notification.data?.code === 3008 ||
+          notification.data?.code === 3001 ||
+          notification.data?.code === 3011
+        ) {
           return;
         }
-        if (notification.data?.action === 'INIT') {
+        if (notification.data?.action === "INIT") {
           return;
         }
         if (!subscribedNotifications.ERROR) return;
@@ -132,7 +155,10 @@ export function Notifications() {
       case HMSNotificationTypes.ROOM_ENDED:
         ToastManager.addToast({
           title: `${notification.message}. 
-              ${notification.data.reason && `Reason: ${notification.data.reason}`}`,
+              ${
+                notification.data.reason &&
+                `Reason: ${notification.data.reason}`
+              }`,
         });
         break;
       case HMSNotificationTypes.DEVICE_CHANGE_UPDATE:
@@ -142,8 +168,14 @@ export function Notifications() {
         break;
 
       case HMSNotificationTypes.POLL_STARTED:
-        if (notification.data.startedBy !== localPeerID && screenProps.screenType !== 'hls_live_streaming') {
-          const pollStartedBy = vanillaStore.getState(selectPeerNameByID(notification.data.startedBy)) || 'Participant';
+        if (
+          notification.data.startedBy !== localPeerID &&
+          screenProps.screenType !== "hls_live_streaming"
+        ) {
+          const pollStartedBy =
+            vanillaStore.getState(
+              selectPeerNameByID(notification.data.startedBy)
+            ) || "Participant";
 
           const pollToastID = ToastManager.addToast({
             title: `${pollStartedBy} started a ${notification.data.type}: ${notification.data.title}`,
@@ -152,13 +184,13 @@ export function Notifications() {
                 onClick={() => togglePollView(notification.data.id)}
                 variant="standard"
                 css={{
-                  backgroundColor: '$surface_bright',
-                  fontWeight: '$semiBold',
-                  color: '$on_surface_high',
-                  p: '$xs $md',
+                  backgroundColor: "$surface_bright",
+                  fontWeight: "$semiBold",
+                  color: "$on_surface_high",
+                  p: "$xs $md",
                 }}
               >
-                {notification.data.type === 'quiz' ? 'Answer' : 'Vote'}
+                {notification.data.type === "quiz" ? "Answer" : "Vote"}
               </Button>
             ),
             duration: Infinity,
@@ -185,7 +217,11 @@ export function Notifications() {
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notification, subscribedNotifications.ERROR, subscribedNotifications.METADATA_UPDATED]);
+  }, [
+    notification,
+    subscribedNotifications.ERROR,
+    subscribedNotifications.METADATA_UPDATED,
+  ]);
 
   if (isNotificationDisabled) {
     return null;

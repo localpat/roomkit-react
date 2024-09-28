@@ -1,5 +1,5 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   BrbIcon,
   ChatIcon,
@@ -8,17 +8,17 @@ import {
   PipIcon,
   ShareScreenIcon,
   VideoOnIcon,
-} from '@100mslive/react-icons';
-import { Button } from '../Button';
-import { IconButton } from '../IconButton';
-import { Footer } from '.';
+} from "@100mslive/react-icons";
+import { Button } from "../Button";
+import { IconButton } from "../IconButton";
+import { Footer } from ".";
 
 export default {
-  title: 'UI Components/Footer',
+  title: "UI Components/Footer",
   component: Footer.Root,
   argTypes: {
     as: { table: { disable: true } },
-    css: { control: { type: 'object' } },
+    css: { control: { type: "object" } },
   },
 } as ComponentMeta<typeof Footer.Root>;
 
@@ -58,4 +58,4 @@ const Template: ComponentStory<typeof Footer.Root> = ({ css }) => {
 };
 
 export const Example = Template.bind({});
-Example.storyName = 'Footer';
+Example.storyName = "Footer";

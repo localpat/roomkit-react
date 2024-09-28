@@ -1,9 +1,9 @@
-import React from 'react';
-import type { Theme } from './stitches.config';
+import React from "react";
+import type { Theme } from "./stitches.config";
 export declare enum ThemeTypes {
     default = "default"
 }
-export declare type ThemeContextValue = {
+export type ThemeContextValue = {
     themeType: string;
     theme: Theme;
     aspectRatio: {
@@ -18,7 +18,7 @@ export declare type ThemeContextValue = {
      */
     toggleTheme: (themeToUpdateTo?: ThemeTypes) => void;
 };
-export declare type ThemeProviderProps = {
+export type ThemeProviderProps = {
     themeType?: string;
     theme?: Theme;
     aspectRatio?: {

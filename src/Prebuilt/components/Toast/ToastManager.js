@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 
 export const ToastManager = {
   toasts: new Map(),
@@ -39,6 +39,6 @@ export const ToastManager = {
   },
   onChange() {
     const toasts = Array.from(this.toasts.values());
-    this.listeners.forEach(listener => listener(toasts));
+    this.listeners.forEach((listener) => listener(toasts));
   },
 };

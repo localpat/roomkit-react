@@ -1,5 +1,11 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import { useMeasure, useMedia } from 'react-use';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useMeasure, useMedia } from "react-use";
 import {
   HMSRoomState,
   selectAppData,
@@ -14,41 +20,60 @@ import {
   useParticipants,
   usePreviewJoin,
   useRecordingStreaming,
-} from '@100mslive/react-sdk';
-import { MicOffIcon, SettingsIcon } from '@100mslive/react-icons';
-import { Avatar, Box, config as cssConfig, Flex, flexCenter, styled, StyledVideoTile, Text, Video } from '../../..';
-import { AudioLevel } from '../../../AudioLevel';
-import { useHMSPrebuiltContext } from '../../AppContext';
-import IconButton from '../../IconButton';
-import SidePane from '../../layouts/SidePane';
-import { AudioVideoToggle, NoiseCancellation } from '../AudioVideoToggle';
-import Chip from '../Chip';
-import TileConnection from '../Connection/TileConnection';
-import FullPageProgress from '../FullPageProgress';
+} from "@100mslive/react-sdk";
+import { MicOffIcon, SettingsIcon } from "@100mslive/react-icons";
+import {
+  Avatar,
+  Box,
+  config as cssConfig,
+  Flex,
+  flexCenter,
+  styled,
+  StyledVideoTile,
+  Text,
+  Video,
+} from "../../..";
+import { AudioLevel } from "../../../AudioLevel";
+import { useHMSPrebuiltContext } from "../../AppContext";
+import IconButton from "../../IconButton";
+import SidePane from "../../layouts/SidePane";
+import { AudioVideoToggle, NoiseCancellation } from "../AudioVideoToggle";
+import Chip from "../Chip";
+import TileConnection from "../Connection/TileConnection";
+import FullPageProgress from "../FullPageProgress";
 // @ts-ignore: No implicit Any
-import { Logo } from '../Header/HeaderComponents';
+import { Logo } from "../Header/HeaderComponents";
 // @ts-ignore: No implicit Any
-import SettingsModal from '../Settings/SettingsModal';
-import { VBToggle } from '../VirtualBackground/VBToggle';
-import PreviewForm from './PreviewForm';
-import { useRoomLayoutPreviewScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import SettingsModal from "../Settings/SettingsModal";
+import { VBToggle } from "../VirtualBackground/VBToggle";
+import PreviewForm from "./PreviewForm";
+import { useRoomLayoutPreviewScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 import {
   useAuthToken,
   useUISettings,
   // @ts-ignore: No implicit Any
-} from '../AppData/useUISettings';
+} from "../AppData/useUISettings";
 // @ts-ignore: No implicit Any
-import { defaultPreviewPreference, UserPreferencesKeys, useUserPreferences } from '../hooks/useUserPreferences';
+import {
+  defaultPreviewPreference,
+  UserPreferencesKeys,
+  useUserPreferences,
+} from "../hooks/useUserPreferences";
 // @ts-ignore: No implicit Any
-import { calculateAvatarAndAttribBoxSize, getFormattedCount } from '../../common/utils';
-import { APP_DATA, UI_SETTINGS } from '../../common/constants';
+import {
+  calculateAvatarAndAttribBoxSize,
+  getFormattedCount,
+} from "../../common/utils";
+import { APP_DATA, UI_SETTINGS } from "../../common/constants";
 
 const getParticipantChipContent = (peerCount = 0) => {
   if (peerCount === 0) {
-    return 'You are the first to join';
+    return "You are the first to join";
   }
   const formattedNum = getFormattedCount(peerCount);
-  return `${formattedNum} other${parseInt(formattedNum) === 1 ? '' : 's'} in the session`;
+  return `${formattedNum} other${
+    parseInt(formattedNum) === 1 ? "" : "s"
+  } in the session`;
 };
 
 const useLocalTileAspectRatio = () => {
@@ -75,7 +100,7 @@ const PreviewJoin = ({
 }) => {
   const [previewPreference, setPreviewPreference] = useUserPreferences(
     UserPreferencesKeys.PREVIEW,
-    defaultPreviewPreference,
+    defaultPreviewPreference
   );
   const { isStreamingOn } = useRecordingStreaming();
   const authToken = useAuthToken();
@@ -92,11 +117,11 @@ const PreviewJoin = ({
     initialSettings: {
       isAudioMuted: skipPreview || previewPreference.isAudioMuted,
       isVideoMuted: skipPreview || previewPreference.isVideoMuted,
-      speakerAutoSelectionBlacklist: ['Yeti Stereo Microphone'],
+      speakerAutoSelectionBlacklist: ["Yeti Stereo Microphone"],
     },
     captureNetworkQualityInPreview: true,
     handleError: (_, method) => {
-      if (method === 'preview') {
+      if (method === "preview") {
         setPreviewError(true);
       }
     },
@@ -111,7 +136,8 @@ const PreviewJoin = ({
     join();
   }, [join, name, setPreviewPreference]);
   const { elements = {} } = useRoomLayoutPreviewScreen();
-  const { preview_header: previewHeader = {}, virtual_background } = elements || {};
+  const { preview_header: previewHeader = {}, virtual_background } =
+    elements || {};
   const aspectRatio = useLocalTileAspectRatio();
   useEffect(() => {
     if (authToken) {
@@ -131,35 +157,70 @@ const PreviewJoin = ({
   }, [initialName]);
 
   return roomState === HMSRoomState.Preview ? (
-    <Flex justify="center" css={{ size: '100%', position: 'relative' }}>
-      <Container css={{ h: '100%', pt: '$6', '@md': { justifyContent: 'space-between', pt: '$10' } }}>
+    <Flex justify="center" css={{ size: "100%", position: "relative" }}>
+      <Container
+        css={{
+          h: "100%",
+          pt: "$6",
+          "@md": { justifyContent: "space-between", pt: "$10" },
+        }}
+      >
         {toggleVideo ? null : <Box />}
-        <Flex direction="column" justify="center" css={{ w: '100%', maxWidth: '600px', gap: '$8' }}>
+        <Flex
+          direction="column"
+          justify="center"
+          css={{ w: "100%", maxWidth: "600px", gap: "$8" }}
+        >
           <Logo />
-          <Text variant="h4" css={{ wordBreak: 'break-word', textAlign: 'center' }}>
+          <Text
+            variant="h4"
+            css={{ wordBreak: "break-word", textAlign: "center" }}
+          >
             {previewHeader.title}
           </Text>
           <Text
-            css={{ c: '$on_surface_medium', textAlign: 'center', maxWidth: '100%', wordWrap: 'break-word' }}
+            css={{
+              c: "$on_surface_medium",
+              textAlign: "center",
+              maxWidth: "100%",
+              wordWrap: "break-word",
+            }}
             variant="sm"
           >
             {previewHeader.sub_title}
           </Text>
-          <Flex justify="center" css={{ gap: '$4' }}>
+          <Flex justify="center" css={{ gap: "$4" }}>
             {isStreamingOn ? (
               <Chip
                 content="LIVE"
                 backgroundColor="$alert_error_default"
                 textColor="#FFF"
-                icon={<Box css={{ h: '$sm', w: '$sm', backgroundColor: '$on_primary_high', borderRadius: '$round' }} />}
+                icon={
+                  <Box
+                    css={{
+                      h: "$sm",
+                      w: "$sm",
+                      backgroundColor: "$on_primary_high",
+                      borderRadius: "$round",
+                    }}
+                  />
+                }
               />
             ) : null}
-            <Chip content={getParticipantChipContent(peerCount)} hideIfNoContent />
+            <Chip
+              content={getParticipantChipContent(peerCount)}
+              hideIfNoContent
+            />
           </Flex>
         </Flex>
         {toggleVideo ? <PreviewTile name={name} error={previewError} /> : null}
-        <Box css={{ w: '100%', maxWidth: `${Math.max(aspectRatio, 1) * 340}px` }}>
-          <PreviewControls hideSettings={!toggleVideo && !toggleAudio} vbEnabled={!!virtual_background} />
+        <Box
+          css={{ w: "100%", maxWidth: `${Math.max(aspectRatio, 1) * 340}px` }}
+        >
+          <PreviewControls
+            hideSettings={!toggleVideo && !toggleAudio}
+            vbEnabled={!!virtual_background}
+          />
           <PreviewForm
             name={name}
             disabled={!!initialName}
@@ -171,7 +232,15 @@ const PreviewJoin = ({
           />
         </Box>
       </Container>
-      <Box css={{ position: 'absolute', right: '0', top: 0, height: '100%', overflow: 'hidden' }}>
+      <Box
+        css={{
+          position: "absolute",
+          right: "0",
+          top: 0,
+          height: "100%",
+          overflow: "hidden",
+        }}
+      >
         <SidePane />
       </Box>
     </Flex>
@@ -180,14 +249,20 @@ const PreviewJoin = ({
   );
 };
 
-const Container = styled('div', {
-  width: '100%',
+const Container = styled("div", {
+  width: "100%",
   ...flexCenter,
-  flexDirection: 'column',
-  px: '$10',
+  flexDirection: "column",
+  px: "$10",
 });
 
-export const PreviewTile = ({ name, error }: { name: string; error?: boolean }) => {
+export const PreviewTile = ({
+  name,
+  error,
+}: {
+  name: string;
+  error?: boolean;
+}) => {
   const localPeer = useHMSStore(selectLocalPeer);
   const { isLocalAudioEnabled, toggleAudio } = useAVToggle();
   const isVideoOn = useHMSStore(selectIsLocalVideoEnabled);
@@ -196,28 +271,29 @@ export const PreviewTile = ({ name, error }: { name: string; error?: boolean }) 
   const track = useHMSStore(trackSelector);
   const showMuteIcon = !isLocalAudioEnabled || !toggleAudio;
   const aspectRatio = useLocalTileAspectRatio();
-  const [ref, { width: calculatedWidth, height: calculatedHeight }] = useMeasure<HTMLDivElement>();
+  const [ref, { width: calculatedWidth, height: calculatedHeight }] =
+    useMeasure<HTMLDivElement>();
   const [avatarSize, attribBoxSize] = useMemo(
     () => calculateAvatarAndAttribBoxSize(calculatedWidth, calculatedHeight),
-    [calculatedWidth, calculatedHeight],
+    [calculatedWidth, calculatedHeight]
   );
 
   return (
     <StyledVideoTile.Container
       ref={ref}
       css={{
-        bg: '$surface_default',
+        bg: "$surface_default",
         aspectRatio,
-        height: 'min(340px, 70vh)',
-        width: 'auto',
-        maxWidth: '600px',
-        overflow: 'clip',
-        mt: '$10',
-        '@md': {
+        height: "min(340px, 70vh)",
+        width: "auto",
+        maxWidth: "600px",
+        overflow: "clip",
+        mt: "$10",
+        "@md": {
           mt: 0,
-          width: 'min(220px, 70vw)',
-          maxWidth: '100%',
-          my: '$4',
+          width: "min(220px, 70vw)",
+          maxWidth: "100%",
+          my: "$4",
         },
       }}
     >
@@ -225,14 +301,18 @@ export const PreviewTile = ({ name, error }: { name: string; error?: boolean }) 
         <>
           <TileConnection name="" peerId={localPeer.id} hideLabel={false} />
           <Video
-            mirror={track?.facingMode !== 'environment' && mirrorLocalVideo}
+            mirror={track?.facingMode !== "environment" && mirrorLocalVideo}
             trackId={localPeer.videoTrack}
             data-testid="preview_tile"
           />
 
           {!isVideoOn ? (
             <StyledVideoTile.AvatarContainer>
-              <Avatar name={name} data-testid="preview_avatar_tile" size={avatarSize} />
+              <Avatar
+                name={name}
+                data-testid="preview_avatar_tile"
+                size={avatarSize}
+              />
             </StyledVideoTile.AvatarContainer>
           ) : null}
         </>
@@ -252,18 +332,24 @@ export const PreviewTile = ({ name, error }: { name: string; error?: boolean }) 
   );
 };
 
-export const PreviewControls = ({ hideSettings, vbEnabled }: { hideSettings: boolean; vbEnabled: boolean }) => {
+export const PreviewControls = ({
+  hideSettings,
+  vbEnabled,
+}: {
+  hideSettings: boolean;
+  vbEnabled: boolean;
+}) => {
   const isMobile = useMedia(cssConfig.media.md);
   const isVBEnabledForUser = useHMSStore(selectIsVBEnabled);
   return (
     <Flex
-      justify={hideSettings && isMobile ? 'center' : 'between'}
+      justify={hideSettings && isMobile ? "center" : "between"}
       css={{
-        width: '100%',
-        mt: '$6',
+        width: "100%",
+        mt: "$6",
       }}
     >
-      <Flex css={{ gap: '$4' }}>
+      <Flex css={{ gap: "$4" }}>
         <AudioVideoToggle />
         {vbEnabled && isVBEnabledForUser ? <VBToggle /> : null}
       </Flex>
@@ -280,7 +366,11 @@ export const PreviewSettings = React.memo(() => {
 
   return (
     <Fragment>
-      <IconButton data-testid="preview_setting_btn" css={{ flexShrink: 0 }} onClick={() => setOpen(value => !value)}>
+      <IconButton
+        data-testid="preview_setting_btn"
+        css={{ flexShrink: 0 }}
+        onClick={() => setOpen((value) => !value)}
+      >
         <SettingsIcon />
       </IconButton>
       {open && <SettingsModal open={open} onOpenChange={setOpen} />}

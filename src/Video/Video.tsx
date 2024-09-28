@@ -1,26 +1,26 @@
-import React from 'react';
-import type { VariantProps } from '@stitches/react';
-import { HMSPeer, useVideo } from '@100mslive/react-sdk';
-import { styled } from '../Theme';
+import React from "react";
+import type { VariantProps } from "@stitches/react";
+import { HMSPeer, useVideo } from "@100mslive/react-sdk";
+import { styled } from "../Theme";
 
-export const StyledVideo = styled('video', {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '$2',
-  objectFit: 'cover',
-  background: '$background_default',
+export const StyledVideo = styled("video", {
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "$2",
+  objectFit: "cover",
+  background: "$background_default",
   variants: {
     mirror: {
       true: {
-        transform: 'scaleX(-1)',
+        transform: "scaleX(-1)",
       },
     },
     screenShare: {
       true: {
-        objectFit: 'contain',
+        objectFit: "contain",
       },
     },
     degraded: {
@@ -41,13 +41,14 @@ export const StyledVideo = styled('video', {
   },
 });
 
-type StyledProps = VariantProps<typeof StyledVideo> & React.ComponentProps<typeof StyledVideo>;
+type StyledProps = VariantProps<typeof StyledVideo> &
+  React.ComponentProps<typeof StyledVideo>;
 
 interface Props {
   /**
    * trackID for peer (videoTrack)
    */
-  trackId: HMSPeer['videoTrack'];
+  trackId: HMSPeer["videoTrack"];
   /**
    * Boolean stating whether to override the internal behaviour.
    * when attach is false, even if tile is inView or enabled, it won't be rendered
@@ -55,7 +56,11 @@ interface Props {
   attach?: boolean;
 }
 
-export const Video: React.FC<Props & StyledProps> = ({ trackId, attach, ...props }) => {
+export const Video: React.FC<Props & StyledProps> = ({
+  trackId,
+  attach,
+  ...props
+}) => {
   const { videoRef } = useVideo({ trackId, attach });
   return <StyledVideo ref={videoRef} {...props} />;
 };

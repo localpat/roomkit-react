@@ -1,15 +1,25 @@
-import React, { useRef, useState } from 'react';
-import { useMedia } from 'react-use';
-import { HMSPeer, selectAvailableRoleNames, selectPeerByID, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { ChevronDownIcon, ChevronUpIcon, CrossIcon } from '@100mslive/react-icons';
-import { Button } from '../../Button';
-import { Dropdown } from '../../Dropdown';
-import { Box, Flex } from '../../Layout';
-import { Dialog } from '../../Modal';
-import { Sheet } from '../../Sheet';
-import { Text } from '../../Text';
-import { config as cssConfig } from '../../Theme';
-import { Tooltip } from '../../Tooltip';
+import React, { useRef, useState } from "react";
+import { useMedia } from "react-use";
+import {
+  HMSPeer,
+  selectAvailableRoleNames,
+  selectPeerByID,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CrossIcon,
+} from "@100mslive/react-icons";
+import { Button } from "../../Button";
+import { Dropdown } from "../../Dropdown";
+import { Box, Flex } from "../../Layout";
+import { Dialog } from "../../Modal";
+import { Sheet } from "../../Sheet";
+import { Text } from "../../Text";
+import { config as cssConfig } from "../../Theme";
+import { Tooltip } from "../../Tooltip";
 
 const HighlightTerm = ({ value }: { value: string | undefined }) => {
   return value ? (
@@ -17,12 +27,12 @@ const HighlightTerm = ({ value }: { value: string | undefined }) => {
       <Text
         variant="body2"
         css={{
-          color: '$on_surface_medium',
-          fontWeight: '$semiBold',
+          color: "$on_surface_medium",
+          fontWeight: "$semiBold",
         }}
       >
         '{value.slice(0, 100)}
-        {value.length > 100 ? '...' : ''}'
+        {value.length > 100 ? "..." : ""}'
       </Text>
     </Tooltip>
   ) : (
@@ -40,16 +50,18 @@ const RoleChangeContent = ({
   isMobile?: boolean;
 }) => {
   const roles = useHMSStore(selectAvailableRoleNames).filter(
-    role => role !== peer?.roleName && role !== '__internal_recorder',
+    (role) => role !== peer?.roleName && role !== "__internal_recorder"
   );
-  const [selectedRole, setRole] = useState(roles.filter(role => role !== peer?.roleName)?.[0] || peer?.roleName);
+  const [selectedRole, setRole] = useState(
+    roles.filter((role) => role !== peer?.roleName)?.[0] || peer?.roleName
+  );
   const hmsActions = useHMSActions();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | undefined>();
 
   return (
     <>
-      <Flex align="center" justify="between" css={{ w: '100%' }}>
+      <Flex align="center" justify="between" css={{ w: "100%" }}>
         <Text as="h6" variant="h6">
           Switch Role
         </Text>
@@ -60,12 +72,12 @@ const RoleChangeContent = ({
         <Text
           variant="sm"
           css={{
-            mt: '$4',
-            mb: '$8',
-            c: '$on_surface_medium',
-            display: 'flex',
-            flexWrap: 'wrap',
-            columnGap: '4px',
+            mt: "$4",
+            mb: "$8",
+            c: "$on_surface_medium",
+            display: "flex",
+            flexWrap: "wrap",
+            columnGap: "4px",
           }}
         >
           Switch the role of
@@ -76,37 +88,45 @@ const RoleChangeContent = ({
       <Flex
         align="center"
         css={{
-          w: '100%',
-          mb: '$10',
+          w: "100%",
+          mb: "$10",
         }}
       >
         <Box
           css={{
-            position: 'relative',
-            flex: '1 1 0',
+            position: "relative",
+            flex: "1 1 0",
             minWidth: 0,
           }}
         >
-          <Dropdown.Root open={open} onOpenChange={setOpen} css={{ width: '100%' }}>
+          <Dropdown.Root
+            open={open}
+            onOpenChange={setOpen}
+            css={{ width: "100%" }}
+          >
             <Dropdown.Trigger
               // @ts-ignore
               ref={triggerRef}
               data-testid="open_role_selection_dropdown"
               asChild
               css={{
-                bg: '$surface_default',
-                r: '$1',
-                p: '$6 $9',
+                bg: "$surface_default",
+                r: "$1",
+                p: "$6 $9",
               }}
             >
-              <Flex align="center" justify="between" css={{ width: '100%' }}>
+              <Flex align="center" justify="between" css={{ width: "100%" }}>
                 <Text>{selectedRole}</Text>
                 {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
               </Flex>
             </Dropdown.Trigger>
 
-            <Dropdown.Content align="start" sideOffset={8} css={{ zIndex: 1000, w: '100%' }}>
-              {roles.map(role => (
+            <Dropdown.Content
+              align="start"
+              sideOffset={8}
+              css={{ zIndex: 1000, w: "100%" }}
+            >
+              {roles.map((role) => (
                 <Dropdown.Item
                   data-testid={role}
                   key={role}
@@ -120,12 +140,12 @@ const RoleChangeContent = ({
           </Dropdown.Root>
         </Box>
       </Flex>
-      <Flex justify="center" align="center" css={{ width: '100%', gap: '$md' }}>
+      <Flex justify="center" align="center" css={{ width: "100%", gap: "$md" }}>
         {!isMobile && (
           <Button
             variant="standard"
             outlined
-            css={{ width: '100%' }}
+            css={{ width: "100%" }}
             onClick={() => onOpenChange(false)}
             data-testid="cancel_button"
           >
@@ -136,7 +156,7 @@ const RoleChangeContent = ({
         <Button
           data-testid="change_button"
           variant="primary"
-          css={{ width: '100%' }}
+          css={{ width: "100%" }}
           onClick={async () => {
             if (selectedRole) {
               await hmsActions.changeRoleOfPeer(peer.id, selectedRole, true);
@@ -167,8 +187,18 @@ export const RoleChangeModal = ({
 
   if (isMobile) {
     return (
-      <Sheet.Root open={true} onOpenChange={onOpenChange} css={{ borderRadius: '$0 $0 0 0' }}>
-        <Sheet.Content css={{ p: '$10 $8', background: '$surface_dim', border: '1px solid $border_default' }}>
+      <Sheet.Root
+        open={true}
+        onOpenChange={onOpenChange}
+        css={{ borderRadius: "$0 $0 0 0" }}
+      >
+        <Sheet.Content
+          css={{
+            p: "$10 $8",
+            background: "$surface_dim",
+            border: "1px solid $border_default",
+          }}
+        >
           <RoleChangeContent peer={peer} onOpenChange={onOpenChange} isMobile />
         </Sheet.Content>
       </Sheet.Root>
@@ -179,7 +209,9 @@ export const RoleChangeModal = ({
     <Dialog.Root defaultOpen onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content css={{ width: 'min(400px,80%)', p: '$10', overflow: 'visible' }}>
+        <Dialog.Content
+          css={{ width: "min(400px,80%)", p: "$10", overflow: "visible" }}
+        >
           <RoleChangeContent peer={peer} onOpenChange={onOpenChange} />
         </Dialog.Content>
       </Dialog.Portal>

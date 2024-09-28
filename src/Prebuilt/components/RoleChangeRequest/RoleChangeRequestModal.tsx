@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   selectIsInPreview,
   selectLocalPeerName,
@@ -7,15 +7,15 @@ import {
   useCustomEvent,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { Flex, Text } from '../../..';
+} from "@100mslive/react-sdk";
+import { Flex, Text } from "../../..";
 // @ts-ignore: No implicit Any
-import { PreviewControls, PreviewTile } from '../Preview/PreviewJoin';
-import { RequestPrompt } from './RequestPrompt';
-import { useRoomLayoutPreviewScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
-import { useMyMetadata } from '../hooks/useMetadata';
+import { PreviewControls, PreviewTile } from "../Preview/PreviewJoin";
+import { RequestPrompt } from "./RequestPrompt";
+import { useRoomLayoutPreviewScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
+import { useMyMetadata } from "../hooks/useMetadata";
 // @ts-ignore: No implicit Any
-import { ROLE_CHANGE_DECLINED } from '../../common/constants';
+import { ROLE_CHANGE_DECLINED } from "../../common/constants";
 
 export const RoleChangeRequestModal = () => {
   const hmsActions = useHMSActions();
@@ -46,9 +46,14 @@ export const RoleChangeRequestModal = () => {
       <Text
         variant="xs"
         css={{
-          c: '$on_surface_medium',
-          textAlign: 'center',
-          '@md': { textAlign: 'left', borderBottom: '1px solid $border_bright', pb: '$4', px: '$8' },
+          c: "$on_surface_medium",
+          textAlign: "center",
+          "@md": {
+            textAlign: "left",
+            borderBottom: "1px solid $border_bright",
+            pb: "$4",
+            px: "$8",
+          },
         }}
       >
         Setup your audio and video before joining
@@ -57,13 +62,13 @@ export const RoleChangeRequestModal = () => {
         align="center"
         justify="center"
         css={{
-          '@sm': { width: '100%' },
-          flexDirection: 'column',
-          mt: '$6',
-          '@md': { px: '$8' },
+          "@sm": { width: "100%" },
+          flexDirection: "column",
+          mt: "$6",
+          "@md": { px: "$8" },
         }}
       >
-        <PreviewTile name={name || ''} />
+        <PreviewTile name={name || ""} />
 
         <PreviewControls hideSettings={true} vbEnabled={!!virtual_background} />
       </Flex>
@@ -73,10 +78,13 @@ export const RoleChangeRequestModal = () => {
   return (
     <RequestPrompt
       title="You're invited to join the stage"
-      onOpenChange={async value => {
+      onOpenChange={async (value) => {
         if (!value) {
           hmsActions.rejectChangeRole(roleChangeRequest);
-          sendEvent({ ...roleChangeRequest, peerName: name }, { peerId: roleChangeRequest.requestedBy?.id });
+          sendEvent(
+            { ...roleChangeRequest, peerName: name },
+            { peerId: roleChangeRequest.requestedBy?.id }
+          );
           await hmsActions.cancelMidCallPreview();
           await hmsActions.lowerLocalPeerHand();
         }

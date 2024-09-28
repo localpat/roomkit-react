@@ -1,11 +1,19 @@
-import React from 'react';
-import { AlertOctagonIcon, HandIcon, PeopleAddIcon, PeopleRemoveIcon } from '@100mslive/react-icons';
-import { Box } from '../../..';
-import SwitchWithLabel from './SwitchWithLabel';
+import React from "react";
+import {
+  AlertOctagonIcon,
+  HandIcon,
+  PeopleAddIcon,
+  PeopleRemoveIcon,
+} from "@100mslive/react-icons";
+import { Box } from "../../..";
+import SwitchWithLabel from "./SwitchWithLabel";
 // @ts-ignore: No implicit Any
-import { useSetSubscribedNotifications, useSubscribedNotifications } from '../AppData/useUISettings';
-import { settingOverflow } from './common';
-import { SUBSCRIBED_NOTIFICATIONS } from '../../common/constants';
+import {
+  useSetSubscribedNotifications,
+  useSubscribedNotifications,
+} from "../AppData/useUISettings";
+import { settingOverflow } from "./common";
+import { SUBSCRIBED_NOTIFICATIONS } from "../../common/constants";
 
 const NotificationItem = ({
   type,
@@ -25,7 +33,7 @@ const NotificationItem = ({
       id={type}
       icon={icon}
       checked={checked}
-      onChange={value => {
+      onChange={(value) => {
         setSubscribedNotifications(value);
       }}
     />

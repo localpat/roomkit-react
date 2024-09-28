@@ -1,19 +1,19 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { HangUpIcon } from '@100mslive/react-icons';
-import { Button } from './Button';
-import mdx from './Button.mdx';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { HangUpIcon } from "@100mslive/react-icons";
+import { Button } from "./Button";
+import mdx from "./Button.mdx";
 
 export default {
-  title: 'UI Components/Button',
+  title: "UI Components/Button",
   component: Button,
   argTypes: {
     variant: {
-      description: 'Button styled variants',
+      description: "Button styled variants",
     },
-    outlined: { description: 'Give button an outlined style' },
-    icon: { description: 'Give space between children' },
-    loading: { description: 'Button is in a loading state' },
+    outlined: { description: "Give button an outlined style" },
+    icon: { description: "Give space between children" },
+    loading: { description: "Button is in a loading state" },
   },
   parameters: {
     docs: {
@@ -35,18 +35,20 @@ export const WithIcon = () => (
   </Button>
 );
 
-export const Playground: ComponentStory<typeof Button> = args => <Button {...args}>Hello World</Button>;
+export const Playground: ComponentStory<typeof Button> = (args) => (
+  <Button {...args}>Hello World</Button>
+);
 
-Playground.storyName = 'Button';
+Playground.storyName = "Button";
 Playground.argTypes = {
-  onClick: { action: 'clicked' },
+  onClick: { action: "clicked" },
   variant: {
     control: {
-      type: 'select',
-      options: ['primary', 'standard', 'danger'],
+      type: "select",
+      options: ["primary", "standard", "danger"],
     },
   },
-  outlined: { control: 'boolean' },
-  icon: { control: 'boolean' },
-  loading: { control: 'boolean' },
+  outlined: { control: "boolean" },
+  icon: { control: "boolean" },
+  loading: { control: "boolean" },
 };

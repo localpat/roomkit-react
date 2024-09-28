@@ -1,22 +1,34 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Accordion } from '.';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Accordion } from ".";
 
 export default {
-  title: 'UI Components/Accordion',
+  title: "UI Components/Accordion",
   component: Accordion.Root,
 } as ComponentMeta<typeof Accordion.Root>;
 
-function AccordionItem({ value, header, content }: { value: string; header: string; content: string }) {
+function AccordionItem({
+  value,
+  header,
+  content,
+}: {
+  value: string;
+  header: string;
+  content: string;
+}) {
   return (
     <Accordion.Item value={value}>
-      <Accordion.Header css={{ padding: '$8 $9' }}>{header}</Accordion.Header>
-      <Accordion.Content contentStyles={{ padding: '$8 $9' }}>
+      <Accordion.Header css={{ padding: "$8 $9" }}>{header}</Accordion.Header>
+      <Accordion.Content contentStyles={{ padding: "$8 $9" }}>
         <>
           {content}
-          <Accordion.Item value={value + '1'}>
-            <Accordion.Header css={{ padding: '$8 $9' }}>nested header</Accordion.Header>
-            <Accordion.Content contentStyles={{ padding: '$8 $9' }}>nested item</Accordion.Content>
+          <Accordion.Item value={value + "1"}>
+            <Accordion.Header css={{ padding: "$8 $9" }}>
+              nested header
+            </Accordion.Header>
+            <Accordion.Content contentStyles={{ padding: "$8 $9" }}>
+              nested item
+            </Accordion.Content>
           </Accordion.Item>
         </>
       </Accordion.Content>
@@ -26,7 +38,11 @@ function AccordionItem({ value, header, content }: { value: string; header: stri
 
 const Template = () => {
   return (
-    <Accordion.Root type="multiple" defaultValue={['item-1']} css={{ width: '300px' }}>
+    <Accordion.Root
+      type="multiple"
+      defaultValue={["item-1"]}
+      css={{ width: "300px" }}
+    >
       <AccordionItem
         value="item-1"
         header="Is it accessible?"
@@ -46,5 +62,6 @@ const Template = () => {
   );
 };
 
-export const AccordionContent: ComponentStory<typeof Accordion.Root> = Template.bind({});
-AccordionContent.storyName = 'Accordion';
+export const AccordionContent: ComponentStory<typeof Accordion.Root> =
+  Template.bind({});
+AccordionContent.storyName = "Accordion";

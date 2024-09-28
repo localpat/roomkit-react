@@ -1,6 +1,6 @@
-import React from 'react';
-import { Video } from './Video';
-import VideoDocs from './Video.mdx';
+import React from "react";
+import { Video } from "./Video";
+import VideoDocs from "./Video.mdx";
 
 const VideoComponent = () => {
   return <Video trackId="2" />;
@@ -11,7 +11,7 @@ const StyledVideoComponent = () => {
 };
 
 const VideoStories = {
-  title: 'Rendering Video/Video Component',
+  title: "Rendering Video/Video Component",
   component: VideoComponent,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   parameters: {

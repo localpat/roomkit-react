@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 export declare enum PrebuiltStates {
     MEETING = "meeting",
     PREVIEW = "preview",
     LEAVE = "leave"
 }
-declare type AppStateContextType = {
+type AppStateContextType = {
     rejoin: () => void;
 };
 export declare const AppStateContext: React.Context<AppStateContextType>;

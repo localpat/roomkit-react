@@ -1,13 +1,19 @@
-import React from 'react';
-import { selectUnreadHMSMessagesCount, useHMSStore } from '@100mslive/react-sdk';
-import { ChatIcon } from '@100mslive/react-icons';
-import { Box, Flex, Text, Tooltip } from '../../..';
+import React from "react";
+import {
+  selectUnreadHMSMessagesCount,
+  useHMSStore,
+} from "@100mslive/react-sdk";
+import { ChatIcon } from "@100mslive/react-icons";
+import { Box, Flex, Text, Tooltip } from "../../..";
 // @ts-ignore: No implicit Any
-import IconButton from '../../IconButton';
+import IconButton from "../../IconButton";
 // @ts-ignore: No implicit Any
-import { useIsSidepaneTypeOpen, useSidepaneToggle } from '../AppData/useSidepane';
+import {
+  useIsSidepaneTypeOpen,
+  useSidepaneToggle,
+} from "../AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { SIDE_PANE_OPTIONS } from '../../common/constants';
+import { SIDE_PANE_OPTIONS } from "../../common/constants";
 
 export const ChatToggle = ({ onClick }: { onClick?: () => void }) => {
   const countUnreadMessages = useHMSStore(selectUnreadHMSMessagesCount);
@@ -17,13 +23,13 @@ export const ChatToggle = ({ onClick }: { onClick?: () => void }) => {
   return (
     <Box
       css={{
-        position: 'relative',
+        position: "relative",
       }}
     >
-      <Tooltip key="chat" title={`${isChatOpen ? 'Close' : 'Open'} chat`}>
+      <Tooltip key="chat" title={`${isChatOpen ? "Close" : "Open"} chat`}>
         <IconButton
           onClick={() => (onClick ? onClick() : toggleChat())}
-          css={{ bg: isChatOpen ? '$surface_brighter' : '' }}
+          css={{ bg: isChatOpen ? "$surface_brighter" : "" }}
           data-testid="chat_btn"
         >
           <ChatIcon />
@@ -32,18 +38,20 @@ export const ChatToggle = ({ onClick }: { onClick?: () => void }) => {
       {countUnreadMessages > 0 && (
         <Flex
           css={{
-            height: '$8',
-            p: '$4 4.5px',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '-$4',
-            right: '-$4',
-            borderRadius: '$space$14',
-            background: '$primary_default',
+            height: "$8",
+            p: "$4 4.5px",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: "-$4",
+            right: "-$4",
+            borderRadius: "$space$14",
+            background: "$primary_default",
           }}
         >
-          <Text variant="overline">{countUnreadMessages > 99 ? '99+' : countUnreadMessages}</Text>
+          <Text variant="overline">
+            {countUnreadMessages > 99 ? "99+" : countUnreadMessages}
+          </Text>
         </Flex>
       )}
     </Box>

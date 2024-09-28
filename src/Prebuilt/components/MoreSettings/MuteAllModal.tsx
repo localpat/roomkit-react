@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from "react";
 import {
   HMSRoleName,
   HMSTrackSource,
@@ -6,13 +6,13 @@ import {
   selectAvailableRoleNames,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { MicOffIcon } from '@100mslive/react-icons';
-import { Dialog } from '../../..';
-import { Sheet } from '../../../Sheet';
+} from "@100mslive/react-sdk";
+import { MicOffIcon } from "@100mslive/react-icons";
+import { Dialog } from "../../..";
+import { Sheet } from "../../../Sheet";
 // @ts-ignore: No implicit any
-import { DialogContent } from '../../primitives/DialogContent';
-import { MuteAllContent } from './MuteAllContent';
+import { DialogContent } from "../../primitives/DialogContent";
+import { MuteAllContent } from "./MuteAllContent";
 
 export const MuteAllModal = ({
   onOpenChange,
@@ -36,7 +36,14 @@ export const MuteAllModal = ({
       roles: selectedRole ? [selectedRole] : undefined,
     });
     onOpenChange(false);
-  }, [selectedRole, enabled, trackType, selectedSource, hmsActions, onOpenChange]);
+  }, [
+    selectedRole,
+    enabled,
+    trackType,
+    selectedSource,
+    hmsActions,
+    onOpenChange,
+  ]);
 
   const props = {
     muteAll,
@@ -55,7 +62,7 @@ export const MuteAllModal = ({
   if (isMobile) {
     return (
       <Sheet.Root defaultOpen onOpenChange={onOpenChange}>
-        <Sheet.Content css={{ px: '$10' }}>
+        <Sheet.Content css={{ px: "$10" }}>
           <MuteAllContent {...props} />
         </Sheet.Content>
       </Sheet.Root>

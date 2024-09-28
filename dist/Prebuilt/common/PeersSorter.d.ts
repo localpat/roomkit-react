@@ -1,4 +1,4 @@
-import { HMSPeer, HMSPeerID, IStoreReadOnly } from '@100mslive/react-sdk';
+import { HMSPeer, HMSPeerID, IStoreReadOnly } from "@100mslive/react-sdk";
 declare class PeersSorter {
     storeUnsubscribe: undefined | (() => void);
     store: IStoreReadOnly<any>;
@@ -8,7 +8,7 @@ declare class PeersSorter {
     speaker?: HMSPeer;
     listeners: Set<(peers: HMSPeer[]) => void>;
     constructor(store: IStoreReadOnly<any>);
-    setPeersAndTilesPerPage: ({ peers, tilesPerPage }: {
+    setPeersAndTilesPerPage: ({ peers, tilesPerPage, }: {
         peers: HMSPeer[];
         tilesPerPage: number;
     }) => void;

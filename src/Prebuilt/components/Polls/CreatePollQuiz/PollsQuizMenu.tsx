@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   HMSPollState,
   selectLocalPeerRoleName,
@@ -6,19 +6,23 @@ import {
   selectPolls,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
-import { QuestionIcon, StatsIcon } from '@100mslive/react-icons';
-import { Button, Flex, Input, Switch, Text } from '../../../..';
+} from "@100mslive/react-sdk";
+import { QuestionIcon, StatsIcon } from "@100mslive/react-icons";
+import { Button, Flex, Input, Switch, Text } from "../../../..";
 // @ts-ignore
-import { Container, ContentHeader, ErrorText } from '../../Streaming/Common';
+import { Container, ContentHeader, ErrorText } from "../../Streaming/Common";
 // @ts-ignore
-import { usePollViewToggle } from '../../AppData/useSidepane';
+import { usePollViewToggle } from "../../AppData/useSidepane";
 // @ts-ignore
-import { usePollViewState } from '../../AppData/useUISettings';
+import { usePollViewState } from "../../AppData/useUISettings";
 // @ts-ignore
-import { isValidTextInput } from '../../../common/utils';
-import { StatusIndicator } from '../common/StatusIndicator';
-import { INTERACTION_TYPE, POLL_STATE, POLL_VIEWS } from '../../../common/constants';
+import { isValidTextInput } from "../../../common/utils";
+import { StatusIndicator } from "../common/StatusIndicator";
+import {
+  INTERACTION_TYPE,
+  POLL_STATE,
+  POLL_VIEWS,
+} from "../../../common/constants";
 
 export const PollsQuizMenu = () => {
   const togglePollView = usePollViewToggle();
@@ -27,7 +31,10 @@ export const PollsQuizMenu = () => {
   return (
     <Container rounded>
       <ContentHeader content="Polls and Quizzes" onClose={togglePollView} />
-      <Flex direction="column" css={{ px: '$10', pb: '$10', overflowY: 'auto' }}>
+      <Flex
+        direction="column"
+        css={{ px: "$10", pb: "$10", overflowY: "auto" }}
+      >
         {permissions?.pollWrite && <AddMenu />}
         <PrevMenu />
       </Flex>
@@ -46,31 +53,33 @@ function InteractionSelectionCard({
   active: boolean;
   onClick: () => void;
 }) {
-  const activeBorderStyle = active ? '$space$px solid $primary_default' : '$space$px solid $border_bright';
+  const activeBorderStyle = active
+    ? "$space$px solid $primary_default"
+    : "$space$px solid $border_bright";
   return (
     <Flex
       onClick={onClick}
       css={{
         border: activeBorderStyle,
-        p: '$4',
-        r: '$2',
-        w: '100%',
-        cursor: 'pointer',
+        p: "$4",
+        r: "$2",
+        w: "100%",
+        cursor: "pointer",
       }}
       align="center"
     >
       <Flex
         css={{
           border: activeBorderStyle,
-          p: '$4',
-          bg: '$surface_bright',
-          c: '$on_surface_high',
-          r: '$0',
+          p: "$4",
+          bg: "$surface_bright",
+          c: "$on_surface_high",
+          r: "$0",
         }}
       >
         {icon}
       </Flex>
-      <Text variant="sub1" css={{ ml: '$md' }}>
+      <Text variant="sub1" css={{ ml: "$md" }}>
         {title}
       </Text>
     </Flex>
@@ -79,11 +88,11 @@ function InteractionSelectionCard({
 
 const AddMenu = () => {
   const actions = useHMSActions();
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const localPeerRoleName = useHMSStore(selectLocalPeerRoleName);
   const [hideVoteCount, setHideVoteCount] = useState(false);
   const [error, setError] = useState();
-  const [titleError, setTitleError] = useState('');
+  const [titleError, setTitleError] = useState("");
   const { setPollState } = usePollViewState();
   const [interactionType, setInteractionType] = useState(INTERACTION_TYPE.POLL);
 
@@ -105,21 +114,21 @@ const AddMenu = () => {
   const validateTitle = useMemo(() => {
     if (!isValidTextInput(title)) {
       if (title) {
-        setTitleError('The title should have between 2-100 characters');
+        setTitleError("The title should have between 2-100 characters");
       }
       return true;
     } else {
-      setTitleError('');
+      setTitleError("");
       return false;
     }
   }, [title]);
 
   return (
     <>
-      <Text variant="caption" css={{ c: '$on_surface_medium', mb: '$md' }}>
+      <Text variant="caption" css={{ c: "$on_surface_medium", mb: "$md" }}>
         Select the type you want to continue with
       </Text>
-      <Flex css={{ w: '100%', gap: '$10', mb: '$md' }}>
+      <Flex css={{ w: "100%", gap: "$10", mb: "$md" }}>
         <InteractionSelectionCard
           title={INTERACTION_TYPE.POLL}
           icon={<StatsIcon width={32} height={32} />}
@@ -133,22 +142,28 @@ const AddMenu = () => {
           active={interactionType === INTERACTION_TYPE.QUIZ}
         />
       </Flex>
-      <Flex direction="column" css={{ mb: '$10' }}>
-        <Text variant="body2" css={{ mb: '$4' }}>{`Name this ${interactionType.toLowerCase()}`}</Text>
+      <Flex direction="column" css={{ mb: "$10" }}>
+        <Text
+          variant="body2"
+          css={{ mb: "$4" }}
+        >{`Name this ${interactionType.toLowerCase()}`}</Text>
         <Input
           ref={inputRef}
           type="text"
           placeholder="Enter a name to continue"
           value={title}
-          onChange={event => setTitle(event.target.value.trimStart())}
+          onChange={(event) => setTitle(event.target.value.trimStart())}
           css={{
-            backgroundColor: '$surface_bright',
-            border: '1px solid $border_default',
+            backgroundColor: "$surface_bright",
+            border: "1px solid $border_default",
           }}
         />
-        <Flex align="center" css={{ mt: '$10' }}>
-          <Switch onCheckedChange={value => setHideVoteCount(value)} css={{ mr: '$6' }} />
-          <Text variant="body2" css={{ c: '$on_surface_medium' }}>
+        <Flex align="center" css={{ mt: "$10" }}>
+          <Switch
+            onCheckedChange={(value) => setHideVoteCount(value)}
+            css={{ mr: "$6" }}
+          />
+          <Text variant="body2" css={{ c: "$on_surface_medium" }}>
             Hide Vote Count
           </Text>
         </Flex>
@@ -156,7 +171,7 @@ const AddMenu = () => {
         <Button
           variant="primary"
           disabled={validateTitle}
-          css={{ mt: '$10' }}
+          css={{ mt: "$10" }}
           onClick={async () => {
             const id = Date.now().toString();
             await actions.interactivityCenter
@@ -164,12 +179,15 @@ const AddMenu = () => {
                 id,
                 title,
                 anonymous: false,
-                rolesThatCanViewResponses: hideVoteCount && localPeerRoleName ? [localPeerRoleName] : undefined,
+                rolesThatCanViewResponses:
+                  hideVoteCount && localPeerRoleName
+                    ? [localPeerRoleName]
+                    : undefined,
                 // @ts-ignore
                 type: interactionType.toLowerCase(),
               })
               .then(() => handleCreate(id))
-              .catch(err => setError(err.message));
+              .catch((err) => setError(err.message));
           }}
         >
           Create {interactionType}
@@ -186,9 +204,15 @@ const PrevMenu = () => {
   const sortedPolls = useMemo(
     () =>
       polls
-        ?.sort((a, b) => (b?.createdAt?.getTime?.() || 0) - (a?.createdAt?.getTime?.() || 0))
-        ?.sort((a, b) => (b?.state === 'started' ? 1 : 0) - (a?.state === 'started' ? 1 : 0)),
-    [polls],
+        ?.sort(
+          (a, b) =>
+            (b?.createdAt?.getTime?.() || 0) - (a?.createdAt?.getTime?.() || 0)
+        )
+        ?.sort(
+          (a, b) =>
+            (b?.state === "started" ? 1 : 0) - (a?.state === "started" ? 1 : 0)
+        ),
+    [polls]
   );
   const permissions = useHMSStore(selectPermissions);
 
@@ -203,40 +227,64 @@ const PrevMenu = () => {
     <Flex
       direction="column"
       css={{
-        width: '100%',
-        ...(permissions?.pollWrite ? { borderTop: '$space$px solid $border_bright', paddingTop: '$10' } : {}),
+        width: "100%",
+        ...(permissions?.pollWrite
+          ? { borderTop: "$space$px solid $border_bright", paddingTop: "$10" }
+          : {}),
       }}
     >
-      <Text variant="h6" css={{ c: '$on_surface_high' }}>
+      <Text variant="h6" css={{ c: "$on_surface_high" }}>
         Previous Polls and Quizzes
       </Text>
-      <Flex direction="column" css={{ gap: '$10', mt: '$8' }}>
-        {sortedPolls?.map(poll => (
-          <InteractionCard key={poll.id} id={poll.id} title={poll.title} status={poll.state} />
+      <Flex direction="column" css={{ gap: "$10", mt: "$8" }}>
+        {sortedPolls?.map((poll) => (
+          <InteractionCard
+            key={poll.id}
+            id={poll.id}
+            title={poll.title}
+            status={poll.state}
+          />
         ))}
       </Flex>
     </Flex>
   ) : null;
 };
 
-const InteractionCard = ({ id, title, status }: { id: string; title: string; status?: HMSPollState }) => {
+const InteractionCard = ({
+  id,
+  title,
+  status,
+}: {
+  id: string;
+  title: string;
+  status?: HMSPollState;
+}) => {
   const { setPollState } = usePollViewState();
 
   return (
-    <Flex direction="column" css={{ backgroundColor: '$surface_bright', borderRadius: '$1', p: '$8' }}>
-      <Flex css={{ w: '100%', justifyContent: 'space-between', mb: '$sm' }}>
-        <Text variant="sub1" css={{ c: '$on_surface_high', fontWeight: '$semiBold' }}>
+    <Flex
+      direction="column"
+      css={{ backgroundColor: "$surface_bright", borderRadius: "$1", p: "$8" }}
+    >
+      <Flex css={{ w: "100%", justifyContent: "space-between", mb: "$sm" }}>
+        <Text
+          variant="sub1"
+          css={{ c: "$on_surface_high", fontWeight: "$semiBold" }}
+        >
           {title}
         </Text>
         <StatusIndicator status={status} />
       </Flex>
-      <Flex css={{ w: '100%', gap: '$4' }} justify="end">
+      <Flex css={{ w: "100%", gap: "$4" }} justify="end">
         <Button
           variant="primary"
           onClick={() =>
             setPollState({
               [POLL_STATE.pollInView]: id,
-              [POLL_STATE.view]: status === 'created' ? POLL_VIEWS.CREATE_QUESTIONS : POLL_VIEWS.VOTE,
+              [POLL_STATE.view]:
+                status === "created"
+                  ? POLL_VIEWS.CREATE_QUESTIONS
+                  : POLL_VIEWS.VOTE,
             })
           }
         >

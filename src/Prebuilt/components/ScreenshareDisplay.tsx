@@ -1,9 +1,9 @@
-import React from 'react';
-import { useHMSActions } from '@100mslive/react-sdk';
-import { CrossIcon, ShareScreenIcon } from '@100mslive/react-icons';
-import { Button } from '../../Button';
-import { Flex } from '../../Layout';
-import { Text } from '../../Text';
+import React from "react";
+import { useHMSActions } from "@100mslive/react-sdk";
+import { CrossIcon, ShareScreenIcon } from "@100mslive/react-icons";
+import { Button } from "../../Button";
+import { Flex } from "../../Layout";
+import { Text } from "../../Text";
 
 export const ScreenshareDisplay = () => {
   const hmsActions = useHMSActions();
@@ -14,18 +14,18 @@ export const ScreenshareDisplay = () => {
       align="center"
       justify="center"
       css={{
-        size: '100%',
-        bg: '$background_default',
-        color: '$on_surface_high',
+        size: "100%",
+        bg: "$background_default",
+        color: "$on_surface_high",
       }}
     >
       <ShareScreenIcon width={48} height={48} />
-      <Text variant="h5" css={{ m: '$8 0' }}>
+      <Text variant="h5" css={{ m: "$8 0" }}>
         You are sharing your screen
       </Text>
       <Button
         variant="danger"
-        css={{ fontWeight: '$semiBold' }}
+        css={{ fontWeight: "$semiBold" }}
         onClick={async () => {
           await hmsActions.setScreenShareEnabled(false);
         }}

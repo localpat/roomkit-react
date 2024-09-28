@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Draggable, { ControlPosition } from 'react-draggable';
-import { useMedia } from 'react-use';
+import React, { useEffect, useRef, useState } from "react";
+import Draggable, { ControlPosition } from "react-draggable";
+import { useMedia } from "react-use";
 import {
   HMSTranscript,
   selectIsTranscriptionEnabled,
   selectPeerNameByID,
   useHMSStore,
   useTranscript,
-} from '@100mslive/react-sdk';
-import { Box, Flex } from '../../Layout';
-import { Text } from '../../Text';
-import { config } from '../../Theme';
+} from "@100mslive/react-sdk";
+import { Box, Flex } from "../../Layout";
+import { Text } from "../../Text";
+import { config } from "../../Theme";
 // @ts-ignore: No implicit Any
-import { useIsSidepaneTypeOpen } from '../components/AppData/useSidepane';
+import { useIsSidepaneTypeOpen } from "../components/AppData/useSidepane";
 // @ts-ignore: No implicit Any
-import { useIsCaptionEnabled } from '../components/AppData/useUISettings';
-import { useRoomLayoutConferencingScreen } from '../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
-import { SIDE_PANE_OPTIONS } from '../common/constants';
+import { useIsCaptionEnabled } from "../components/AppData/useUISettings";
+import { useRoomLayoutConferencingScreen } from "../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
+import { SIDE_PANE_OPTIONS } from "../common/constants";
 interface CaptionQueueData extends HMSTranscript {
   transcriptQueue: SimpleQueue;
 }
@@ -26,7 +26,10 @@ interface TranscriptData extends HMSTranscript {
 }
 class SimpleQueue {
   private storage: TranscriptData[] = [];
-  constructor(private capacity: number = 3, private MAX_STORAGE_TIME: number = 5000) {}
+  constructor(
+    private capacity: number = 3,
+    private MAX_STORAGE_TIME: number = 5000
+  ) {}
   enqueue(data: TranscriptData): void {
     if (!data.transcript.trim()) {
       return;
@@ -82,8 +85,10 @@ class SimpleQueue {
     return this.storage[0];
   }
   getTranscription(): string {
-    let script = '';
-    this.storage.forEach((value: TranscriptData) => (script += value.transcript + ' '));
+    let script = "";
+    this.storage.forEach(
+      (value: TranscriptData) => (script += value.transcript + " ")
+    );
     return script;
   }
   reset() {
@@ -110,13 +115,15 @@ class Queue {
         start: data.start,
         end: data.end,
       };
-      this.storage[data.peer_id].transcriptQueue.enqueue(data as TranscriptData);
+      this.storage[data.peer_id].transcriptQueue.enqueue(
+        data as TranscriptData
+      );
       return;
     }
     this.storage[data.peer_id].transcriptQueue.enqueue(data as TranscriptData);
   }
   dequeue(): CaptionQueueData {
-    const key: string = Object.keys(this.storage).shift() || '';
+    const key: string = Object.keys(this.storage).shift() || "";
     const captionData = this.storage[key];
     captionData.transcriptQueue.reset();
     delete this.storage[key];
@@ -125,7 +132,7 @@ class Queue {
 
   peek(): CaptionQueueData | undefined {
     if (this.size() <= 0) return undefined;
-    const key: string = Object.keys(this.storage).shift() || '';
+    const key: string = Object.keys(this.storage).shift() || "";
     return this.storage[key];
   }
 
@@ -154,15 +161,21 @@ class CaptionMaintainerQueue {
     });
   }
 }
-const TranscriptView = ({ peer_id, data }: { peer_id: string; data: string }) => {
-  const peerName = useHMSStore(selectPeerNameByID(peer_id)) || 'Participant';
+const TranscriptView = ({
+  peer_id,
+  data,
+}: {
+  peer_id: string;
+  data: string;
+}) => {
+  const peerName = useHMSStore(selectPeerNameByID(peer_id)) || "Participant";
   data = data.trim();
   if (!data) return null;
   return (
     <Text
       variant="body2"
       css={{
-        fontWeight: '$normal',
+        fontWeight: "$normal",
       }}
     >
       <b>{peerName}: </b>
@@ -184,8 +197,12 @@ export const CaptionsViewer = ({
 
   const showCaptionAtTop = elements?.chat?.is_overlay && isChatOpen && isMobile;
 
-  const [captionQueue] = useState<CaptionMaintainerQueue>(new CaptionMaintainerQueue());
-  const [currentData, setCurrentData] = useState<{ [key: string]: string }[]>([]);
+  const [captionQueue] = useState<CaptionMaintainerQueue>(
+    new CaptionMaintainerQueue()
+  );
+  const [currentData, setCurrentData] = useState<{ [key: string]: string }[]>(
+    []
+  );
 
   const isCaptionEnabled = useIsCaptionEnabled();
 
@@ -216,7 +233,12 @@ export const CaptionsViewer = ({
     }
     return false;
   });
-  if (dataToShow.length <= 0 || screenType === 'hls_live_streaming' || !isCaptionEnabled || !isTranscriptionEnabled) {
+  if (
+    dataToShow.length <= 0 ||
+    screenType === "hls_live_streaming" ||
+    !isCaptionEnabled ||
+    !isTranscriptionEnabled
+  ) {
     return null;
   }
   return (
@@ -231,26 +253,28 @@ export const CaptionsViewer = ({
       <Box
         ref={nodeRef}
         css={{
-          position: 'absolute',
-          w: isMobile ? '100%' : '40%',
-          bottom: showCaptionAtTop ? '' : '0',
-          top: showCaptionAtTop ? '0' : '',
-          left: isMobile ? 0 : '50%',
-          transform: isMobile ? '' : 'translateX(-50%)',
-          background: '#000000A3',
-          overflow: 'clip',
+          position: "absolute",
+          w: isMobile ? "100%" : "40%",
+          bottom: showCaptionAtTop ? "" : "0",
+          top: showCaptionAtTop ? "0" : "",
+          left: isMobile ? 0 : "50%",
+          transform: isMobile ? "" : "translateX(-50%)",
+          background: "#000000A3",
+          overflow: "clip",
           zIndex: 10,
-          height: 'fit-content',
-          r: '$1',
-          p: '$6',
-          transition: 'bottom 0.3s ease-in-out',
-          '&:empty': { display: 'none' },
+          height: "fit-content",
+          r: "$1",
+          p: "$6",
+          transition: "bottom 0.3s ease-in-out",
+          "&:empty": { display: "none" },
         }}
       >
         <Flex direction="column">
           {dataToShow.map((data: { [key: string]: string }, index: number) => {
             const key = Object.keys(data)[0];
-            return <TranscriptView key={index} peer_id={key} data={data[key]} />;
+            return (
+              <TranscriptView key={index} peer_id={key} data={data[key]} />
+            );
           })}
         </Flex>
       </Box>

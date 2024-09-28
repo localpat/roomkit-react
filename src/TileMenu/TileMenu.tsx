@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   HMSPeerID,
   HMSTrack,
@@ -8,7 +8,7 @@ import {
   selectVideoTrackByPeerID,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 import {
   HorizontalMenuIcon,
   MicOffIcon,
@@ -17,9 +17,9 @@ import {
   SpeakerIcon,
   VideoOffIcon,
   VideoOnIcon,
-} from '@100mslive/react-icons';
-import { Slider } from '../Slider';
-import { Flex, StyledMenuTile } from './StyledMenuTile';
+} from "@100mslive/react-icons";
+import { Slider } from "../Slider";
+import { Flex, StyledMenuTile } from "./StyledMenuTile";
 
 export interface TileMenuProps {
   peerId: HMSPeerID;
@@ -31,8 +31,12 @@ export const TileMenu: React.FC<TileMenuProps> = ({ peerId }) => {
   // TODO: selectTrackByID vs selectVideoTrackByPeerID
   const videoTrack = useHMSStore(selectVideoTrackByPeerID(peerId));
   const audioTrack = useHMSStore(selectAudioTrackByPeerID(peerId));
-  const canMuteVideo = videoTrack?.enabled ? permissions?.mute : permissions?.unmute;
-  const canMuteAudio = audioTrack?.enabled ? permissions?.mute : permissions?.unmute;
+  const canMuteVideo = videoTrack?.enabled
+    ? permissions?.mute
+    : permissions?.unmute;
+  const canMuteAudio = audioTrack?.enabled
+    ? permissions?.mute
+    : permissions?.unmute;
 
   const toggleTrackEnabled = async (track?: HMSTrack | null) => {
     if (track) {
@@ -51,16 +55,20 @@ export const TileMenu: React.FC<TileMenuProps> = ({ peerId }) => {
       </StyledMenuTile.Trigger>
       <StyledMenuTile.Content side="left" align="start" sideOffset={10}>
         {canMuteVideo ? (
-          <StyledMenuTile.ItemButton onClick={() => toggleTrackEnabled(videoTrack)}>
+          <StyledMenuTile.ItemButton
+            onClick={() => toggleTrackEnabled(videoTrack)}
+          >
             {videoTrack?.enabled ? <VideoOnIcon /> : <VideoOffIcon />}
-            <span>{`${videoTrack?.enabled ? 'Mute' : 'Unmute'} Video`}</span>
+            <span>{`${videoTrack?.enabled ? "Mute" : "Unmute"} Video`}</span>
           </StyledMenuTile.ItemButton>
         ) : null}
 
         {canMuteAudio ? (
-          <StyledMenuTile.ItemButton onClick={() => toggleTrackEnabled(audioTrack)}>
+          <StyledMenuTile.ItemButton
+            onClick={() => toggleTrackEnabled(audioTrack)}
+          >
             {audioTrack?.enabled ? <MicOnIcon /> : <MicOffIcon />}
-            <span>{`${audioTrack?.enabled ? 'Mute' : 'Unmute'} Audio`}</span>
+            <span>{`${audioTrack?.enabled ? "Mute" : "Unmute"} Audio`}</span>
           </StyledMenuTile.ItemButton>
         ) : null}
 
@@ -70,10 +78,10 @@ export const TileMenu: React.FC<TileMenuProps> = ({ peerId }) => {
               <SpeakerIcon /> <span>Volume ({trackVolume})</span>
             </Flex>
             <Slider
-              css={{ my: '0.5rem' }}
+              css={{ my: "0.5rem" }}
               step={5}
               value={[trackVolume || 0]}
-              onValueChange={e => actions.setVolume(e[0], audioTrack?.id)}
+              onValueChange={(e) => actions.setVolume(e[0], audioTrack?.id)}
             />
           </StyledMenuTile.VolumeItem>
         ) : null}
@@ -82,7 +90,7 @@ export const TileMenu: React.FC<TileMenuProps> = ({ peerId }) => {
           <StyledMenuTile.RemoveItem
             onClick={async () => {
               try {
-                await actions.removePeer(peerId, '');
+                await actions.removePeer(peerId, "");
               } catch (error) {
                 // TODO: Toast here
               }

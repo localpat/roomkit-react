@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { HMSHLSPlayerEvents } from '@100mslive/hls-player';
-import { Text } from '../../../Text';
-import { useHMSPlayerContext } from './PlayerContext';
-import { getDuration, getDurationFromSeconds } from './utils';
+import React, { useCallback, useEffect, useState } from "react";
+import { HMSHLSPlayerEvents } from "@100mslive/hls-player";
+import { Text } from "../../../Text";
+import { useHMSPlayerContext } from "./PlayerContext";
+import { getDuration, getDurationFromSeconds } from "./utils";
 
 export const VideoTime = () => {
   const { hlsPlayer } = useHMSPlayerContext();
@@ -19,7 +19,7 @@ export const VideoTime = () => {
         setVideoTime(getDurationFromSeconds(currentTime));
       }
     },
-    [hlsPlayer],
+    [hlsPlayer]
   );
   useEffect(() => {
     const timeupdateHandler = (currentTime: number) => {
@@ -39,11 +39,11 @@ export const VideoTime = () => {
     <Text
       variant="body1"
       css={{
-        minWidth: '$16',
-        c: '$on_surface_medium',
-        display: 'flex',
-        justifyContent: 'center',
-        fontWeight: '$regular',
+        minWidth: "$16",
+        c: "$on_surface_medium",
+        display: "flex",
+        justifyContent: "center",
+        fontWeight: "$regular",
       }}
     >
       -{videoTime}

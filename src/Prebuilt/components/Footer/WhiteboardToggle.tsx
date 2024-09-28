@@ -1,11 +1,15 @@
-import React from 'react';
-import { selectPeerScreenSharing, useHMSStore, useWhiteboard } from '@100mslive/react-sdk';
-import { PencilDrawIcon } from '@100mslive/react-icons';
-import { Tooltip } from '../../..';
+import React from "react";
+import {
+  selectPeerScreenSharing,
+  useHMSStore,
+  useWhiteboard,
+} from "@100mslive/react-sdk";
+import { PencilDrawIcon } from "@100mslive/react-icons";
+import { Tooltip } from "../../..";
 // @ts-ignore: No implicit Any
-import IconButton from '../../IconButton';
+import IconButton from "../../IconButton";
 // @ts-ignore: No implicit Any
-import { ToastManager } from '../Toast/ToastManager';
+import { ToastManager } from "../Toast/ToastManager";
 
 export const WhiteboardToggle = () => {
   const { toggle, open, isOwner } = useWhiteboard();
@@ -20,7 +24,9 @@ export const WhiteboardToggle = () => {
     <Tooltip
       key="whiteboard"
       title={
-        peerSharing ? 'Cannot open whiteboard when viewing a shared screen' : `${open ? 'Close' : 'Open'} Whiteboard`
+        peerSharing
+          ? "Cannot open whiteboard when viewing a shared screen"
+          : `${open ? "Close" : "Open"} Whiteboard`
       }
     >
       <IconButton
@@ -31,7 +37,10 @@ export const WhiteboardToggle = () => {
           try {
             await toggle();
           } catch (error) {
-            ToastManager.addToast({ title: (error as Error).message, variant: 'error' });
+            ToastManager.addToast({
+              title: (error as Error).message,
+              variant: "error",
+            });
           }
         }}
         active={!open}

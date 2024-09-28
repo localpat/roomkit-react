@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useMedia } from 'react-use';
-import { Rating } from '@100mslive/types-prebuilt/elements/feedback';
-import { useHMSActions } from '@100mslive/react-sdk';
-import { CheckIcon, CrossIcon } from '@100mslive/react-icons';
-import { Button } from '../../../Button';
-import { Checkbox } from '../../../Checkbox';
-import { Label } from '../../../Label';
-import { Flex } from '../../../Layout';
-import { Dialog } from '../../../Modal';
-import { Sheet } from '../../../Sheet';
-import { Text } from '../../../Text';
-import { TextArea } from '../../../TextArea';
-import { config as cssConfig } from '../../../Theme';
-import { useHMSPrebuiltContext } from '../../AppContext';
-import { useRoomLayoutLeaveScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import React, { useState } from "react";
+import { useMedia } from "react-use";
+import { Rating } from "@100mslive/types-prebuilt/elements/feedback";
+import { useHMSActions } from "@100mslive/react-sdk";
+import { CheckIcon, CrossIcon } from "@100mslive/react-icons";
+import { Button } from "../../../Button";
+import { Checkbox } from "../../../Checkbox";
+import { Label } from "../../../Label";
+import { Flex } from "../../../Layout";
+import { Dialog } from "../../../Modal";
+import { Sheet } from "../../../Sheet";
+import { Text } from "../../../Text";
+import { TextArea } from "../../../TextArea";
+import { config as cssConfig } from "../../../Theme";
+import { useHMSPrebuiltContext } from "../../AppContext";
+import { useRoomLayoutLeaveScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 
 export const FEEBACK_INDEX = {
   THANK_YOU: -10,
@@ -37,27 +37,41 @@ export const FeedbackModal = ({
   };
   if (isMobile) {
     return (
-      <Sheet.Root open={index !== FEEBACK_INDEX.INIT} onOpenChange={onOpenChange}>
+      <Sheet.Root
+        open={index !== FEEBACK_INDEX.INIT}
+        onOpenChange={onOpenChange}
+      >
         <Sheet.Content
-          css={{ bg: '$surface_dim', p: '$10', overflowY: 'auto' }}
+          css={{ bg: "$surface_dim", p: "$10", overflowY: "auto" }}
           onPointerDownOutside={avoidDefaultDomBehavior}
           onInteractOutside={avoidDefaultDomBehavior}
         >
-          <FeedbackContent ratings={ratings} indexSelected={index} setIndex={setIndex} />
+          <FeedbackContent
+            ratings={ratings}
+            indexSelected={index}
+            setIndex={setIndex}
+          />
         </Sheet.Content>
       </Sheet.Root>
     );
   }
   return (
-    <Dialog.Root open={index !== FEEBACK_INDEX.INIT} onOpenChange={onOpenChange}>
+    <Dialog.Root
+      open={index !== FEEBACK_INDEX.INIT}
+      onOpenChange={onOpenChange}
+    >
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
-          css={{ bg: '$surface_dim', width: '528px', p: '$12' }}
+          css={{ bg: "$surface_dim", width: "528px", p: "$12" }}
           onPointerDownOutside={avoidDefaultDomBehavior}
           onInteractOutside={avoidDefaultDomBehavior}
         >
-          <FeedbackContent ratings={ratings} indexSelected={index} setIndex={setIndex} />
+          <FeedbackContent
+            ratings={ratings}
+            indexSelected={index}
+            setIndex={setIndex}
+          />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -77,7 +91,7 @@ export const FeedbackContent = ({
   const { endpoints } = useHMSPrebuiltContext();
   const isMobile = useMedia(cssConfig.media.md);
   const hmsActions = useHMSActions();
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [selectedReasons, setSelectedReasons] = useState(new Set<number>());
   const handleCheckedChange = (checked: boolean | string, index: number) => {
     const newSelected = new Set(selectedReasons);
@@ -93,17 +107,21 @@ export const FeedbackContent = ({
       return;
     }
     try {
-      const reasons = [...selectedReasons].map((value: number) => ratings[indexSelected]?.reasons?.[value] || '');
+      const reasons = [...selectedReasons].map(
+        (value: number) => ratings[indexSelected]?.reasons?.[value] || ""
+      );
       await hmsActions.submitSessionFeedback(
         {
-          question: `${feedback?.title} | ${ratings[indexSelected].question || ''}`,
+          question: `${feedback?.title} | ${
+            ratings[indexSelected].question || ""
+          }`,
           rating: ratings[indexSelected].value || 1,
           min_rating: 1,
           max_rating: ratings.length,
           reasons: selectedReasons.size === 0 ? [] : reasons,
           comment: comment,
         },
-        endpoints?.event,
+        endpoints?.event
       );
     } catch (e) {
       console.error(e);
@@ -114,10 +132,10 @@ export const FeedbackContent = ({
   return (
     <Flex
       css={{
-        p: indexSelected === FEEBACK_INDEX.INIT ? '$12 !important' : '0',
-        bg: '$surface_dim',
-        r: '$3',
-        gap: '$10',
+        p: indexSelected === FEEBACK_INDEX.INIT ? "$12 !important" : "0",
+        bg: "$surface_dim",
+        r: "$3",
+        gap: "$10",
       }}
       direction="column"
     >
@@ -140,11 +158,11 @@ export const FeedbackContent = ({
         type="submit"
         icon
         css={{
-          alignSelf: isMobile ? '' : 'end',
+          alignSelf: isMobile ? "" : "end",
         }}
         onClick={submitFeedback}
       >
-        {feedback?.submit_btn_label || 'Submit Feedback'}
+        {feedback?.submit_btn_label || "Submit Feedback"}
       </Button>
     </Flex>
   );
@@ -166,40 +184,45 @@ export const FeedbackHeader = ({
         <Flex
           direction="column"
           css={{
-            flex: '1 1 0',
+            flex: "1 1 0",
           }}
         >
           <Text
-            variant={isMobile ? 'h6' : 'h5'}
+            variant={isMobile ? "h6" : "h5"}
             css={{
-              c: '$on_surface_high',
-              fontStyle: 'normal',
+              c: "$on_surface_high",
+              fontStyle: "normal",
             }}
           >
-            {feedback?.title || 'How was your experience?'}
+            {feedback?.title || "How was your experience?"}
           </Text>
           <Text
-            variant={isMobile ? 'body2' : 'body1'}
+            variant={isMobile ? "body2" : "body1"}
             css={{
-              c: '$on_surface_medium',
+              c: "$on_surface_medium",
               opacity: 0.9,
-              fontWeight: '$regular',
+              fontWeight: "$regular",
             }}
           >
-            {feedback?.sub_title || 'Your answers help us improve the quality.'}
+            {feedback?.sub_title || "Your answers help us improve the quality."}
           </Text>
         </Flex>
         {indexSelected !== FEEBACK_INDEX.INIT ? (
-          <CrossIcon width="24px" height="24px" color="white" onClick={() => onEmojiClicked(FEEBACK_INDEX.INIT)} />
+          <CrossIcon
+            width="24px"
+            height="24px"
+            color="white"
+            onClick={() => onEmojiClicked(FEEBACK_INDEX.INIT)}
+          />
         ) : null}
       </Flex>
       <Flex
         justify="between"
         css={{
-          gap: '$17',
-          c: '$on_surface_high',
-          '@md': {
-            gap: '0',
+          gap: "$17",
+          c: "$on_surface_high",
+          "@md": {
+            gap: "0",
           },
         }}
       >
@@ -210,36 +233,42 @@ export const FeedbackHeader = ({
               direction="column"
               css={{
                 c:
-                  indexSelected === index || indexSelected === FEEBACK_INDEX.INIT
-                    ? '$on_surface_high'
-                    : '$on_surface_default',
-                gap: '$4',
+                  indexSelected === index ||
+                  indexSelected === FEEBACK_INDEX.INIT
+                    ? "$on_surface_high"
+                    : "$on_surface_default",
+                gap: "$4",
               }}
               onClick={() => onEmojiClicked(index)}
               key={`${index}`}
             >
               <Text
                 css={{
-                  fontWeight: '$semiBold',
-                  fontSize: '$h4',
-                  pb: '$1',
-                  cursor: 'pointer',
-                  opacity: indexSelected === index || indexSelected === FEEBACK_INDEX.INIT ? 1 : 0.2,
-                  '@md': {
-                    fontSize: '$h5',
+                  fontWeight: "$semiBold",
+                  fontSize: "$h4",
+                  pb: "$1",
+                  cursor: "pointer",
+                  opacity:
+                    indexSelected === index ||
+                    indexSelected === FEEBACK_INDEX.INIT
+                      ? 1
+                      : 0.2,
+                  "@md": {
+                    fontSize: "$h5",
                   },
                 }}
               >
                 {element.emoji}
               </Text>
               <Text
-                variant={isMobile ? 'body2' : 'body1'}
+                variant={isMobile ? "body2" : "body1"}
                 css={{
                   c:
-                    indexSelected === index || indexSelected === FEEBACK_INDEX.INIT
-                      ? '$on_surface_medium'
-                      : '$on_surface_low',
-                  fontWeight: '$regular',
+                    indexSelected === index ||
+                    indexSelected === FEEBACK_INDEX.INIT
+                      ? "$on_surface_medium"
+                      : "$on_surface_low",
+                  fontWeight: "$regular",
                 }}
               >
                 {element.label}
@@ -271,32 +300,32 @@ export const FeedbackForm = ({
         <Flex
           direction="column"
           css={{
-            gap: '$4',
+            gap: "$4",
           }}
         >
           <Text
             variant="sub2"
             css={{
-              c: '$on_surface_high',
-              fontWeight: '$semiBold',
-              fontSize: '$sm',
-              px: '$2',
+              c: "$on_surface_high",
+              fontWeight: "$semiBold",
+              fontSize: "$sm",
+              px: "$2",
             }}
           >
-            {rating.question || 'What do you like/dislike here?'}
+            {rating.question || "What do you like/dislike here?"}
           </Text>
           <Flex
             css={{
-              alignItems: 'flex-start',
-              alignSelf: 'stretch',
-              flexWrap: 'wrap',
-              gap: '$6',
-              flex: '1 1 calc(25% - 12px)',
-              '@md': {
-                flex: '1 1 calc(50% - 12px)',
+              alignItems: "flex-start",
+              alignSelf: "stretch",
+              flexWrap: "wrap",
+              gap: "$6",
+              flex: "1 1 calc(25% - 12px)",
+              "@md": {
+                flex: "1 1 calc(50% - 12px)",
               },
-              '@sm': {
-                flex: '1 1 100%',
+              "@sm": {
+                flex: "1 1 100%",
               },
             }}
           >
@@ -307,20 +336,22 @@ export const FeedbackForm = ({
                   gap="2"
                   key={index}
                   css={{
-                    border: '1px solid $border_bright',
-                    r: '$1',
-                    p: '$6',
+                    border: "1px solid $border_bright",
+                    r: "$1",
+                    p: "$6",
                   }}
                 >
                   <Checkbox.Root
                     id={`${option}-${index}`}
                     checked={selectedReasons.has(index)}
-                    onCheckedChange={checked => handleCheckedChange(checked, index)}
+                    onCheckedChange={(checked) =>
+                      handleCheckedChange(checked, index)
+                    }
                     css={{
-                      cursor: 'pointer',
+                      cursor: "pointer",
                       flexShrink: 0,
-                      bg: '$on_secondary_low',
-                      border: '1px solid $border_bright',
+                      bg: "$on_secondary_low",
+                      border: "1px solid $border_bright",
                     }}
                   >
                     <Checkbox.Indicator>
@@ -330,10 +361,10 @@ export const FeedbackForm = ({
                   <Label
                     htmlFor={`${option}-${index}`}
                     css={{
-                      color: '$on_surface_high',
-                      fontSize: '$sm',
-                      fontWeight: '$regular',
-                      lineHeight: '20px' /* 142.857% */,
+                      color: "$on_surface_high",
+                      fontSize: "$sm",
+                      fontWeight: "$regular",
+                      lineHeight: "20px" /* 142.857% */,
                     }}
                   >
                     {option}
@@ -348,31 +379,31 @@ export const FeedbackForm = ({
         <Flex
           direction="column"
           css={{
-            gap: '$4',
+            gap: "$4",
           }}
         >
           <Text
             variant="body2"
             css={{
-              c: '$on_surface_high',
-              fontWeight: '$regular',
-              fontSize: '$sm',
+              c: "$on_surface_high",
+              fontWeight: "$regular",
+              fontSize: "$sm",
             }}
           >
-            {feedback?.comment.label || 'Additional comments (optional)'}
+            {feedback?.comment.label || "Additional comments (optional)"}
           </Text>
           <TextArea
             maxLength={1024}
-            placeholder={feedback?.comment.placeholder || 'Tell us more...'}
+            placeholder={feedback?.comment.placeholder || "Tell us more..."}
             css={{
-              backgroundColor: '$surface_bright',
-              border: '1px solid $border_bright',
-              resize: 'none',
-              height: '$36',
-              display: 'flex',
+              backgroundColor: "$surface_bright",
+              border: "1px solid $border_bright",
+              resize: "none",
+              height: "$36",
+              display: "flex",
             }}
             value={comment}
-            onChange={event => setComment(event.target.value.trimStart())}
+            onChange={(event) => setComment(event.target.value.trimStart())}
           />
         </Flex>
       )}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export const useAudioOutputTest = ({ deviceId }: { deviceId: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -7,7 +7,7 @@ export const useAudioOutputTest = ({ deviceId }: { deviceId: string }) => {
     if (audioRef.current && deviceId) {
       try {
         // @ts-ignore
-        if (typeof audioRef.current.setSinkId !== 'undefined') {
+        if (typeof audioRef.current.setSinkId !== "undefined") {
           // @ts-ignore
           audioRef.current.setSinkId(deviceId);
         }

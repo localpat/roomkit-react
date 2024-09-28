@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   HMSQuizLeaderboardResponse,
   HMSQuizLeaderboardSummary,
   selectPollByID,
   useHMSActions,
   useHMSStore,
-} from '@100mslive/react-sdk';
+} from "@100mslive/react-sdk";
 
 export const useQuizSummary = (quizID: string) => {
   const hmsActions = useHMSActions();
   const quiz = useHMSStore(selectPollByID(quizID));
-  const [quizLeaderboard, setQuizLeaderboard] = useState<HMSQuizLeaderboardResponse | undefined>();
+  const [quizLeaderboard, setQuizLeaderboard] = useState<
+    HMSQuizLeaderboardResponse | undefined
+  >();
 
   const summary: HMSQuizLeaderboardSummary = quizLeaderboard?.summary || {
     totalUsers: 0,
@@ -19,12 +21,21 @@ export const useQuizSummary = (quizID: string) => {
     avgTime: 0,
     correctUsers: 0,
   };
-  const [calculations, setCalculations] = useState({ maxPossibleScore: 0, totalResponses: 0 });
+  const [calculations, setCalculations] = useState({
+    maxPossibleScore: 0,
+    totalResponses: 0,
+  });
 
   useEffect(() => {
     const fetchLeaderboardData = async () => {
-      if (!quizLeaderboard && quiz && !quiz?.anonymous && quiz.state === 'stopped') {
-        const leaderboardData = await hmsActions.interactivityCenter.fetchLeaderboard(quiz.id, 0, 50);
+      if (
+        !quizLeaderboard &&
+        quiz &&
+        !quiz?.anonymous &&
+        quiz.state === "stopped"
+      ) {
+        const leaderboardData =
+          await hmsActions.interactivityCenter.fetchLeaderboard(quiz.id, 0, 50);
 
         const { maxPossibleScore, totalResponses } =
           quiz?.questions?.reduce((accumulator, question) => {

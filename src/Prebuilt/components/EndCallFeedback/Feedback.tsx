@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useMedia } from 'react-use';
-import { Flex } from '../../../Layout';
-import { config as cssConfig } from '../../../Theme';
-import { FEEBACK_INDEX, FeedbackHeader, FeedbackModal } from './FeedbackForm';
-import { ThankyouView } from './ThankyouView';
-import { useRoomLayoutLeaveScreen } from '../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen';
+import React, { useState } from "react";
+import { useMedia } from "react-use";
+import { Flex } from "../../../Layout";
+import { config as cssConfig } from "../../../Theme";
+import { FEEBACK_INDEX, FeedbackHeader, FeedbackModal } from "./FeedbackForm";
+import { ThankyouView } from "./ThankyouView";
+import { useRoomLayoutLeaveScreen } from "../../provider/roomLayoutProvider/hooks/useRoomLayoutScreen";
 
 export const Feedback = () => {
   const { feedback } = useRoomLayoutLeaveScreen();
@@ -30,7 +30,7 @@ export const Feedback = () => {
       <Flex
         justify="center"
         css={{
-          pt: '$16',
+          pt: "$16",
         }}
       >
         <ThankyouView />
@@ -41,22 +41,22 @@ export const Feedback = () => {
     <Flex
       justify="center"
       css={{
-        pt: '$16',
-        w: isMobile ? '100%' : '528px',
+        pt: "$16",
+        w: isMobile ? "100%" : "528px",
       }}
     >
       {index === FEEBACK_INDEX.INIT ? (
         <Flex
           css={{
-            p: isMobile ? '$10' : '$12',
-            border: '1px solid $border_default',
-            bg: '$surface_dim',
-            borderRadius: !isMobile ? '$3' : '$3 $3 0 0',
-            gap: '$10',
-            '@md': {
-              position: 'absolute',
-              bottom: '0',
-              w: '100%',
+            p: isMobile ? "$10" : "$12",
+            border: "1px solid $border_default",
+            bg: "$surface_dim",
+            borderRadius: !isMobile ? "$3" : "$3 $3 0 0",
+            gap: "$10",
+            "@md": {
+              position: "absolute",
+              bottom: "0",
+              w: "100%",
             },
           }}
           direction="column"

@@ -1,12 +1,15 @@
-export const getFormattedTime = (milliseconds: number | undefined, precise = true) => {
-  if (!milliseconds) return '-';
+export const getFormattedTime = (
+  milliseconds: number | undefined,
+  precise = true
+) => {
+  if (!milliseconds) return "-";
 
   const totalSeconds = milliseconds / 1000;
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  let formattedTime = '';
+  let formattedTime = "";
   if (hours) {
     formattedTime += `${hours}h `;
   }

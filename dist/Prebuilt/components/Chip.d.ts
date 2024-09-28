@@ -1,12 +1,12 @@
-import React from 'react';
-import { CSS } from '../../Theme';
+import React from "react";
+import { CSS } from "../../Theme";
 declare const Chip: ({ icon, content, backgroundColor, textColor, hideIfNoContent, onClick, css, }: {
-    icon?: React.JSX.Element | undefined;
+    icon?: React.JSX.Element;
     content: string;
-    backgroundColor?: string | undefined;
-    textColor?: string | undefined;
-    hideIfNoContent?: boolean | undefined;
-    onClick?: (() => void | Promise<void>) | undefined;
-    css?: CSS | undefined;
+    backgroundColor?: string;
+    textColor?: string;
+    hideIfNoContent?: boolean;
+    onClick?: () => void | Promise<void>;
+    css?: CSS;
 }) => React.JSX.Element | null;
 export default Chip;
